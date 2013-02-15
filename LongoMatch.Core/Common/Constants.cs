@@ -25,7 +25,7 @@ using Gdk;
 namespace LongoMatch.Common
 {
 	public class Constants {
-		public const string SOFTWARE_NAME = "LongoMatch";
+		public const string SOFTWARE_NAME = "LongoMatch (COES)";
 
 		public const string PROJECT_NAME = SOFTWARE_NAME + " project";
 

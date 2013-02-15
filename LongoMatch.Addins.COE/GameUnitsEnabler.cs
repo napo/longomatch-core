@@ -26,9 +26,9 @@ using LongoMatch.Addins.ExtensionPoints;
 public class GameUnitsEnabler: IConfigModifier
 {
 	public void ModifyConfig() {
-		LongoMatch.Config.useGameUnits = true;
+		LongoMatch.Config.UseGameUnits = true;
 		Log.Information("Loading GameUnitsEnabler addin");
-		Log.Information("'useGameUnits' modified to " + LongoMatch.Config.useGameUnits);
+		Log.Information("'useGameUnits' modified to " + LongoMatch.Config.UseGameUnits);
 	}
 }
 
