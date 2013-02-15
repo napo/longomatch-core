@@ -11,6 +11,7 @@ SUBDIRS = \
 	oxyplot \
 	LongoMatch.Core \
 	LongoMatch.Addins \
+	LongoMatch.Addins.COE \
 	LongoMatch.Multimedia \
 	LongoMatch.GUI.Multimedia \
 	LongoMatch.GUI \

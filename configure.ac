@@ -125,6 +125,7 @@ libcesarplayer/Makefile
 oxyplot/Makefile
 
 LongoMatch.Addins/Makefile
+LongoMatch.Addins.COE/Makefile
 LongoMatch.Core/Makefile
 LongoMatch.Multimedia/Makefile
 LongoMatch.Multimedia/LongoMatch.Multimedia.dll.config
