@@ -47,6 +47,8 @@ libcesarplayer_la_SOURCES = \
 	gst-nle-source.h\
 	video-utils.c\
 	video-utils.h\
+	gstosxvideosink.m\
+	gstosxvideosink.h\
 	macros.h
 
 libcesarplayer_la_LDFLAGS = \

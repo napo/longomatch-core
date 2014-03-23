@@ -139,10 +139,10 @@ namespace LongoMatch.Video
 			}
 		}
 		
-		[DllImport("libgstreamer-0.10.dll")]
-		static extern void gst_init (int argc, string argv);
+		[DllImport("libcesarplayer.dll")]
+		static extern void lgm_init_backend (int argc, string argv);
 		public static void InitBackend() {
-			gst_init(0, "");
+			lgm_init_backend(0, "");
 		}
 	}
 }

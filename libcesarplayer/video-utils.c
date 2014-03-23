@@ -27,8 +27,6 @@
  *
  */
 
-#include "video-utils.h"
-
 #include <glib/gi18n.h>
 #include <libintl.h>
 
@@ -37,6 +35,11 @@
 #include <unistd.h>
 #include <string.h>
 #include <stdio.h>
+
+#include "video-utils.h"
+#if defined (OSTYPE_OS_X)
+#include "gstosxvideosink.h"
+#endif
 
 void
 totem_gdk_window_set_invisible_cursor (GdkWindow * window)
@@ -271,7 +274,7 @@ gst_get_window_handle(GdkWindow *window)
 #if defined (GDK_WINDOWING_WIN32)
   window_handle = (guintptr)GDK_WINDOW_HWND (window);
 #elif defined (GDK_WINDOWING_QUARTZ)
-  window_handle = gdk_quartz_window_get_nsview (window);
+  window_handle = (guintptr) gdk_quartz_window_get_nsview (window);
 #elif defined (GDK_WINDOWING_X11)
   window_handle = GDK_WINDOW_XID (window);
 #endif
@@ -286,9 +289,12 @@ gst_set_window_handle(GstXOverlay *xoverlay, guintptr window_handle)
 }
 
 void
-init_backend (int argc, char **argv)
+lgm_init_backend (int argc, char **argv)
 {
   gst_init(&argc, &argv);
+  g_print ("REGISTER");
+  gst_element_register (NULL, "lgmosxvideosink",
+      GST_RANK_PRIMARY + 1, GST_TYPE_LGM_OSX_VIDEO_SINK);
 }
 
 gchar *

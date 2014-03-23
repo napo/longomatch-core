@@ -82,7 +82,7 @@ bacon_video_widget_error_quark (void)
      EXPORT GType bacon_video_widget_get_type (void) G_GNUC_CONST;
      EXPORT GOptionGroup *bacon_video_widget_get_option_group (void);
 /* This can be used if the app does not use popt */
-     EXPORT void bacon_video_widget_init_backend (int *argc, char ***argv);
+     EXPORT void bacon_video_widget_init_backend (int argc, char **argv);
 
 /**
  * BvwUseType:

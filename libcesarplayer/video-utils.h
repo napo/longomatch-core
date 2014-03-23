@@ -80,3 +80,4 @@ EXPORT GstElement * lgm_create_audio_encoder (AudioEncoderType type, guint quali
     GQuark quark, GError **err);
 EXPORT GstElement * lgm_create_muxer (VideoMuxerType type,
     GQuark quark, GError **err);
+EXPORT void lgm_init_backend (int argc, char **argv);

@@ -4494,9 +4494,9 @@ G_DEFINE_TYPE (BaconVideoWidget, bacon_video_widget, GTK_TYPE_HBOX)
  * once; but not both.
  **/
 void
-bacon_video_widget_init_backend (int *argc, char ***argv)
+bacon_video_widget_init_backend (int argc, char **argv)
 {
-  gst_init (argc, argv);
+  lgm_init_backend (argc, argv);
 }
 
 GQuark
