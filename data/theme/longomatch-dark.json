@@ -1,0 +1,13 @@
+{
+	'WelcomeBorder': 30,
+	'WelcomeIconSize': 80,
+	'WelcomeLogoWidth': 450,
+	'WelcomeLogoHeight': 99,
+	'WelcomeIconsHSpacing': 105,
+	'WelcomeIconsVSpacing': 55,
+	'WelcomeIconsTextSpacing': 5,
+	'WelcomeIconsTextHeight': 20,
+	'WelcomeIconsPerRow': 3,
+	'WelcomeTextHeight': 20,
+	'TeamsComboColorHeight': 2,
+}
