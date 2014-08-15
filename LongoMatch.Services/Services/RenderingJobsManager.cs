@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Threading;
 using System.Collections.Generic;
 using Mono.Unix;
 
@@ -188,19 +189,21 @@ namespace LongoMatch.Services
 			
 			Log.Debug(String.Format("Adding segment with {0} drawings", segment.Drawings.Count));
 			if (segment.Drawings.Count >= 1) {
-				Drawing drawing = segment.Drawings[0];
-				string image_path = CreateStillImage(segment.MediaFile.FilePath, drawing);
 				
+				Drawing drawing = segment.Drawings[0];
 				videoEditor.AddSegment(segment.MediaFile.FilePath,
 				                       segment.Start.MSeconds,
 				                       drawing.RenderTime - segment.Start.MSeconds,
 				                       segment.Rate,
 				                       segment.Name,
 				                       segment.MediaFile.HasAudio);
-				videoEditor.AddImageSegment(image_path,
+				string image_path = CreateStillImage(segment.MediaFile.FilePath, drawing);
+				if (image_path != null) {
+					videoEditor.AddImageSegment(image_path,
 				                            drawing.RenderTime,
 				                            drawing.PauseTime,
 				                            segment.Name);
+				}
 				videoEditor.AddSegment(segment.MediaFile.FilePath,
 				                       drawing.RenderTime,
 				                       segment.Stop.MSeconds - drawing.RenderTime,
@@ -225,6 +228,13 @@ namespace LongoMatch.Services
 			capturer.Open(filename);
 			capturer.SeekTime(drawing.RenderTime, true);
 			frame = capturer.GetCurrentFrame();
+			if (frame == null) {
+			    Thread.Sleep (200);
+			    frame = capturer.GetCurrentFrame();
+			    if (frame == null) {
+			        return null;
+			    }
+			}
 			final_image = Image.Composite(frame, drawing.Pixbuf);
 			final_image.Save(path);
 			return path;
