@@ -33,6 +33,7 @@ REF_DEP_LONGOMATCH_ADDINS = \
 REF_DEP_LONGOMATCH_PLUGINS = \
                      $(LINK_MONO_ADDINS) \
                      $(LINK_MONO_POSIX) \
+                     $(LINK_GTK) \
                      $(LINK_LONGOMATCH_CORE) \
                      $(LINK_LONGOMATCH_ADDINS)
 
