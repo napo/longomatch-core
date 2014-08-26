@@ -1,3 +1,12 @@
+===== LongoMatch 0.20.8 "New Age" =====
+
+	== Bugs fixed ==
+
+	* Fix memory leak rendering files with long preroll times
+	* Fix exception rendering plays with drawings when the no screenshot is taken
+	* Fix focus bug in the filters
+	* Fix filenames for autorendering plays
+
 ===== LongoMatch 0.20.7 "Franela" =====
 
 	== Bugs fixed ==

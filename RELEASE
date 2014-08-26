@@ -1,7 +1,7 @@
-LongoMatch-0.20.7 "Franela"
+LongoMatch-0.20.8 "New age"
 -----------------------------
 
-The LongoMatch team is happy to announce the seventh release in the
+The LongoMatch team is happy to announce the eight release in the
 stable 0.20 series.
 
 Due to its dependency on GStreamer, We strongly recommend to have
@@ -10,8 +10,10 @@ experience.
 
 
 * Bugs fixed
-	* Fix deadlock cancelling rendering operations
-	* Fix x264enc when running from non-writable place
+	* Fix memory leak rendering files with long preroll times
+	* Fix exception rendering plays with drawings when the no screenshot is taken
+	* Fix focus bug in the filters
+	* Fix filenames for autorendering plays
 
   * LongoMatch:
 	Andoni Morales Alastruey <ylatuya@gmail.com>
