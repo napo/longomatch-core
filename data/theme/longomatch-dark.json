@@ -4,6 +4,7 @@
 	'PaletteBackground': '#252627FF',
 	'PaletteBackgroundLight': '#3b3b3cFF',
 	'PaletteBackgroundDark': '#151a20FF',
+	'PaletteBackgroundDarkBright': '#292e33FF',
 	'PaletteWidgets': '#6a6a6aFF',
 	'PaletteSelected': '#f3f3f3FF',
 	'PaletteActive': '#50b44dFF',
