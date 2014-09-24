@@ -86,7 +86,7 @@ public class TeamStatsSheet
 				optionWidth -= 1;
 				FillSubcategoryName(subcatStats.Name, subcategoryColumn, optionWidth); 
 				subcategoryWidth += optionWidth + 1;
-				subcategoryColumn += subcategoryWidth;
+				subcategoryColumn += optionWidth + 1;
 			}
 			subcategoryWidth -= 1;
 			FillCategoryName(catStats.Name, categoryColumn, subcategoryWidth);
