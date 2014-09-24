@@ -47,7 +47,7 @@ public class ExcelExporter:IExportProject
 	
 	public void ExportProject (Project project, IGUIToolkit guiToolkit) {
 		string filename = guiToolkit.SaveFile(Catalog.GetString("Output file"), null,
-			Config.HomeDir(), "Excel", ".xlsx");
+			Config.HomeDir, "Excel", new string[] {".xlsx"});
 		
 		if (filename == null)
 			return;
