@@ -9,4 +9,5 @@
 	'PaletteSelected': '#f3f3f3FF',
 	'PaletteActive': '#50b44dFF',
 	'PaletteTool': '#c42527FF',
+	'PaletteText': '#f6f6f6FF',
 }
