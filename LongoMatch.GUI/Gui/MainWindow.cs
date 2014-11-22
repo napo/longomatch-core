@@ -204,6 +204,10 @@ namespace LongoMatch.Gui
 			ImportProjectAction.Activated += (sender, e) => {
 				Config.EventsBroker.EmitImportProject ();
 			};
+			NewPresentationAction.Activated += (sender, e) => {
+				Config.EventsBroker.EmitNewPresentation ();
+			};
+			
 			FullScreenAction.Activated += (object sender, EventArgs e) => {
 				Config.EventsBroker.EmitShowFullScreen (FullScreenAction.Active);
 			};

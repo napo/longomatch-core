@@ -134,6 +134,8 @@
     <Compile Include="Stats\TeamStats.cs" />
     <Compile Include="Stats\PlayerEventTypeStats.cs" />
     <Compile Include="Stats\PlayerStats.cs" />
+    <Compile Include="Interfaces\GUI\IPresentationWindow.cs" />
+    <Compile Include="Store\Presentation.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

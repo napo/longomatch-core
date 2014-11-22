@@ -332,4 +332,17 @@
       </itemgroup>
     </signals>
   </object>
+  <object type="LongoMatch.Gui.Panel.NewPresentationPanel" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+      <itemgroup label="IPanel Signals">
+        <signal name="BackEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PresentationComponent" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
+    <signals>
+    </signals>
+  </object>
 </objects>

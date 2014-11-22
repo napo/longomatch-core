@@ -65,6 +65,7 @@ namespace LongoMatch.Core.Common
 		/* IMainController */
 		public event NewProjectHandler NewProjectEvent;
 		public event OpenNewProjectHandler OpenNewProjectEvent;
+		public event NewPresentationHandler NewPresentation;
 		public event OpenProjectHandler OpenProjectEvent;
 		public event OpenProjectIDHandler OpenProjectIDEvent;
 		public event ImportProjectHandler ImportProjectEvent;
@@ -209,6 +210,11 @@ namespace LongoMatch.Core.Common
 				SaveProjectEvent (project, projectType);
 		}
 		
+		public void EmitNewPresentation () {
+			if (NewPresentation != null)
+				NewPresentation ();
+		}
+
 		public void EmitNewProject (Project project) {
 			if (NewProjectEvent != null)
 				NewProjectEvent(project);

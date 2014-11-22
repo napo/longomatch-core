@@ -324,6 +324,21 @@ namespace LongoMatch.Gui
 			mainWindow.CreateNewProject (project);
 		}
 		
+		public void CreateNewPresentation () {
+			NewPresentationPanel panel = new NewPresentationPanel ();
+			Log.Information ("Create new presentation");
+			mainWindow.SetPanel (panel);
+		}
+
+		public void OpenPresentation (Presentation presentation, out IPresentationWindow presentationWindow)
+		{
+			Log.Information ("Open presentation");
+			PresentationComponent widget = new PresentationComponent ();
+			mainWindow.SetPanel (widget);
+			presentationWindow = widget;
+			presentationWindow.Open (presentation);
+		}
+
 		public void ShowProjectStats (Project project) {
 			Log.Information ("Show project stats");
 			Addins.AddinsManager.ShowStats (project);

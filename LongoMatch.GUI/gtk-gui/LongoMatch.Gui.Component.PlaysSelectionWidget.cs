@@ -23,7 +23,7 @@ namespace LongoMatch.Gui.Component
 			this.notebook = new global::Gtk.Notebook ();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
-			this.notebook.CurrentPage = 0;
+			this.notebook.CurrentPage = 2;
 			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			// Container child notebook.Gtk.Notebook+NotebookChild
 			this.eventslistwidget = new global::LongoMatch.Gui.Component.EventsListWidget ();
@@ -61,7 +61,7 @@ namespace LongoMatch.Gui.Component
 			this.filtersnotebook = new global::Gtk.Notebook ();
 			this.filtersnotebook.CanFocus = true;
 			this.filtersnotebook.Name = "filtersnotebook";
-			this.filtersnotebook.CurrentPage = 1;
+			this.filtersnotebook.CurrentPage = 0;
 			this.filtersnotebook.TabPos = ((global::Gtk.PositionType)(3));
 			this.filtersvbox.Add (this.filtersnotebook);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.filtersvbox [this.filtersnotebook]));

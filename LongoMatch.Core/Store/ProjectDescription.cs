@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
+using Mono.Unix;
 
 namespace LongoMatch.Core.Store
 {
@@ -164,6 +165,20 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[JsonIgnore]
+		public string Description {
+			get {
+				return String.Format ("{0}-{1} ({2}-{3})\n{4}: {5}\n{6}: {7}\n{8}: {9}",
+				                      LocalName, VisitorName,
+				                      LocalGoals, VisitorGoals,
+				                      Catalog.GetString ("Date"),
+				                      MatchDate.ToShortDateString(),
+				                      Catalog.GetString ("Competition"),
+				                      Competition,
+				                      Catalog.GetString ("Season"),
+				                      Season);
+			}
+		} 
 		public int CompareTo(object obj) {
 			if(obj is ProjectDescription) {
 				ProjectDescription project = (ProjectDescription) obj;

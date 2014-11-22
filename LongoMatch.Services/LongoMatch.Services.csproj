@@ -38,6 +38,7 @@
     <Compile Include="Services\DataBaseManager.cs" />
     <Compile Include="Services\ToolsManager.cs" />
     <Compile Include="Services\FileDB.cs" />
+    <Compile Include="PresentationsManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="..\" />

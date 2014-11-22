@@ -93,7 +93,6 @@ namespace LongoMatch.Gui.Component
 		public void Fill (List<ProjectDescription> projects)
 		{
 			Pixbuf image, homeShield, awayShield;
-			string desc;
 
 			swallowSignals = true;
 			this.projects = projects;
@@ -117,17 +116,7 @@ namespace LongoMatch.Gui.Component
 				} else {
 					awayShield = Misc.LoadIcon ("longomatch-default-shield", 50);
 				}
-				
-				desc = String.Format ("{0}-{1} ({2}-{3})\n{4}: {5}\n{6}: {7}\n{8}: {9}",
-				                      pdesc.LocalName, pdesc.VisitorName,
-				                      pdesc.LocalGoals, pdesc.VisitorGoals,
-				                      Catalog.GetString ("Date"),
-				                      pdesc.MatchDate.ToShortDateString(),
-				                      Catalog.GetString ("Competition"),
-				                      pdesc.Competition,
-				                      Catalog.GetString ("Season"),
-				                      pdesc.Season);
-				store.AppendValues (desc, image, homeShield, awayShield, pdesc);
+				store.AppendValues (pdesc.Description, image, homeShield, awayShield, pdesc);
 			}
 			swallowSignals = false;
 			iconview.SetCursor (new TreePath ("0"), null, false);

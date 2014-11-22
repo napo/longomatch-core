@@ -41,6 +41,7 @@ namespace LongoMatch.Services
 		static PlaylistManager plManager;
 		static ToolsManager toolsManager;
 		static TemplatesService ts;
+		static PresentationsManager presentationsManager;
 				
 
 		public static IProjectsImporter ProjectsImporter;
@@ -111,6 +112,9 @@ namespace LongoMatch.Services
 
 			/* Start playlists manager */
 			plManager = new PlaylistManager (Config.GUIToolkit, videoRenderer);
+			
+			/* Presentations manage */
+			presentationsManager = new PresentationsManager ();
 		}
 
 		public static void CheckDirs ()
