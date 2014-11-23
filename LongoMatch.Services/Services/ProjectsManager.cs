@@ -23,6 +23,7 @@ using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.Core.Store;
 using Mono.Unix;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Services
 {
@@ -46,7 +47,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.OpenProjectEvent += OpenProject;
 			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
 			Config.EventsBroker.OpenNewProjectEvent += OpenNewProject;
-			Config.EventsBroker.CloseOpenedProjectEvent += PromptCloseProject;
+			Config.EventsBroker.CloseOpenedProjectEvent += HandleCloseOpenedProjectEvent;
 			Config.EventsBroker.SaveProjectEvent += SaveProject;
 			Config.EventsBroker.CaptureError += HandleCaptureError;
 			Config.EventsBroker.CaptureFinished += HandleCaptureFinished;
@@ -338,9 +339,9 @@ namespace LongoMatch.Services
 
 		void OpenProject ()
 		{
-			if (!PromptCloseProject ()) {
+			if (!Config.EventsBroker.EmitCloseOpenedProject ()) {
 				return;
-			}
+			};
 			guiToolkit.SelectProject (Config.DatabaseManager.ActiveDB.GetAllProjects ());
 		}
 
@@ -364,6 +365,7 @@ namespace LongoMatch.Services
 				return;
 			}
 			project.UpdateEventTypesAndTimers ();
+			project.UpdateFileset ();
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
 		}
 
@@ -396,6 +398,13 @@ namespace LongoMatch.Services
 			guiToolkit.ErrorMessage (Catalog.GetString ("The following error happened and" +
 				" the current capture will be closed:") + "\n" + message);
 			HandleCaptureFinished (false);
+		}
+
+		void HandleCloseOpenedProjectEvent (RetEventArgs args)
+		{
+			if (!PromptCloseProject ()) {
+				args.ReturnValue = false;
+			}
 		}
 
 	}

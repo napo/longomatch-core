@@ -46,7 +46,7 @@ namespace LongoMatch.Core.Store
 	/// </summary>
 	///
 	[Serializable]
-	public class Project : IComparable, IIDObject
+	public class Project : IComparable, IProject
 	{
 		ProjectDescription description;
 		SubstitutionEventType subsType;
@@ -141,6 +141,13 @@ namespace LongoMatch.Core.Store
 		}
 		
 		[JsonIgnore]
+		public List<TeamTemplate> Teams {
+			get {
+				return new List<TeamTemplate> {LocalTeamTemplate, VisitorTeamTemplate};
+			}
+		}
+		
+		[JsonIgnore]
 		public List<Score> Scores {
 			get {
 				var scores = Dashboard.List.OfType<ScoreButton> ().Select (b => b.Score);
@@ -171,7 +178,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		[JsonIgnore]
-		public IEnumerable<IGrouping<EventType, TimelineEvent>> PlaysGroupedByEventType {
+		public IEnumerable<IGrouping<EventType, TimelineEvent>> EventsGroupedByType {
 			get {
 				return Timeline.GroupBy(play => play.EventType);
 			}
@@ -248,6 +255,7 @@ namespace LongoMatch.Core.Store
 			evt.EventType = type;
 			evt.Notes = "";
 			evt.Miniature = miniature;
+			evt.FileSet = Description.FileSet;
 
 			if (addToTimeline) {
 				Timeline.Add (evt);
@@ -260,6 +268,7 @@ namespace LongoMatch.Core.Store
 		
 		public void AddEvent (TimelineEvent play)
 		{
+			play.FileSet = Description.FileSet;
 			Timeline.Add (play);
 			if (play is ScoreEvent) {
 				UpdateScore ();
@@ -310,6 +319,14 @@ namespace LongoMatch.Core.Store
 			EventTypes.AddRange (types.Except (EventTypes));
 			if (!EventTypes.Contains (SubstitutionsEventType)) {
 				EventTypes.Add (SubstitutionsEventType);
+			}
+			
+		}
+
+		public void UpdateFileset ()
+		{
+			foreach (TimelineEvent ev in Timeline) {
+				ev.FileSet = Description.FileSet;
 			}
 		}
 

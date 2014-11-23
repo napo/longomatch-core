@@ -68,14 +68,18 @@ namespace LongoMatch.Core.Handlers
 	                                                 IAnalysisWindow analysisWindow);
 	public delegate void OpenProjectIDHandler (Guid project_id);
 	public delegate void OpenProjectHandler ();
-	public delegate bool CloseOpenendProjectHandler ();
-	public delegate void NewPresentationHandler ();
+	public delegate void CloseOpenendProjectHandler (RetEventArgs args);
 	public delegate void NewProjectHandler (Project project);
 	public delegate void OpenNewProjectHandler (Project project,ProjectType projectType,CaptureSettings captureSettings);
 	public delegate void ImportProjectHandler ();
 	public delegate void ExportProjectHandler (Project project);
 	public delegate void QuitApplicationHandler ();
 	public delegate void CreateThumbnailsHandler (Project project);
+	
+	/* Presentations */
+	public delegate void NewPresentationHandler ();
+	public delegate void OpenPresentationHandler (Presentation presentation);
+
 	/* GUI */
 	public delegate void ManageJobsHandler ();
 	public delegate void ManageTeamsHandler ();
@@ -86,7 +90,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void MigrateDBHandler ();
 	/*Playlist Events*/
 	/* Create a new playlist */
-	public delegate Playlist NewPlaylistHandler (Project project);
+	public delegate Playlist NewPlaylistHandler (IProject project);
 	/* Add a new rendering job */
 	public delegate void RenderPlaylistHandler (Playlist playlist);
 	/* A play list element is selected */

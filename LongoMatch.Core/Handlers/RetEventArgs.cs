@@ -16,35 +16,19 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Interfaces.GUI;
-using LongoMatch.Core.Store;
 
-namespace LongoMatch.Gui.Component
+namespace LongoMatch.Core.Handlers
 {
-	[System.ComponentModel.ToolboxItem(true)]
-	public partial class PresentationComponent : Gtk.Bin, IPresentationWindow
+	public class RetEventArgs: EventArgs
 	{
-		public PresentationComponent ()
+		public RetEventArgs (bool ret)
 		{
-			this.Build ();
+			ReturnValue = ret;
 		}
 		
-		public IPlayerBin Player{
-			get {
-				return playerbin1;
-			}
-		}
-
-		public void Open (Presentation presentation) {
-			playslisttreewidget1.Project = presentation;
-			playlistwidget1.Project = presentation;
-		}
-		
-		public void Close () {
-		
-		}
-
-		public void DetachPlayer () {
+		public bool ReturnValue {
+			get;
+			set;
 		}
 	}
 }

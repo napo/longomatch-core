@@ -47,6 +47,7 @@ namespace LongoMatch.Gui.Panel
 			this.Build ();
 			panelheader1.ApplyVisible = false;
 			panelheader1.BackClicked += HandleClicked;
+			panelheader1.ApplyClicked += HandleApplyClicked;
 			panelheader1.Title = "PRESENTATION PROJECT";
 			projects = new Dictionary<Guid, Project> ();
 			eventTypes = new Dictionary<Guid, EventType> ();
@@ -100,6 +101,11 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
+		void HandleApplyClicked (object sender, EventArgs e)
+		{
+			Presentation presentation = new Presentation ();
+			Config.EventsBroker.EmitOpenPresentation (presentation);
+		}
 
 		void HandleProjectsSelected (List<ProjectDescription> pds)
 		{

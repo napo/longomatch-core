@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class PlayListTreeView : Gtk.TreeView
 	{
-		Project project;
+		IProject project;
 		TreeIter selectedIter;
 		Playlist dragSourcePlaylist;
 		IPlaylistElement dragSourceElement;
@@ -51,7 +51,7 @@ namespace LongoMatch.Gui.Component
 			AppendColumn (custColumn);
 		}
 
-		public Project Project {
+		public IProject Project {
 			set {
 				project = value;
 				Reload ();

@@ -232,7 +232,7 @@ namespace LongoMatch.Services
 				Directory.CreateDirectory (Path.GetDirectoryName (outputFile));
 				settings = EncodingSettings.DefaultRenderingSettings (outputFile);
 				playlist = new Playlist ();
-				element = new PlaylistPlayElement (play, project.Description.FileSet);
+				element = new PlaylistPlayElement (play);
 				playlist.Elements.Add (element);
 				job = new EditionJob (playlist, settings);
 				renderer.AddJob (job);

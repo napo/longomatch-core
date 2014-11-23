@@ -16,12 +16,11 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
-using Gtk;
 using Gdk;
-using Mono.Unix;
-
+using Gtk;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces;
+using Mono.Unix;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 
 namespace LongoMatch.Gui.Component
@@ -30,10 +29,11 @@ namespace LongoMatch.Gui.Component
 	public abstract class FilterTreeViewBase: TreeView
 	{
 		protected Menu playersMenu;
-		protected Project project;
+		protected IProject project;
 		protected string firstColumnName = "";
 		protected TreeStore store;
 		protected EventsFilter filter;
+		protected int ACTIVE_COL = 0;
 		
 		public FilterTreeViewBase ()
 		{
@@ -41,7 +41,7 @@ namespace LongoMatch.Gui.Component
 			CreateMenu();
 		}
 		
-		public virtual void SetFilter (EventsFilter filter, Project project) {
+		public virtual void SetFilter (EventsFilter filter, IProject project) {
 			this.project  = project;
 			this.filter = filter;
 			FillTree();
@@ -69,7 +69,7 @@ namespace LongoMatch.Gui.Component
 			filterColumn.Title = Catalog.GetString("Visible");
 			filterCell.Toggled += HandleFilterCellToggled;
 			filterColumn.PackStart (filterCell, true);
-			filterColumn.AddAttribute(filterCell, "active", 1);
+			filterColumn.AddAttribute(filterCell, "active", ACTIVE_COL);
 
 			AppendColumn (nameColumn);
 			AppendColumn (filterColumn);
@@ -118,7 +118,7 @@ namespace LongoMatch.Gui.Component
 			
 			if (store.GetIterFromString(out iter, args.Path))
 			{
-				bool active = !((bool) store.GetValue(iter, 1));
+				bool active = !((bool) store.GetValue(iter, ACTIVE_COL));
 				UpdateSelection(iter, active);
 			}
 		}

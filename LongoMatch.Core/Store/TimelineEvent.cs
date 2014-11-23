@@ -147,6 +147,11 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		public MediaFileSet FileSet {
+			get;
+			set;
+		}
+
 		[JsonIgnore]
 		public virtual string Description {
 			get {
@@ -163,6 +168,7 @@ namespace LongoMatch.Core.Store
 				return EventType.Color;
 			}
 		}
+
 		#endregion
 		#region Public methods
 		public string TagsDescription ()

@@ -24,6 +24,8 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Playlists;
 using LongoMatch.Gui.Dialog;
+using System.Linq;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Gui.Component
 {
@@ -32,7 +34,7 @@ namespace LongoMatch.Gui.Component
 	public partial class PlaysListTreeWidget : Gtk.Bin
 	{
 
-		Project project;
+		IProject project;
 		Dictionary<EventType, TreeIter> itersDic;
 
 		public PlaysListTreeWidget ()
@@ -105,11 +107,11 @@ namespace LongoMatch.Gui.Component
 			treeview.ScrollToPoint (cellRect.X, Math.Max (cellRect.Y, 0));
 		}
 
-		public Project Project {
+		public IProject Project {
 			set {
 				project = value;
 				if (project != null) {
-					treeview.Model = GetModel (project);
+					treeview.Model = GetModel (project.EventsGroupedByType, project.EventTypes);
 					treeview.Colors = true;
 					treeview.Project = value;
 				} else {
@@ -121,19 +123,20 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		private TreeStore GetModel (Project project)
+		private TreeStore GetModel (IEnumerable<IGrouping<EventType, TimelineEvent>> eventsByType,
+		                            List<EventType> eventTypes)
 		{
 			Gtk.TreeIter iter;
 			Gtk.TreeStore dataFileListStore = new Gtk.TreeStore (typeof(object));
 
 			itersDic.Clear ();
 
-			foreach (EventType evType in project.EventTypes) {
+			foreach (EventType evType in eventTypes) {
 				iter = dataFileListStore.AppendValues (evType);
 				itersDic.Add (evType, iter);
 			}
 			
-			var queryPlaysByCategory = project.PlaysGroupedByEventType;
+			var queryPlaysByCategory = eventsByType;
 			foreach (var playsGroup in queryPlaysByCategory) {
 				EventType cat = playsGroup.Key;
 				if (!itersDic.ContainsKey (cat))
@@ -147,7 +150,7 @@ namespace LongoMatch.Gui.Component
 
 		protected virtual void OnEditProperties (EventType eventType)
 		{
-			EditCategoryDialog dialog = new EditCategoryDialog (project, eventType);
+			EditCategoryDialog dialog = new EditCategoryDialog (project as Project, eventType);
 			dialog.Run ();
 			dialog.Destroy ();
 		}
@@ -165,8 +168,7 @@ namespace LongoMatch.Gui.Component
 				PlaylistPlayElement element;
 				
 				treeview.Model.GetIter (out iter, path);
-				element = new PlaylistPlayElement (treeview.Model.GetValue (iter, 0) as TimelineEvent,
-				                                   project.Description.FileSet);
+				element = new PlaylistPlayElement (treeview.Model.GetValue (iter, 0) as TimelineEvent);
 				playlist.Elements.Add (element);
 			}
 			

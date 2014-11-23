@@ -21,6 +21,7 @@ using System.Linq;
 using Gdk;
 using Gtk;
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using LongoMatch.Drawing;
@@ -83,11 +84,11 @@ namespace LongoMatch.Gui.Component
 				modelFilter.Refilter ();
 		}
 
-		public Project Project {
+		public IProject Project {
 			set;
 			protected get;
 		}
-
+		
 		new public TreeStore Model {
 			set {
 				childModel = value;
@@ -152,7 +153,8 @@ namespace LongoMatch.Gui.Component
 
 		void HandleEditPlayEvent (object sender, EventArgs e)
 		{
-			Config.GUIToolkit.EditPlay (SelectedPlay, Project, true, true, true, true);
+			/* This event is only triggered with Project and not with Presentation */
+			Config.GUIToolkit.EditPlay (SelectedPlay, Project as Project, true, true, true, true);
 			Config.EventsBroker.EmitTeamTagsChanged ();
 		}
 

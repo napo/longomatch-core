@@ -272,9 +272,11 @@ namespace LongoMatch.Gui.Component
 					if (selectedTimeNode != null) {
 						ShowMenu ();
 					} else {
-						EventType eventType = GetValueFromPath (paths [0]) as EventType;
-						SetupSortMenu (eventType.SortMethod);
-						categoriesMenu.Popup ();
+						if (Project is Project) {
+							EventType eventType = GetValueFromPath (paths [0]) as EventType;
+							SetupSortMenu (eventType.SortMethod);
+							categoriesMenu.Popup ();
+						}
 					}
 				} else if (paths.Length > 1) {
 					ShowMenu ();

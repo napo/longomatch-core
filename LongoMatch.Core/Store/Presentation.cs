@@ -19,39 +19,62 @@ using System;
 using LongoMatch.Core.Interfaces;
 using System.Collections.Generic;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Store.Playlists;
+using Mono.Unix;
+using System.Linq;
+using Newtonsoft.Json;
 
 namespace LongoMatch.Core.Store
 {
-	public class Presentation: IIDObject
+	public class Presentation: IProject
 	{
 		public Presentation ()
 		{
+			ID = new Guid ();
+			Description = Catalog.GetString ("Presentation");
+			Timeline = new List<TimelineEvent> ();
+			EventTypes = new List<EventType> ();
+			Teams = new List<TeamTemplate> ();
+			Playlists = new List<Playlist> ();
 		}
 
 		public Guid ID {
 			get;
 			set;
 		}
-		
+
 		public string Description {
 			get;
 			set;
 		}
 
-		public List<TimelineEvent> Events {
+		public List<TimelineEvent> Timeline {
 			get;
 			set;
 		}
-		
+
 		public List<EventType> EventTypes {
 			get;
 			set;
 		}
-		
+
 		public List<TeamTemplate> Teams {
 			get;
 			set;
 		}
+
+		public List<Playlist> Playlists {
+			get;
+			set;
+		}
+
+		[JsonIgnore]
+		public IEnumerable<IGrouping<EventType, TimelineEvent>> EventsGroupedByType {
+			get {
+				return Timeline.GroupBy(e => e.EventType);
+			}
+		}
+
 	}
 }
 

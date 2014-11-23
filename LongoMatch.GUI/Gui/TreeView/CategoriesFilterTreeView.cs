@@ -30,13 +30,15 @@ namespace LongoMatch.Gui.Component
 	public class CategoriesFilterTreeView: FilterTreeViewBase
 	{
 
+		const int OBJECT_COL = 1;
+
 		public CategoriesFilterTreeView (): base()
 		{
 			firstColumnName = Catalog.GetString ("Category");
 			HeadersVisible = false;
 		}
 
-		public override void SetFilter (EventsFilter filter, Project project)
+		public override void SetFilter (EventsFilter filter, IProject project)
 		{
 			this.project = project;
 			base.SetFilter (filter, project);
@@ -45,26 +47,29 @@ namespace LongoMatch.Gui.Component
 		protected override void FillTree ()
 		{
 			TreeIter catIter;
-			store = new TreeStore (typeof(object), typeof(bool));
+			store = new TreeStore (typeof (bool), typeof(object));
 			
-			/* Periods */
-			catIter = store.AppendValues (new StringObject (Catalog.GetString ("Periods")), false);
-			foreach (Period p in project.Periods) {
-				store.AppendValues (catIter, p, false);
+			if (project is Project) {
+				Project p = project as Project;
+				/* Periods */
+				catIter = store.AppendValues (false, new StringObject (Catalog.GetString ("Periods")));
+				foreach (Period period in p.Periods) {
+					store.AppendValues (catIter, false, period);
+				}
+			
+				catIter = store.AppendValues (false, new StringObject (Catalog.GetString ("Timers")));
+				foreach (Timer t in p.Timers) {
+					store.AppendValues (catIter, false, t);
+				}
 			}
-			
-			catIter = store.AppendValues (new StringObject (Catalog.GetString ("Timers")), false);
-			foreach (Timer t in project.Timers) {
-				store.AppendValues (catIter, t, false);
-			}
-			
+
 			foreach (EventType evType in project.EventTypes) {
-				catIter = store.AppendValues (evType, true);
+				catIter = store.AppendValues (true, evType);
 				filter.FilterEventType (evType, true);
 
 				if (evType is AnalysisEventType) {
 					foreach (Tag tag in (evType as AnalysisEventType).Tags) {
-						store.AppendValues (catIter, tag, false);
+						store.AppendValues (catIter, false, tag);
 					}
 				}
 			}
@@ -75,11 +80,11 @@ namespace LongoMatch.Gui.Component
 		{
 			TreeIter child, parent;
 			
-			object o = store.GetValue (iter, 0);
+			object o = store.GetValue (iter, OBJECT_COL);
 			store.IterParent (out parent, iter);
 			
 			if (o is Tag) {
-				EventType evType = store.GetValue (parent, 0) as EventType;
+				EventType evType = store.GetValue (parent, OBJECT_COL) as EventType;
 				filter.FilterEventTag (evType, o as Tag, active);
 			} else if (o is EventType) {
 				filter.FilterEventType (o as EventType, active);
@@ -88,7 +93,7 @@ namespace LongoMatch.Gui.Component
 			} else if (o is Timer) {
 				filter.FilterTimer (o as Timer, active);
 			}
-			store.SetValue (iter, 1, active);
+			store.SetValue (iter, ACTIVE_COL, active);
 			
 			/* Check its parents */
 			if (active && checkParents && store.IterIsValid (parent)) {
@@ -115,7 +120,7 @@ namespace LongoMatch.Gui.Component
 
 		protected override void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			object obj = store.GetValue (iter, 0);
+			object obj = store.GetValue (iter, OBJECT_COL);
 			string text = "";
 			
 			if (obj is EventType) {

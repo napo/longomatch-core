@@ -34,7 +34,7 @@ namespace LongoMatch.Services
 		IGUIToolkit guiToolkit;
 		IPlayerBin player;
 		IRenderingJobsManager videoRenderer;
-		Project openedProject;
+		IProject openedProject;
 		ProjectType openedProjectType;
 		IPlaylistElement loadedElement;
 		Playlist loadedPlaylist;
@@ -68,8 +68,7 @@ namespace LongoMatch.Services
 		void LoadPlay (TimelineEvent play, Time seekTime, bool playing)
 		{
 			play.Selected = true;
-			player.LoadPlay (openedProject.Description.FileSet, play,
-			                 seekTime, playing);
+			player.LoadPlay (play.FileSet, play, seekTime, playing);
 			loadedPlay = play;
 			if (playing) {
 				player.Play ();
@@ -196,7 +195,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.EmitPlaylistsChanged (this);
 		}
 
-		Playlist HandleNewPlaylist (Project project)
+		Playlist HandleNewPlaylist (IProject project)
 		{
 			string name;
 			Playlist playlist = null;
@@ -243,9 +242,7 @@ namespace LongoMatch.Services
 			if (openedProject == null)
 				return;
 
-			if (openedProjectType != ProjectType.CaptureProject &&
-				openedProjectType != ProjectType.URICaptureProject &&
-				openedProjectType != ProjectType.FakeCaptureProject) {
+			if (openedProject is Presentation || openedProjectType == ProjectType.FileProject) {
 				KeyAction action;
 				if (player == null)
 					return;

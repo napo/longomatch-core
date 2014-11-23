@@ -16,6 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces.GUI;
+using Mono.Unix;
+using LongoMatch.Core.Handlers;
 
 namespace LongoMatch.Services
 {
@@ -26,34 +30,37 @@ namespace LongoMatch.Services
 		
 		public PresentationsManager ()
 		{
-			Config.EventsBroker.NewPresentation += HandleNewPresentation;
-			Config.EventsBroker.OpenPresentation += HandleOpenPresentation;
-			Config.EventsBroker.CloseOpenedProjectEvent += HandleCloseOpeneProject ;
+			Config.EventsBroker.NewPresentationEvent += HandleNewPresentation;
+			Config.EventsBroker.OpenPresentationEvent += HandleOpenPresentation;
+			Config.EventsBroker.CloseOpenedProjectEvent += HandleCloseOpenedProject ;
 		}
 
 		void HandleNewPresentation ()
 		{
-			Config.EventsBroker.EmitCloseOpenedProject ();
-			Config.GUIToolkit.CreateNewPresentation ();
+			if (Config.EventsBroker.EmitCloseOpenedProject ()) {
+				Config.GUIToolkit.CreateNewPresentation ();
+			}
 		}
 
 		void HandleOpenPresentation (Presentation presentation)
 		{
-			Config.EventsBroker.EmitCloseOpenedProject ();
-			Config.GUIToolkit.OpenPresentation (presentation, out presentationWindow));
+			if (Config.EventsBroker.EmitCloseOpenedProject ()) {
+				Config.GUIToolkit.OpenPresentation (presentation, out presentationWindow);
+			}
 		}
 		
-		bool HandleCloseOpenedProject ()
+		void HandleCloseOpenedProject (RetEventArgs args)
 		{
 			if (openedPresentation != null) {
 				bool ret;
-				ret = guiToolkit.QuestionMessage (
+				ret = Config.GUIToolkit.QuestionMessage (
 					Catalog.GetString ("Do you want to close the current project?"), null);
 				if (ret) {
-					CloseOpenedProject (true);
-					return true;
+					openedPresentation = null;
+					presentationWindow.Close ();
+				} else {
+					args.ReturnValue = false;
 				}
-				return false;
 			}
 		}
 		

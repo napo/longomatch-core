@@ -27,13 +27,12 @@ namespace LongoMatch.Core.Store.Playlists
 	[Serializable]
 	public class PlaylistPlayElement: IPlaylistElement
 	{
-		public PlaylistPlayElement (TimelineEvent play, MediaFileSet fileset=null)
+		public PlaylistPlayElement (TimelineEvent play)
 		{
 			Play = play;
 			Title = play.Name;
 			Rate = play.Rate;
 			Angles = new HashSet<MediaFileAngle> (play.ActiveViews);
-			FileSet = fileset;
 		}
 
 		public TimelineEvent Play {
@@ -64,8 +63,9 @@ namespace LongoMatch.Core.Store.Playlists
 		}
 
 		public MediaFileSet FileSet {
-			get;
-			set;
+			get {
+				return Play.FileSet;
+			}
 		}
 
 		public HashSet<MediaFileAngle> Angles {

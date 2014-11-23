@@ -33,7 +33,7 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public partial class PlayListWidget : Gtk.Bin
 	{
-		Project project;
+		IProject project;
 
 		public PlayListWidget ()
 		{
@@ -85,7 +85,7 @@ namespace LongoMatch.Gui.Component
 			Config.EventsBroker.EmitPlaylistElementSelected (playlist, element);
 		}
 
-		public Project Project {
+		public IProject Project {
 			set {
 				project = value;
 				playlisttreeview1.Project = value;

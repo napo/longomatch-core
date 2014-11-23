@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Menus
 		List<TimelineEvent> plays;
 		EventType eventType;
 		Time time;
-		Project project;
+		IProject project;
 	
 		
 		public PlaysMenu ()
@@ -44,20 +44,20 @@ namespace LongoMatch.Gui.Menus
 			CreateMenu ();
 		}
 		
-		public void ShowListMenu (Project project, List<TimelineEvent> plays) {
+		public void ShowListMenu (IProject project, List<TimelineEvent> plays) {
 			ShowMenu (project, plays, null, null, project.EventTypes, true);
 		}
 
-		public void ShowMenu (Project project, List<TimelineEvent> plays) {
+		public void ShowMenu (IProject project, List<TimelineEvent> plays) {
 			ShowMenu (project, plays, null, null, null, false);
 		}
 		
-		public void ShowTimelineMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time)
+		public void ShowTimelineMenu (IProject project, List<TimelineEvent> plays, EventType eventType, Time time)
 		{
 			ShowMenu (project, plays, eventType, time, null, false);
 		}
 		
-		private void ShowMenu (Project project, List<TimelineEvent> plays, EventType eventType, Time time,
+		private void ShowMenu (IProject project, List<TimelineEvent> plays, EventType eventType, Time time,
 		                     List<EventType> eventTypes, bool editableName)
 		{
 			bool isLineup = false, isSubstitution = false;
@@ -160,7 +160,7 @@ namespace LongoMatch.Gui.Menus
 					item.Activated += (sender, e) => {
 						IEnumerable<IPlaylistElement> elements;
 						
-						elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.FileSet));
+						elements = plays.Select (p => new PlaylistPlayElement (p));
 						Config.EventsBroker.EmitAddPlaylistElement (pl, elements.ToList());
 					}; 
 				}
@@ -169,7 +169,7 @@ namespace LongoMatch.Gui.Menus
 				plMenu.Append (item);
 				item.Activated += (sender, e) => {
 					IEnumerable<IPlaylistElement> elements;
-					elements = plays.Select (p => new PlaylistPlayElement (p, project.Description.FileSet));
+					elements = plays.Select (p => new PlaylistPlayElement (p));
 					Config.EventsBroker.EmitAddPlaylistElement (null, elements.ToList());
 				}; 
 				
@@ -233,7 +233,7 @@ namespace LongoMatch.Gui.Menus
 		{
 			Playlist pl = new Playlist();
 			foreach (TimelineEvent p in plays) {
-				pl.Elements.Add (new PlaylistPlayElement (p, project.Description.FileSet));
+				pl.Elements.Add (new PlaylistPlayElement (p));
 			}
 			Config.EventsBroker.EmitRenderPlaylist (pl);
 		}

@@ -65,7 +65,6 @@ namespace LongoMatch.Core.Common
 		/* IMainController */
 		public event NewProjectHandler NewProjectEvent;
 		public event OpenNewProjectHandler OpenNewProjectEvent;
-		public event NewPresentationHandler NewPresentation;
 		public event OpenProjectHandler OpenProjectEvent;
 		public event OpenProjectIDHandler OpenProjectIDEvent;
 		public event ImportProjectHandler ImportProjectEvent;
@@ -79,6 +78,9 @@ namespace LongoMatch.Core.Common
 		public event EditPreferences EditPreferencesEvent;
 		public event ConvertVideoFilesHandler ConvertVideoFilesEvent;
 		public event MigrateDBHandler MigrateDB;
+		
+		public event NewPresentationHandler NewPresentationEvent;
+		public event OpenPresentationHandler OpenPresentationEvent;
 		
 		public event OpenedProjectChangedHandler OpenedProjectChanged;
 		
@@ -135,7 +137,7 @@ namespace LongoMatch.Core.Common
 				RenderPlaylist(playlist);
 		}
 		
-		public void EmitNewPlaylist (Project project)
+		public void EmitNewPlaylist (IProject project)
 		{
 			if (NewPlaylistEvent != null) {
 				NewPlaylistEvent (project);
@@ -183,9 +185,11 @@ namespace LongoMatch.Core.Common
 		}
 		
 		public bool EmitCloseOpenedProject () {
+			RetEventArgs args = new RetEventArgs (true);
+			
 			if (CloseOpenedProjectEvent != null)
-				return CloseOpenedProjectEvent ();
-			return false;
+				CloseOpenedProjectEvent (args);
+			return args.ReturnValue;
 		}
 		
 		public void EmitShowProjectStats (Project project) {
@@ -211,8 +215,13 @@ namespace LongoMatch.Core.Common
 		}
 		
 		public void EmitNewPresentation () {
-			if (NewPresentation != null)
-				NewPresentation ();
+			if (NewPresentationEvent != null)
+				NewPresentationEvent ();
+		}
+		
+		public void EmitOpenPresentation (Presentation presentation) {
+			if (OpenPresentationEvent != null)
+				OpenPresentationEvent (presentation);
 		}
 
 		public void EmitNewProject (Project project) {

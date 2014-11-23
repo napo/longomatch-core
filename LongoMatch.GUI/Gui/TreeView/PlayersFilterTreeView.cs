@@ -23,6 +23,7 @@ using Mono.Unix;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Gui.Component
 {
@@ -31,40 +32,22 @@ namespace LongoMatch.Gui.Component
 	[System.ComponentModel.ToolboxItem(true)]
 	public class PlayersFilterTreeView: FilterTreeViewBase
 	{
-		TeamTemplate local, visitor;
-		Player localTeam, visitorTeam;
-		TreeIter localIter, visitorIter;
+		const int PLAYER_COL = 1;
+		const int TEAM_COL = 2;
 		
-		public PlayersFilterTreeView (): base()
+		public PlayersFilterTreeView ()
 		{
-			visitorTeam = new Player();
-			localTeam = new Player();
 			HeadersVisible = false;
 		}
 		
-		public override void SetFilter (EventsFilter filter, Project project) {
-			this.local = project.LocalTeamTemplate;
-			this.visitor = project.VisitorTeamTemplate;
-			localTeam.Name = local.TeamName;
-			visitorTeam.Name = visitor.TeamName;
-			base.SetFilter(filter, project);
-		}
-		
 		protected override void FillTree () {
-			TreeStore store = new TreeStore (typeof (Player), typeof (bool));
-			localIter = store.AppendValues (localTeam);
-			visitorIter = store.AppendValues (visitorTeam);
-			store.SetValue(localIter, 1, false);
-			store.SetValue(visitorIter, 1, false);
-			
-			foreach (Player player in local.PlayingPlayersList) {
-				filter.FilterPlayer (player, true);
-				store.AppendValues (localIter, player, true);
-			}
-			
-			foreach (Player player in visitor.PlayingPlayersList) {
-				filter.FilterPlayer (player, true);
-				store.AppendValues (visitorIter, player, true);
+			TreeStore store = new TreeStore (typeof (bool), typeof (Player), typeof (TeamTemplate));
+			foreach (TeamTemplate team in project.Teams) {
+				TreeIter iter = store.AppendValues (false, null, team);
+				foreach (Player player in team.List) {
+					filter.FilterPlayer (player, true);
+					store.AppendValues (iter, true, player, team);
+				}
 			}
 			Model = store;
 		}
@@ -72,50 +55,54 @@ namespace LongoMatch.Gui.Component
 		
 		protected override void UpdateSelection(TreeIter iter, bool active) {
 			TreeStore store = Model as TreeStore;
-			Player player = (Player) store.GetValue(iter, 0);
+			Player player = (Player) store.GetValue(iter, PLAYER_COL);
 			
 			/* Check all children */
-			if (player == localTeam || player == visitorTeam)
+			if (player == null)
 			{
 				TreeIter child;
 				store.IterChildren(out child, iter);
 				
 				while (store.IterIsValid(child)) {
-					Player childPlayer = (Player) store.GetValue(child, 0);
+					Player childPlayer = (Player) store.GetValue(child, PLAYER_COL);
 					filter.FilterPlayer (childPlayer, active);
-					store.SetValue(child, 1, active);
+					store.SetValue(child, ACTIVE_COL, active);
 					store.IterNext(ref child);
 				}
 			} else {
 				filter.FilterPlayer (player, active);
 				if (!active) {
-					TreeIter team;
-					/* Uncheck the team check button */
-					if (local.List.Contains(player))
-						team = localIter;
-					else
-						team = visitorIter;
-					store.SetValue(team, 1, false);
+					TreeIter teamIter;
+					
+					store.IterParent (out teamIter, iter);
+					store.SetValue(teamIter, ACTIVE_COL, false);
 				}
 			}
 			
-			store.SetValue(iter, 1, active);
+			store.SetValue(iter, ACTIVE_COL, active);
 			filter.Update();
 		}
 		
 		protected override void RenderColumn (TreeViewColumn column, CellRenderer cell, TreeModel model, TreeIter iter)
 		{
-			Player player = (Player) model.GetValue (iter, 0);
-			string name = player.ToString();
-			if (player == localTeam || player == visitorTeam) {
-				name = player.Name;
+			Player player = model.GetValue (iter, PLAYER_COL) as Player;
+			if (player != null) {
+				(cell as CellRendererText).Text = player.ToString ();
+			} else {
+				TeamTemplate team = model.GetValue (iter, TEAM_COL) as TeamTemplate;
+				(cell as CellRendererText).Text = team.TeamName;
 			}
-			(cell as CellRendererText).Text = name;
 		}
 		
-		protected override void Select(bool select_all) {
-			UpdateSelection(localIter, select_all);
-			UpdateSelection(visitorIter, select_all);
+		protected override void Select (bool select_all)
+		{
+			TreeIter first;
+			
+			store.GetIterFirst (out first);
+			while (store.IterIsValid (first)) {
+				UpdateSelection (first, select_all);
+				store.IterNext (ref first);
+			}
 		}
 		
 		protected override bool OnKeyPressEvent (Gdk.EventKey evnt)
