@@ -11467,7 +11467,7 @@ Installing these codecs will therefore be entirely at your risk.</property>
                     <child>
                       <widget class="Gtk.Label" id="label3">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Projects</property>
+                        <property name="LabelProp" translatable="yes">1. Projects</property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -11506,7 +11506,7 @@ Installing these codecs will therefore be entirely at your risk.</property>
                     <child>
                       <widget class="Gtk.Label" id="label1">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Teams</property>
+                        <property name="LabelProp" translatable="yes">2. Teams</property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -11528,7 +11528,7 @@ Installing these codecs will therefore be entirely at your risk.</property>
                       </widget>
                       <packing>
                         <property name="Position">1</property>
-                        <property name="AutoSize">True</property>
+                        <property name="AutoSize">False</property>
                       </packing>
                     </child>
                   </widget>
@@ -11544,7 +11544,7 @@ Installing these codecs will therefore be entirely at your risk.</property>
                     <child>
                       <widget class="Gtk.Label" id="label2">
                         <property name="MemberName" />
-                        <property name="LabelProp" translatable="yes">Event types</property>
+                        <property name="LabelProp" translatable="yes">3. Event types</property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>

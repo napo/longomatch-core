@@ -68,13 +68,56 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
+		public List<Guid> ProjectsID {
+			get;
+			set;
+		}
+
 		[JsonIgnore]
 		public IEnumerable<IGrouping<EventType, TimelineEvent>> EventsGroupedByType {
 			get {
-				return Timeline.GroupBy(e => e.EventType);
+				return Timeline.GroupBy (e => e.EventType);
 			}
 		}
 
+		public static Presentation CreateFromData (List<Project> projects, List<TeamTemplate> teams,
+		                                           List<EventType> eventTypes)
+		{
+			Dictionary <Guid, EventType> eventTypesDict = eventTypes.ToDictionary (t => t.ID, t => t);
+			Dictionary <Guid, Player> playersDict = new Dictionary<Guid, Player> ();
+			List<TimelineEvent> timeline = new List<TimelineEvent> ();
+			Presentation presentation = new Presentation ();
+
+			foreach (TeamTemplate team in teams) {
+				foreach (Player player in team.List) {
+					playersDict [player.ID] = player;
+				}
+			}
+			
+			foreach (Project project in projects) {
+				foreach (TimelineEvent evt in project.Timeline) {
+					List<Player> players = new List<Player> ();
+					if (!eventTypesDict.ContainsKey (evt.ID)) {
+						continue;
+					}
+					/* FIXME: filter team */
+					evt.EventType = eventTypesDict [evt.ID];
+					foreach (Player player in evt.Players) {
+						if (playersDict.ContainsKey (player.ID)) {
+							players.Add (playersDict [player.ID]);
+						}
+					}
+					evt.Players = players;
+					timeline.Add (evt);
+				}
+			}
+			
+			presentation.Timeline = timeline;
+			presentation.EventTypes = eventTypes;
+			presentation.Teams = teams;
+			presentation.ProjectsID = projects.Select (p => p.ID).ToList ();
+			return presentation;
+		}
 	}
 }
 

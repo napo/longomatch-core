@@ -32,10 +32,10 @@ namespace LongoMatch.Gui.Panel
 	public partial class NewPresentationPanel : Gtk.Bin, IPanel
 	{
 		public event BackEventHandle BackEvent;
+
 		Dictionary <Guid, Project> projects;
 		Dictionary <Guid, TeamTemplate> teams;
 		Dictionary <Guid, EventType> eventTypes;
-		Dictionary <Guid, int> projectsRefs;
 		Dictionary <Guid, int> teamsRefs;
 		Dictionary <Guid, int> eventTypesRefs;
 		ListStore teamsStore;
@@ -52,7 +52,6 @@ namespace LongoMatch.Gui.Panel
 			projects = new Dictionary<Guid, Project> ();
 			eventTypes = new Dictionary<Guid, EventType> ();
 			teams = new Dictionary<Guid, TeamTemplate> ();
-			projectsRefs = new Dictionary<Guid, int> ();
 			eventTypesRefs = new Dictionary<Guid, int> ();
 			teamsRefs = new Dictionary<Guid, int> ();
 			teamsStore = new ListStore (typeof(bool), typeof(string), typeof(TeamTemplate));
@@ -101,24 +100,33 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void HandleApplyClicked (object sender, EventArgs e)
-		{
-			Presentation presentation = new Presentation ();
-			Config.EventsBroker.EmitOpenPresentation (presentation);
+		List<TeamTemplate> SelectedTeams {
+			get {
+				List<TeamTemplate> teams = new List<TeamTemplate> ();
+				TreeIter iter;
+				
+				teamsStore.GetIterFirst (out iter);
+				while (teamsStore.IterIsValid (iter)) {
+					if ((bool)teamsStore.GetValue (iter, 1)) {
+						teams.Add (teamsStore.GetValue (iter, 2) as TeamTemplate);
+					}
+				}
+				return teams;
+			}
 		}
 
-		void HandleProjectsSelected (List<ProjectDescription> pds)
-		{
-			foreach (ProjectDescription pd in pds) {
-				if (!projects.ContainsKey (pd.ID)) {
-					AddProject (Config.DatabaseManager.ActiveDB.GetProject (pd.ID));
+		List<EventType> SelectedEvents {
+			get {
+				List<EventType> eventTypes = new List<EventType> ();
+				TreeIter iter;
+				
+				eventTypesStore.GetIterFirst (out iter);
+				while (eventTypesStore.IterIsValid (iter)) {
+					if ((bool)eventTypesStore.GetValue (iter, 1)) {
+						eventTypes.Add (eventTypesStore.GetValue (iter, 2) as EventType);
+					}
 				}
-			}
-
-			var ps = projects.Where (p => !pds.Select (pd => pd.ID).
-			                         Contains (p.Key)).Select (p => p.Value).ToList(); 
-			foreach (Project project in ps) {
-				RemoveProject (project);
+				return eventTypes;
 			}
 		}
 
@@ -154,7 +162,7 @@ namespace LongoMatch.Gui.Panel
 				teamsRefs.Add (template.ID, 1);
 				teamsStore.AppendValues (true, template.TeamName, template);
 			} else {
-				teamsRefs[template.ID] ++;
+				teamsRefs [template.ID] ++;
 			}
 		}
 
@@ -178,15 +186,18 @@ namespace LongoMatch.Gui.Panel
 				}
 			}
 		}
-		
+
 		void AddEventType (EventType evt)
 		{
+			if (evt.ID == Constants.SubsID) {
+				return;
+			} 
 			if (!eventTypes.ContainsKey (evt.ID)) {
 				eventTypes.Add (evt.ID, evt);
 				eventTypesRefs.Add (evt.ID, 1);
 				eventTypesStore.AppendValues (true, evt.Name, evt);
 			} else {
-				eventTypesRefs[evt.ID] ++;
+				eventTypesRefs [evt.ID] ++;
 			}
 		}
 
@@ -239,6 +250,29 @@ namespace LongoMatch.Gui.Panel
 				} else {
 					RemoveProject (project);
 				}
+			}
+		}
+
+		void HandleApplyClicked (object sender, EventArgs e)
+		{
+			Presentation presentation = Presentation.CreateFromData (projects.Values,
+			                                                         SelectedTeams,
+			                                                         SelectedEvents);
+			Config.EventsBroker.EmitOpenPresentation (presentation);
+		}
+
+		void HandleProjectsSelected (List<ProjectDescription> pds)
+		{
+			foreach (ProjectDescription pd in pds) {
+				if (!projects.ContainsKey (pd.ID)) {
+					AddProject (Config.DatabaseManager.ActiveDB.GetProject (pd.ID));
+				}
+			}
+
+			var ps = projects.Where (p => !pds.Select (pd => pd.ID).
+			                         Contains (p.Key)).Select (p => p.Value).ToList (); 
+			foreach (Project project in ps) {
+				RemoveProject (project);
 			}
 		}
 	}

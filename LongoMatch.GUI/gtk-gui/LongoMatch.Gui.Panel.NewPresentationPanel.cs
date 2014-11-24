@@ -56,7 +56,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child vbox1.Gtk.Box+BoxChild
 			this.label3 = new global::Gtk.Label ();
 			this.label3.Name = "label3";
-			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("Projects");
+			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("1. Projects");
 			this.vbox1.Add (this.label3);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox1 [this.label3]));
 			w2.Position = 0;
@@ -84,7 +84,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child vbox2.Gtk.Box+BoxChild
 			this.label1 = new global::Gtk.Label ();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("Teams");
+			this.label1.LabelProp = global::Mono.Unix.Catalog.GetString ("2. Teams");
 			this.vbox2.Add (this.label1);
 			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label1]));
 			w6.Position = 0;
@@ -111,7 +111,7 @@ namespace LongoMatch.Gui.Panel
 			// Container child vbox3.Gtk.Box+BoxChild
 			this.label2 = new global::Gtk.Label ();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("Event types");
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("3. Event types");
 			this.vbox3.Add (this.label2);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.label2]));
 			w10.Position = 0;
