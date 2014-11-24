@@ -105,13 +105,13 @@ namespace LongoMatch.Services
 			filter.Update ();
 		}
 		
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
+		void HandleOpenedProjectChanged (IProject project, ProjectType projectType,
+		                                 EventsFilter filter, IProjectWindow projectWindow)
 		{
 			openedProject = project;
 			openedProjectType = projectType;
 			if (project != null) {
-				player = analysisWindow.Player;
+				player = projectWindow.Player;
 				this.filter = filter;
 			}
 		}

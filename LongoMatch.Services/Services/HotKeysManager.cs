@@ -25,6 +25,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Services
 {
@@ -98,18 +99,18 @@ namespace LongoMatch.Services
 			ReloadHotkeys ();
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
+		void HandleOpenedProjectChanged (IProject project, ProjectType projectType,
+		                                 EventsFilter filter, IProjectWindow projectWindow)
 		{
-			this.analysisWindow = analysisWindow;
-			this.capturer = analysisWindow.Capturer;
-			openedProject = project;
-			this.projectType = projectType;
-			if (project == null) {
-				dashboard = null;
+			openedProject = project as Project;
+			analysisWindow = projectWindow as IAnalysisWindow;
+			if (openedProject != null) {
+				this.capturer = analysisWindow.Capturer;
+				dashboard = openedProject.Dashboard;
 			} else {
-				dashboard = project.Dashboard;
+				this.capturer = null;
 			}
+			this.projectType = projectType;
 			ReloadHotkeys ();
 		}
 

@@ -34,6 +34,7 @@ namespace LongoMatch.Core.Common
 		FakeCaptureProject,
 		FileProject,
 		EditProject,
+		PresentationProject,
 		None,
 	}
 	

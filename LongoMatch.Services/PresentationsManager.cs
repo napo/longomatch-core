@@ -20,6 +20,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Interfaces.GUI;
 using Mono.Unix;
 using LongoMatch.Core.Handlers;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Services
 {
@@ -33,6 +34,7 @@ namespace LongoMatch.Services
 			Config.EventsBroker.NewPresentationEvent += HandleNewPresentation;
 			Config.EventsBroker.OpenPresentationEvent += HandleOpenPresentation;
 			Config.EventsBroker.CloseOpenedProjectEvent += HandleCloseOpenedProject ;
+			Config.EventsBroker.Detach += HandleDetach;
 		}
 
 		void HandleNewPresentation ()
@@ -45,7 +47,10 @@ namespace LongoMatch.Services
 		void HandleOpenPresentation (Presentation presentation)
 		{
 			if (Config.EventsBroker.EmitCloseOpenedProject ()) {
-				Config.GUIToolkit.OpenPresentation (presentation, out presentationWindow);
+				EventsFilter eventsFilter = new EventsFilter (presentation);
+				Config.GUIToolkit.OpenPresentation (presentation, eventsFilter, out presentationWindow);
+				Config.EventsBroker.EmitOpenedProjectChanged (presentation, ProjectType.PresentationProject,
+				                                              eventsFilter, presentationWindow);
 			}
 		}
 		
@@ -58,11 +63,20 @@ namespace LongoMatch.Services
 				if (ret) {
 					openedPresentation = null;
 					presentationWindow.Close ();
+					presentationWindow = null;
 				} else {
 					args.ReturnValue = false;
 				}
 			}
 		}
+		
+		void HandleDetach ()
+		{
+			if (presentationWindow != null) {
+				presentationWindow.DetachPlayer ();
+			}
+		}
+
 		
 	}
 }

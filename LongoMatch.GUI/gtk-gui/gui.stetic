@@ -11596,7 +11596,7 @@ Installing these codecs will therefore be entirely at your risk.</property>
         <property name="CanFocus">True</property>
         <property name="Position">268</property>
         <child>
-          <widget class="Gtk.Notebook" id="notebook1">
+          <widget class="Gtk.Notebook" id="leftnotebook">
             <property name="MemberName" />
             <property name="WidthRequest">300</property>
             <property name="CanFocus">True</property>
@@ -11612,56 +11612,6 @@ Installing these codecs will therefore be entirely at your risk.</property>
               <widget class="Gtk.Label" id="label4">
                 <property name="MemberName" />
                 <property name="LabelProp" translatable="yes">page1</property>
-              </widget>
-              <packing>
-                <property name="type">tab</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow1">
-                <property name="MemberName" />
-                <property name="ShadowType">In</property>
-                <child>
-                  <widget class="LongoMatch.Gui.Component.PlayersFilterTreeView" id="playersfiltertreeview1">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="ShowScrollbars">True</property>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">1</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="label6">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">page2</property>
-              </widget>
-              <packing>
-                <property name="type">tab</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.ScrolledWindow" id="GtkScrolledWindow2">
-                <property name="MemberName" />
-                <property name="ShadowType">In</property>
-                <child>
-                  <widget class="LongoMatch.Gui.Component.CategoriesFilterTreeView" id="categoriesfiltertreeview1">
-                    <property name="MemberName" />
-                    <property name="CanFocus">True</property>
-                    <property name="ShowScrollbars">True</property>
-                  </widget>
-                </child>
-              </widget>
-              <packing>
-                <property name="Position">2</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="Gtk.Label" id="label7">
-                <property name="MemberName" />
-                <property name="LabelProp" translatable="yes">page3</property>
               </widget>
               <packing>
                 <property name="type">tab</property>
@@ -11687,11 +11637,11 @@ Installing these codecs will therefore be entirely at your risk.</property>
               </packing>
             </child>
             <child>
-              <widget class="Gtk.Notebook" id="notebook2">
+              <widget class="Gtk.Notebook" id="rightnotebook">
                 <property name="MemberName" />
                 <property name="WidthRequest">300</property>
                 <property name="CanFocus">True</property>
-                <property name="CurrentPage">0</property>
+                <property name="CurrentPage">2</property>
                 <property name="TabPos">Right</property>
                 <child>
                   <widget class="LongoMatch.Gui.Component.PlayListWidget" id="playlistwidget1">
@@ -11709,7 +11659,60 @@ Installing these codecs will therefore be entirely at your risk.</property>
                     <property name="type">tab</property>
                   </packing>
                 </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="teamsscrolledwindow">
+                    <property name="MemberName" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="LongoMatch.Gui.Component.PlayersFilterTreeView" id="playersfiltertreeview1">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label2">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">page2</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.ScrolledWindow" id="eventsscrolledwindow">
+                    <property name="MemberName" />
+                    <property name="ShadowType">In</property>
+                    <child>
+                      <widget class="LongoMatch.Gui.Component.CategoriesFilterTreeView" id="categoriesfiltertreeview1">
+                        <property name="MemberName" />
+                        <property name="CanFocus">True</property>
+                        <property name="ShowScrollbars">True</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="Position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="Gtk.Label" id="label3">
+                    <property name="MemberName" />
+                    <property name="LabelProp" translatable="yes">page3</property>
+                  </widget>
+                  <packing>
+                    <property name="type">tab</property>
+                  </packing>
+                </child>
               </widget>
+              <packing>
+                <property name="Resize">False</property>
+              </packing>
             </child>
           </widget>
           <packing>

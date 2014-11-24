@@ -5,20 +5,20 @@ namespace LongoMatch.Gui.Component
 	public partial class PresentationComponent
 	{
 		private global::Gtk.HPaned hpaned1;
-		private global::Gtk.Notebook notebook1;
+		private global::Gtk.Notebook leftnotebook;
 		private global::LongoMatch.Gui.Component.PlaysListTreeWidget playslisttreewidget1;
 		private global::Gtk.Label label4;
-		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
-		private global::LongoMatch.Gui.Component.PlayersFilterTreeView playersfiltertreeview1;
-		private global::Gtk.Label label6;
-		private global::Gtk.ScrolledWindow GtkScrolledWindow2;
-		private global::LongoMatch.Gui.Component.CategoriesFilterTreeView categoriesfiltertreeview1;
-		private global::Gtk.Label label7;
 		private global::Gtk.HPaned hpaned2;
 		private global::LongoMatch.Gui.PlayerBin playerbin1;
-		private global::Gtk.Notebook notebook2;
+		private global::Gtk.Notebook rightnotebook;
 		private global::LongoMatch.Gui.Component.PlayListWidget playlistwidget1;
 		private global::Gtk.Label label5;
+		private global::Gtk.ScrolledWindow teamsscrolledwindow;
+		private global::LongoMatch.Gui.Component.PlayersFilterTreeView playersfiltertreeview1;
+		private global::Gtk.Label label2;
+		private global::Gtk.ScrolledWindow eventsscrolledwindow;
+		private global::LongoMatch.Gui.Component.CategoriesFilterTreeView categoriesfiltertreeview1;
+		private global::Gtk.Label label3;
 
 		protected virtual void Build ()
 		{
@@ -32,62 +32,26 @@ namespace LongoMatch.Gui.Component
 			this.hpaned1.Name = "hpaned1";
 			this.hpaned1.Position = 268;
 			// Container child hpaned1.Gtk.Paned+PanedChild
-			this.notebook1 = new global::Gtk.Notebook ();
-			this.notebook1.WidthRequest = 300;
-			this.notebook1.CanFocus = true;
-			this.notebook1.Name = "notebook1";
-			this.notebook1.CurrentPage = 0;
-			this.notebook1.TabPos = ((global::Gtk.PositionType)(0));
-			// Container child notebook1.Gtk.Notebook+NotebookChild
+			this.leftnotebook = new global::Gtk.Notebook ();
+			this.leftnotebook.WidthRequest = 300;
+			this.leftnotebook.CanFocus = true;
+			this.leftnotebook.Name = "leftnotebook";
+			this.leftnotebook.CurrentPage = 0;
+			this.leftnotebook.TabPos = ((global::Gtk.PositionType)(0));
+			// Container child leftnotebook.Gtk.Notebook+NotebookChild
 			this.playslisttreewidget1 = new global::LongoMatch.Gui.Component.PlaysListTreeWidget ();
 			this.playslisttreewidget1.Events = ((global::Gdk.EventMask)(256));
 			this.playslisttreewidget1.Name = "playslisttreewidget1";
-			this.notebook1.Add (this.playslisttreewidget1);
+			this.leftnotebook.Add (this.playslisttreewidget1);
 			// Notebook tab
 			this.label4 = new global::Gtk.Label ();
 			this.label4.Name = "label4";
 			this.label4.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
-			this.notebook1.SetTabLabel (this.playslisttreewidget1, this.label4);
+			this.leftnotebook.SetTabLabel (this.playslisttreewidget1, this.label4);
 			this.label4.ShowAll ();
-			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow ();
-			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
-			this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
-			this.playersfiltertreeview1 = new global::LongoMatch.Gui.Component.PlayersFilterTreeView ();
-			this.playersfiltertreeview1.CanFocus = true;
-			this.playersfiltertreeview1.Name = "playersfiltertreeview1";
-			this.GtkScrolledWindow1.Add (this.playersfiltertreeview1);
-			this.notebook1.Add (this.GtkScrolledWindow1);
-			global::Gtk.Notebook.NotebookChild w3 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.GtkScrolledWindow1]));
-			w3.Position = 1;
-			// Notebook tab
-			this.label6 = new global::Gtk.Label ();
-			this.label6.Name = "label6";
-			this.label6.LabelProp = global::Mono.Unix.Catalog.GetString ("page2");
-			this.notebook1.SetTabLabel (this.GtkScrolledWindow1, this.label6);
-			this.label6.ShowAll ();
-			// Container child notebook1.Gtk.Notebook+NotebookChild
-			this.GtkScrolledWindow2 = new global::Gtk.ScrolledWindow ();
-			this.GtkScrolledWindow2.Name = "GtkScrolledWindow2";
-			this.GtkScrolledWindow2.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child GtkScrolledWindow2.Gtk.Container+ContainerChild
-			this.categoriesfiltertreeview1 = new global::LongoMatch.Gui.Component.CategoriesFilterTreeView ();
-			this.categoriesfiltertreeview1.CanFocus = true;
-			this.categoriesfiltertreeview1.Name = "categoriesfiltertreeview1";
-			this.GtkScrolledWindow2.Add (this.categoriesfiltertreeview1);
-			this.notebook1.Add (this.GtkScrolledWindow2);
-			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.GtkScrolledWindow2]));
-			w5.Position = 2;
-			// Notebook tab
-			this.label7 = new global::Gtk.Label ();
-			this.label7.Name = "label7";
-			this.label7.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
-			this.notebook1.SetTabLabel (this.GtkScrolledWindow2, this.label7);
-			this.label7.ShowAll ();
-			this.hpaned1.Add (this.notebook1);
-			global::Gtk.Paned.PanedChild w6 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.notebook1]));
-			w6.Resize = false;
+			this.hpaned1.Add (this.leftnotebook);
+			global::Gtk.Paned.PanedChild w2 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.leftnotebook]));
+			w2.Resize = false;
 			// Container child hpaned1.Gtk.Paned+PanedChild
 			this.hpaned2 = new global::Gtk.HPaned ();
 			this.hpaned2.CanFocus = true;
@@ -98,28 +62,66 @@ namespace LongoMatch.Gui.Component
 			this.playerbin1.Events = ((global::Gdk.EventMask)(256));
 			this.playerbin1.Name = "playerbin1";
 			this.hpaned2.Add (this.playerbin1);
-			global::Gtk.Paned.PanedChild w7 = ((global::Gtk.Paned.PanedChild)(this.hpaned2 [this.playerbin1]));
-			w7.Resize = false;
+			global::Gtk.Paned.PanedChild w3 = ((global::Gtk.Paned.PanedChild)(this.hpaned2 [this.playerbin1]));
+			w3.Resize = false;
 			// Container child hpaned2.Gtk.Paned+PanedChild
-			this.notebook2 = new global::Gtk.Notebook ();
-			this.notebook2.WidthRequest = 300;
-			this.notebook2.CanFocus = true;
-			this.notebook2.Name = "notebook2";
-			this.notebook2.CurrentPage = 0;
-			this.notebook2.TabPos = ((global::Gtk.PositionType)(1));
-			// Container child notebook2.Gtk.Notebook+NotebookChild
+			this.rightnotebook = new global::Gtk.Notebook ();
+			this.rightnotebook.WidthRequest = 300;
+			this.rightnotebook.CanFocus = true;
+			this.rightnotebook.Name = "rightnotebook";
+			this.rightnotebook.CurrentPage = 2;
+			this.rightnotebook.TabPos = ((global::Gtk.PositionType)(1));
+			// Container child rightnotebook.Gtk.Notebook+NotebookChild
 			this.playlistwidget1 = new global::LongoMatch.Gui.Component.PlayListWidget ();
 			this.playlistwidget1.WidthRequest = 100;
 			this.playlistwidget1.Events = ((global::Gdk.EventMask)(256));
 			this.playlistwidget1.Name = "playlistwidget1";
-			this.notebook2.Add (this.playlistwidget1);
+			this.rightnotebook.Add (this.playlistwidget1);
 			// Notebook tab
 			this.label5 = new global::Gtk.Label ();
 			this.label5.Name = "label5";
 			this.label5.LabelProp = global::Mono.Unix.Catalog.GetString ("page1");
-			this.notebook2.SetTabLabel (this.playlistwidget1, this.label5);
+			this.rightnotebook.SetTabLabel (this.playlistwidget1, this.label5);
 			this.label5.ShowAll ();
-			this.hpaned2.Add (this.notebook2);
+			// Container child rightnotebook.Gtk.Notebook+NotebookChild
+			this.teamsscrolledwindow = new global::Gtk.ScrolledWindow ();
+			this.teamsscrolledwindow.Name = "teamsscrolledwindow";
+			this.teamsscrolledwindow.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child teamsscrolledwindow.Gtk.Container+ContainerChild
+			this.playersfiltertreeview1 = new global::LongoMatch.Gui.Component.PlayersFilterTreeView ();
+			this.playersfiltertreeview1.CanFocus = true;
+			this.playersfiltertreeview1.Name = "playersfiltertreeview1";
+			this.teamsscrolledwindow.Add (this.playersfiltertreeview1);
+			this.rightnotebook.Add (this.teamsscrolledwindow);
+			global::Gtk.Notebook.NotebookChild w6 = ((global::Gtk.Notebook.NotebookChild)(this.rightnotebook [this.teamsscrolledwindow]));
+			w6.Position = 1;
+			// Notebook tab
+			this.label2 = new global::Gtk.Label ();
+			this.label2.Name = "label2";
+			this.label2.LabelProp = global::Mono.Unix.Catalog.GetString ("page2");
+			this.rightnotebook.SetTabLabel (this.teamsscrolledwindow, this.label2);
+			this.label2.ShowAll ();
+			// Container child rightnotebook.Gtk.Notebook+NotebookChild
+			this.eventsscrolledwindow = new global::Gtk.ScrolledWindow ();
+			this.eventsscrolledwindow.Name = "eventsscrolledwindow";
+			this.eventsscrolledwindow.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child eventsscrolledwindow.Gtk.Container+ContainerChild
+			this.categoriesfiltertreeview1 = new global::LongoMatch.Gui.Component.CategoriesFilterTreeView ();
+			this.categoriesfiltertreeview1.CanFocus = true;
+			this.categoriesfiltertreeview1.Name = "categoriesfiltertreeview1";
+			this.eventsscrolledwindow.Add (this.categoriesfiltertreeview1);
+			this.rightnotebook.Add (this.eventsscrolledwindow);
+			global::Gtk.Notebook.NotebookChild w8 = ((global::Gtk.Notebook.NotebookChild)(this.rightnotebook [this.eventsscrolledwindow]));
+			w8.Position = 2;
+			// Notebook tab
+			this.label3 = new global::Gtk.Label ();
+			this.label3.Name = "label3";
+			this.label3.LabelProp = global::Mono.Unix.Catalog.GetString ("page3");
+			this.rightnotebook.SetTabLabel (this.eventsscrolledwindow, this.label3);
+			this.label3.ShowAll ();
+			this.hpaned2.Add (this.rightnotebook);
+			global::Gtk.Paned.PanedChild w9 = ((global::Gtk.Paned.PanedChild)(this.hpaned2 [this.rightnotebook]));
+			w9.Resize = false;
 			this.hpaned1.Add (this.hpaned2);
 			global::Gtk.Paned.PanedChild w10 = ((global::Gtk.Paned.PanedChild)(this.hpaned1 [this.hpaned2]));
 			w10.Resize = false;

@@ -64,8 +64,8 @@ namespace LongoMatch.Core.Handlers
 	public delegate void TeamsTagsChangedHandler ();
 	/* Project Events */
 	public delegate void SaveProjectHandler (Project project,ProjectType projectType);
-	public delegate void OpenedProjectChangedHandler (Project project,ProjectType projectType,EventsFilter filter,
-	                                                 IAnalysisWindow analysisWindow);
+	public delegate void OpenedProjectChangedHandler (IProject project,ProjectType projectType,EventsFilter filter,
+	                                                  IProjectWindow window);
 	public delegate void OpenProjectIDHandler (Guid project_id);
 	public delegate void OpenProjectHandler ();
 	public delegate void CloseOpenendProjectHandler (RetEventArgs args);

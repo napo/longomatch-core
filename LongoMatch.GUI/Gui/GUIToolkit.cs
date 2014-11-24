@@ -330,13 +330,14 @@ namespace LongoMatch.Gui
 			mainWindow.SetPanel (panel);
 		}
 
-		public void OpenPresentation (Presentation presentation, out IPresentationWindow presentationWindow)
+		public void OpenPresentation (Presentation presentation, EventsFilter filter,
+		                              out IPresentationWindow presentationWindow)
 		{
 			Log.Information ("Open presentation");
 			PresentationComponent widget = new PresentationComponent ();
 			mainWindow.SetPanel (widget);
 			presentationWindow = widget;
-			presentationWindow.Open (presentation);
+			presentationWindow.Open (presentation, filter);
 		}
 
 		public void ShowProjectStats (Project project) {

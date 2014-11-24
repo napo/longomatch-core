@@ -23,6 +23,7 @@ using LongoMatch.Core.Store.Playlists;
 using Mono.Unix;
 using System.Linq;
 using Newtonsoft.Json;
+using LongoMatch.Core.Interfaces.GUI;
 
 namespace LongoMatch.Core.Store
 {
@@ -81,7 +82,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		public static Presentation CreateFromData (List<Project> projects, List<TeamTemplate> teams,
-		                                           List<EventType> eventTypes)
+		                                           List<EventType> eventTypes, IBusyDialog dialog)
 		{
 			Dictionary <Guid, EventType> eventTypesDict = eventTypes.ToDictionary (t => t.ID, t => t);
 			Dictionary <Guid, Player> playersDict = new Dictionary<Guid, Player> ();
@@ -97,18 +98,20 @@ namespace LongoMatch.Core.Store
 			foreach (Project project in projects) {
 				foreach (TimelineEvent evt in project.Timeline) {
 					List<Player> players = new List<Player> ();
-					if (!eventTypesDict.ContainsKey (evt.ID)) {
+					if (!eventTypesDict.ContainsKey (evt.EventType.ID)) {
 						continue;
 					}
 					/* FIXME: filter team */
-					evt.EventType = eventTypesDict [evt.ID];
+					evt.EventType = eventTypesDict [evt.EventType.ID];
 					foreach (Player player in evt.Players) {
 						if (playersDict.ContainsKey (player.ID)) {
 							players.Add (playersDict [player.ID]);
 						}
 					}
+					evt.FileSet = project.Description.FileSet;
 					evt.Players = players;
 					timeline.Add (evt);
+					dialog.Pulse ();
 				}
 			}
 			

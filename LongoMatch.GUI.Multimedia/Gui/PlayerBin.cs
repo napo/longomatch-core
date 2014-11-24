@@ -122,7 +122,9 @@ namespace LongoMatch.Gui
 			controlsbox.HeightRequest = StyleConf.PlayerCapturerControlsHeight;
 			
 			CreatePlayer ();
+			ResetGui ();
 		}
+
 		#endregion
 		protected override void OnDestroyed ()
 		{
@@ -257,8 +259,7 @@ namespace LongoMatch.Gui
 			IsPlayingPrevState = false;
 			muted = false;
 			emitRateScale = true;
-			videowindow.Visible = true;
-			blackboarddrawingarea.Visible = false;
+			LoadImage (Config.Background, null);
 		}
 
 		public void LoadPlayListPlay (Playlist playlist, IPlaylistElement element)
@@ -290,6 +291,7 @@ namespace LongoMatch.Gui
 			loadedPlaylist = null;
 			loadedPlaylistElement = null;
 			loadedPlay = evt;
+			Open (fileSet, false);
 			if (evt.Start != null && evt.Start != null) {
 				LoadSegment (fileSet, evt.Start, evt.Stop, seekTime, playing, evt.Rate);
 			} else if (evt.EventTime != null) {
@@ -529,7 +531,6 @@ namespace LongoMatch.Gui
 			blackboard.Drawing = drawing;
 			DrawingsVisible = true;
 			blackboarddrawingarea.QueueDraw ();
-			videowindow.Visible = false;
 		}
 
 		void LoadStillImage (PlaylistImage image)

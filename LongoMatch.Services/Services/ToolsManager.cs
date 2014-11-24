@@ -34,7 +34,7 @@ namespace LongoMatch.Services
 	public class ToolsManager: IProjectsImporter
 	{
 		
-		Project openedProject;
+		IProject openedProject;
 		IGUIToolkit guiToolkit;
 		IDataBaseManager dbManager;
 
@@ -69,7 +69,7 @@ namespace LongoMatch.Services
 			
 			Config.EventsBroker.ManageProjectsEvent += () => {
 				if (openedProject == null || Config.EventsBroker.EmitCloseOpenedProject ()) {
-					guiToolkit.OpenProjectsManager (this.openedProject);
+					guiToolkit.OpenProjectsManager (this.openedProject as Project);
 				}
 			};
 			

@@ -54,14 +54,15 @@ namespace LongoMatch.Services
 			ConnectSignals ();
 		}
 
-		void HandleOpenedProjectChanged (Project project, ProjectType projectType,
-		                                 EventsFilter filter, IAnalysisWindow analysisWindow)
+		void HandleOpenedProjectChanged (IProject project, ProjectType projectType,
+		                                 EventsFilter filter, IProjectWindow projectWindow)
 		{
-			this.openedProject = project;
+			this.openedProject = project as Project;
 			this.projectType = projectType;
 			this.filter = filter;
+			analysisWindow = projectWindow as IAnalysisWindow;
 			
-			if (project == null) {
+			if (openedProject == null) {
 				if (framesCapturer != null) {
 					framesCapturer.Dispose ();
 					framesCapturer = null;
@@ -73,7 +74,6 @@ namespace LongoMatch.Services
 				framesCapturer = Config.MultimediaToolkit.GetFramesCapturer ();
 				framesCapturer.Open (openedProject.Description.FileSet.GetAngle (MediaFileAngle.Angle1).FilePath);
 			}
-			this.analysisWindow = analysisWindow;
 			player = analysisWindow.Player;
 			capturer = analysisWindow.Capturer;
 		}
@@ -161,7 +161,8 @@ namespace LongoMatch.Services
 
 		void HandleDetach ()
 		{
-			analysisWindow.DetachPlayer ();
+			if (analysisWindow != null) 
+				analysisWindow.DetachPlayer ();
 		}
 
 		void HandleTagSubcategoriesChangedEvent (bool tagsubcategories)

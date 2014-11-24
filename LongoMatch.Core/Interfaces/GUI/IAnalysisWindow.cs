@@ -17,7 +17,6 @@
 // 
 using System;
 using System.Collections.Generic;
-
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
@@ -25,27 +24,39 @@ using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Core.Interfaces.GUI
 {
-	public interface IAnalysisWindow
+	public interface IAnalysisWindow: IProjectWindow
 	{	
-		void SetProject(Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter);
+		void SetProject (Project project, ProjectType projectType, CaptureSettings props, EventsFilter filter);
+
 		void ReloadProject ();
+
 		void CloseOpenedProject ();
-		void AddPlay(TimelineEvent play);
+
+		void AddPlay (TimelineEvent play);
+
 		void UpdateCategories ();
+
 		void DeletePlays (List<TimelineEvent> plays);
-		void DetachPlayer ();
+
 		void ZoomIn ();
+
 		void ZoomOut ();
+
 		void FitTimeline ();
+
 		void ShowDashboard ();
+
 		void ShowTimeline ();
+
 		void ShowZonalTags ();
+
 		void ClickButton (DashboardButton button, Tag tag = null);
+
 		void TagPlayer (Player player);
+
 		void TagTeam (Team team);
-		
-		IPlayerBin Player{get;}
-		ICapturerBin Capturer{get;}
+
+		ICapturerBin Capturer{ get; }
 	}
 }
 

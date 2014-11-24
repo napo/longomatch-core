@@ -301,11 +301,11 @@ namespace LongoMatch.Core.Common
 			}
 		}
 		
-		public  void EmitOpenedProjectChanged (Project project, ProjectType projectType,
-		                                       EventsFilter filter, IAnalysisWindow analysisWindow)
+		public  void EmitOpenedProjectChanged (IProject project, ProjectType projectType,
+		                                       EventsFilter filter, IProjectWindow projectwindow)
 		{
 			if (OpenedProjectChanged != null) {
-				OpenedProjectChanged (project, projectType, filter, analysisWindow);
+				OpenedProjectChanged (project, projectType, filter, projectwindow);
 			}
 		}
 

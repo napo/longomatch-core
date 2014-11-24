@@ -138,6 +138,7 @@
     <Compile Include="Store\Presentation.cs" />
     <Compile Include="Handlers\RetEventArgs.cs" />
     <Compile Include="Interfaces\IProject.cs" />
+    <Compile Include="Interfaces\GUI\IProjectWindow.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\" />

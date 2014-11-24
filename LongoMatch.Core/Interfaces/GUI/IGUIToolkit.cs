@@ -71,7 +71,8 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		void CreateNewPresentation ();
 		
-		void OpenPresentation (Presentation presentation, out IPresentationWindow presentationWindow);
+		void OpenPresentation (Presentation presentation, EventsFilter filter,
+		                       out IPresentationWindow presentationWindow);
 		
 		void ShowProjectStats (Project project);
 		

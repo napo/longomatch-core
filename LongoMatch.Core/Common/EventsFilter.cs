@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Interfaces;
 
 namespace LongoMatch.Core.Common
 {
@@ -32,9 +33,9 @@ namespace LongoMatch.Core.Common
 		List<Player> playersFilter;
 		List<Period> periodsFilter;
 		List<Timer> timersFilter;
-		Project project;
+		IProject project;
 
-		public EventsFilter (Project project)
+		public EventsFilter (IProject project)
 		{
 			this.project = project;
 			eventsFilter = new Dictionary<EventType, List<Tag>> ();
@@ -168,7 +169,7 @@ namespace LongoMatch.Core.Common
 		void UpdateVisiblePlayers ()
 		{
 			if (playersFilter.Count == 0) {
-				VisiblePlayers = project.LocalTeamTemplate.List.Concat (project.VisitorTeamTemplate.List).ToList ();
+				VisiblePlayers = project.Teams.SelectMany (t => t.List).ToList ();
 			} else {
 				VisiblePlayers = playersFilter.ToList ();
 			}
@@ -204,8 +205,7 @@ namespace LongoMatch.Core.Common
 					}
 				}
 
-				if (play.Players.Count == 0 && VisiblePlayers.Count == 
-					project.LocalTeamTemplate.List.Count + project.VisitorTeamTemplate.List.Count) {
+				if (play.Players.Count == 0 && VisiblePlayers.Count == project.Teams.Sum (t => t.List.Count)) { 
 					player_match = true;
 				} else {
 					player_match = VisiblePlayers.Intersect (play.Players).Count () != 0;

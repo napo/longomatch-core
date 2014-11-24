@@ -25,6 +25,7 @@ using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using Misc = LongoMatch.Gui.Helpers.Misc;
 using Mono.Unix;
+using LongoMatch.Core.Common;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -107,9 +108,10 @@ namespace LongoMatch.Gui.Panel
 				
 				teamsStore.GetIterFirst (out iter);
 				while (teamsStore.IterIsValid (iter)) {
-					if ((bool)teamsStore.GetValue (iter, 1)) {
+					if ((bool)teamsStore.GetValue (iter, 0)) {
 						teams.Add (teamsStore.GetValue (iter, 2) as TeamTemplate);
 					}
+					teamsStore.IterNext (ref iter);
 				}
 				return teams;
 			}
@@ -122,9 +124,10 @@ namespace LongoMatch.Gui.Panel
 				
 				eventTypesStore.GetIterFirst (out iter);
 				while (eventTypesStore.IterIsValid (iter)) {
-					if ((bool)eventTypesStore.GetValue (iter, 1)) {
+					if ((bool)eventTypesStore.GetValue (iter, 0)) {
 						eventTypes.Add (eventTypesStore.GetValue (iter, 2) as EventType);
 					}
+					eventTypesStore.IterNext (ref iter);
 				}
 				return eventTypes;
 			}
@@ -255,9 +258,14 @@ namespace LongoMatch.Gui.Panel
 
 		void HandleApplyClicked (object sender, EventArgs e)
 		{
-			Presentation presentation = Presentation.CreateFromData (projects.Values,
+			string msg = Catalog.GetString ("Creating presentation..."); 
+			IBusyDialog dialog = Config.GUIToolkit.BusyDialog (msg, this);
+			dialog.Show ();
+			Presentation presentation = Presentation.CreateFromData (projects.Values.ToList (),
 			                                                         SelectedTeams,
-			                                                         SelectedEvents);
+			                                                         SelectedEvents,
+			                                                         dialog);
+			dialog.Destroy ();
 			Config.EventsBroker.EmitOpenPresentation (presentation);
 		}
 
