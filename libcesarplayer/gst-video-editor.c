@@ -78,7 +78,6 @@ struct GstVideoEditorPrivate
 
   /* Video */
   GstElement *identity;
-  GstElement *ffmpegcolorspace;
   GstElement *queue;
   GstElement *video_encoder;
 
@@ -230,8 +229,6 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
 
   gve->priv->vencode_bin = gst_element_factory_make ("bin", "vencodebin");
   gve->priv->identity = gst_element_factory_make ("identity", "identity");
-  gve->priv->ffmpegcolorspace =
-      gst_element_factory_make ("ffmpegcolorspace", "ffmpegcolorspace");
   gve->priv->queue = gst_element_factory_make ("queue2", "video-encode-queue");
   gve->priv->video_encoder =
       lgm_create_video_encoder (gve->priv->video_encoder_type,
@@ -249,10 +246,8 @@ gve_create_video_encode_bin (GstVideoEditor * gve)
   /*Add and link elements */
   gst_bin_add_many (GST_BIN (gve->priv->vencode_bin),
       gve->priv->identity,
-      gve->priv->ffmpegcolorspace,
       gve->priv->video_encoder, gve->priv->queue, NULL);
   gst_element_link_many (gve->priv->identity,
-      gve->priv->ffmpegcolorspace,
       gve->priv->video_encoder, gve->priv->queue, NULL);
 
   /*Create bin sink pad */
@@ -343,7 +338,7 @@ new_decoded_pad_cb (GstElement * object, GstPad * pad, gpointer user_data)
   gve = GST_VIDEO_EDITOR (user_data);
 
   /* check media type */
-  caps = GST_PAD_CAPS (pad);
+  caps = gst_pad_get_caps_reffed (pad);
   str = gst_caps_get_structure (caps, 0);
 
   if (g_strrstr (gst_structure_get_name (str), "video")) {
@@ -357,9 +352,7 @@ new_decoded_pad_cb (GstElement * object, GstPad * pad, gpointer user_data)
     GST_INFO ("Found video stream...%" GST_PTR_FORMAT, caps);
     gst_pad_link (pad, videopad);
     gst_object_unref (videopad);
-  }
-
-  else if (g_strrstr (gst_structure_get_name (str), "audio")
+  } else if (g_strrstr (gst_structure_get_name (str), "audio")
       && gve->priv->audio_enabled) {
     audiopad = gst_element_get_static_pad (gve->priv->aencode_bin, "sink");
     /* only link once */
@@ -372,6 +365,7 @@ new_decoded_pad_cb (GstElement * object, GstPad * pad, gpointer user_data)
     gst_pad_link (pad, audiopad);
     gst_object_unref (audiopad);
   }
+  gst_caps_unref (caps);
 }
 
 static void

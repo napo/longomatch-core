@@ -44,7 +44,7 @@ GST_DEBUG_CATEGORY (_nlesrc_gst_debug_cat);
 static GstStaticPadTemplate video_tpl = GST_STATIC_PAD_TEMPLATE ("video",
     GST_PAD_SRC,
     GST_PAD_SOMETIMES,
-    GST_STATIC_CAPS ("video/x-raw-yuv, format=(fourcc)I420, "
+    GST_STATIC_CAPS ("video/x-raw-yuv, "
         "width=[1,2160], height=[1,2160], framerate={25/1, 30/1, 50/1, 60/1}"));
 
 static GstStaticPadTemplate audio_tpl = GST_STATIC_PAD_TEMPLATE ("audio",
@@ -192,13 +192,11 @@ gst_nle_source_setup (GstNleSource * nlesrc)
   vident = gst_element_factory_make ("identity", NULL);
 
   v_caps = gst_caps_new_simple ("video/x-raw-yuv",
-      "format", GST_TYPE_FOURCC, GST_STR_FOURCC ("I420"),
       "width", G_TYPE_INT, (gint) nlesrc->width,
       "height", G_TYPE_INT, (gint) nlesrc->height,
       "pixel-aspect-ratio", GST_TYPE_FRACTION, 1, 1,
       "framerate", GST_TYPE_FRACTION,
       (gint) nlesrc->fps_n, (gint) nlesrc->fps_d, NULL);
-  gst_pad_set_caps (nlesrc->video_pad, v_caps);
 
   g_object_set (nlesrc->video_appsrc, "block", TRUE, NULL);
   g_object_set (videoscale, "add-borders", TRUE, NULL);
@@ -559,7 +557,21 @@ gst_nle_source_pad_added_cb (GstElement * element, GstPad * pad,
     gst_app_sink_set_callbacks (GST_APP_SINK (appsink), &appsink_cbs, nlesrc,
         NULL);
     gst_bin_add (GST_BIN (nlesrc->decoder), appsink);
-    sink_pad = gst_element_get_static_pad (appsink, "sink");
+    if (!g_strcmp0 (mime, "video/x-fluendo-va")) {
+      GstElement *vaconvert;
+      GstCaps *fcaps;
+
+      GST_INFO_OBJECT (nlesrc, "Using fluvaconvert");
+      fcaps = gst_caps_new_simple ("video/x-raw-yuv", NULL);
+      vaconvert = gst_element_factory_make ("fluvaconvert", "vaconvert");
+      gst_bin_add (GST_BIN (nlesrc->decoder), vaconvert);
+      gst_element_link_filtered (vaconvert, appsink, fcaps);
+      gst_caps_unref (fcaps);
+      gst_element_sync_state_with_parent (vaconvert);
+      sink_pad = gst_element_get_static_pad (vaconvert, "sink");
+    } else {
+      sink_pad = gst_element_get_static_pad (appsink, "sink");
+    }
     gst_pad_link (pad, sink_pad);
     gst_element_sync_state_with_parent (appsink);
     gst_object_unref (sink_pad);

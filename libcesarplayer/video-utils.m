@@ -46,7 +46,7 @@ lgm_filter_video_decoders (GstElement * object, GstPad * arg0,
 {
   const gchar *name = gst_plugin_feature_get_name (GST_PLUGIN_FEATURE (arg2));
   if (!g_strcmp0 (name, "fluvadec")) {
-    return GST_AUTOPLUG_SELECT_SKIP;
+    //return GST_AUTOPLUG_SELECT_SKIP;
   }
   return GST_AUTOPLUG_SELECT_TRY;
 }
