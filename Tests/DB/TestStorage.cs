@@ -240,6 +240,37 @@ namespace Tests.DB
 		}
 
 		[Test ()]
+		public void TestSaveLoadTimelineEvent ()
+		{
+			IDReferenceResolver resolver = new IDReferenceResolver ();
+			Player p = new Player ();
+			AnalysisEventType evtType = new AnalysisEventType ();
+			TimelineEvent evt = new TimelineEvent ();
+
+			resolver.AddReference (null, p.ID.ToString (), p);
+			resolver.AddReference (null, evtType.ID.ToString (), evtType);
+			evt.Players.Add (p);
+			evt.EventType = evtType;
+
+			Document doc = db.GetDocument (evt.ID.ToString ());
+			doc.Update ((UnsavedRevision rev) => {
+				JObject jo = DocumentsSerializer.SerializeObject (evt, rev, db, resolver);
+				Assert.AreEqual (p.ID, jo ["Players"] [0].Value<Guid> ());
+				Assert.AreEqual (evtType.ID, jo ["EventType"].Value<Guid> ());
+				IDictionary<string, object> props = jo.ToObject<IDictionary<string, object>> ();
+				rev.SetProperties (props);
+				return true;
+			});
+
+			/* Player has not been added to the db, as it was already referenced
+			 * by the IDReferenceResolver */
+			Assert.AreEqual (1, db.DocumentCount);
+
+			TimelineEvent evt2 = storage.Retrieve <TimelineEvent> (evt.ID);
+			Assert.IsNotNull (evt2.EventType);
+		}
+
+		[Test ()]
 		public void TestSaveLoadProjectDescription ()
 		{
 			MediaFile mf = new MediaFile ("path", 34000, 25, true, true, "mp4", "h264",
@@ -292,17 +323,26 @@ namespace Tests.DB
 			pd.FileSet.Add (mf);
 			p.Description = pd;
 
-			for (int i = 0; i < 10; i++) {
-				p.AddEvent (p.EventTypes [i], new Time (1000), new Time (2000), null, null, null, null);
+			for (int i = 0; i < 1; i++) {
+				TimelineEvent evt = new TimelineEvent {
+					EventType = p.EventTypes [i],
+					Start = new Time (1000),
+					Stop = new Time (2000),
+					Players = new List<Player> { p.LocalTeamTemplate.List [0] }, 
+				};
+				p.Timeline.Add (evt);
 			}
 
 			storage.Store<Project> (p);
-			Assert.AreEqual (1 + 1 + 10, db.DocumentCount);
+			Assert.AreEqual (1 + 1 + 1, db.DocumentCount);
 			storage.Store<Project> (p);
-			Assert.AreEqual (1 + 1 + 10, db.DocumentCount);
+			Assert.AreEqual (1 + 1 + 1, db.DocumentCount);
 
 			Project p2 = storage.Retrieve<Project> (p.ID);
 			Assert.AreEqual (p.Timeline.Count, p2.Timeline.Count);
+			Assert.AreEqual (p2.LocalTeamTemplate.List [0], p2.Timeline [0].Players [0]);
+			Assert.AreEqual ((p2.Dashboard.List [0] as AnalysisEventButton).EventType,
+				p2.Timeline [0].EventType);
 		}
 	}
 }
