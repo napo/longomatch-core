@@ -74,8 +74,19 @@ namespace LongoMatch.Services.Services
 			// use the last part
 			string[] parts = t.ToString ().Split ('.');
 			string part = parts [parts.Length - 1];
+
 			// Make it lowercase so we end into something like this: baseDir/template
-			return part.ToLower ();
+			part = part.ToLower ();
+
+			// Add the final 's', template => templates, dashboard => dashboards, etc
+			if (part [part.Length - 1] != 's')
+				part += 's';
+
+			// FIXME We need to refactor the code to use dashboard everywhere
+			if (part == "dashboards")
+				part = "analysis";
+
+			return part;
 		}
 
 		static private string GetExtension (Type t)
@@ -83,9 +94,9 @@ namespace LongoMatch.Services.Services
 			string sType = ResolveType (t);
 
 			// Add the different cases of t
-			if (sType == "dashboard") {
+			if (sType == "analysis") {
 				return Constants.CAT_TEMPLATE_EXT;
-			} else if (sType == "team") {
+			} else if (sType == "teams")
 				return Constants.TEAMS_TEMPLATE_EXT;
 			} else {
 				return ".json";
