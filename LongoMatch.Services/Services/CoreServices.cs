@@ -84,14 +84,27 @@ namespace LongoMatch.Services
 
 		public static void StartServices (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
-			ts = new TemplatesService (new FileStorage (Config.DBDir));
+			IStorage storage = new FileStorage (Config.DBDir);
+
+			ts = new TemplatesService (storage);
 			Config.TeamTemplatesProvider = ts.TeamTemplateProvider;
 			Config.CategoriesTemplatesProvider = ts.CategoriesTemplateProvider;
 
 			/* Start DB services */
-			dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
-			dbManager.SetActiveByName (Config.CurrentDatabase);
-			Config.DatabaseManager = dbManager;
+			// FIXME Ok, this is wrong. From the current code, looks like there is a DB which
+			// handles all the projects and you can backup, set active, etc a specific DB through
+			// the DataBaseManager service using the DatabasesManager GUI (yes, using that camel case)
+			// The approach is that an IStorage handles a whole database and such IStorage is used
+			// on any service that requires to store/retrieve data.
+			// The DataBaseManager/DatabasesManager should handle IStorages, for that we would require
+			// a new GUI, are we going to actually support more than one Storage?
+			// About the config ... The config is the class that should trigger events and the services
+			// that require the IStorages register whenever a new IStorage is set as current. In case
+			// we do let creation/deletion of databases, we need to keep the IStorage on the Config itself
+			// instaed of being dynamically created here
+			//dbManager = new DataBaseManager (Config.DBDir, guiToolkit);
+			//dbManager.SetActiveByName (Config.CurrentDatabase);
+			//Config.DatabaseManager = dbManager;
 			
 			/* Start the rendering jobs manager */
 			videoRenderer = new RenderingJobsManager (multimediaToolkit, guiToolkit);
