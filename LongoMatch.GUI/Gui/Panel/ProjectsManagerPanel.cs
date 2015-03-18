@@ -28,6 +28,7 @@ using LongoMatch.Gui.Helpers;
 using Mono.Unix;
 using Pango;
 using Misc = LongoMatch.Gui.Helpers.Misc;
+using LongoMatch.Services.Services;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -39,14 +40,15 @@ namespace LongoMatch.Gui.Panel
 		Project openedProject, loadedProject;
 		List<ProjectDescription> selectedProjects;
 		List<VideoFileInfo> videoFileInfos;
-		IDatabase DB;
+		IStorage storage;
 		IGUIToolkit gkit;
 		bool edited;
 
 		public ProjectsManagerPanel (Project openedProject)
 		{
 			this.openedProject = openedProject;
-			this.DB = Config.DatabaseManager.ActiveDB;
+			// FIXME get the IStorage from the Config!
+			this.storage = new FileStorage (Config.DBDir);
 			this.gkit = Config.GUIToolkit;
 			this.Build ();
 
@@ -69,7 +71,17 @@ namespace LongoMatch.Gui.Panel
 			notebook1.ShowBorder = false;
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
-			projectlistwidget1.Fill (DB.GetAllProjects ());
+
+			// FIXME use projects until the project description is refactored
+			List<Project> projects = storage.RetrieveAll<Project> ();
+			List<ProjectDescription> pdescriptions = new List<ProjectDescription> ();
+			foreach (Project p in projects) {
+				ProjectDescription pd = new ProjectDescription ();
+				pd = p.Description;
+				pd.ID = p.ID;
+				pdescriptions.Add (pd);
+			}
+			projectlistwidget1.Fill (pdescriptions);
 
 			seasonentry.Changed += HandleChanged;
 			competitionentry.Changed += HandleChanged;
@@ -114,7 +126,7 @@ namespace LongoMatch.Gui.Panel
 					}
 				}
 				if (save) {
-					DB.UpdateProject (loadedProject);
+					storage.Store<Project> (loadedProject);
 					projectlistwidget1.UpdateProject (loadedProject.Description);
 					edited = false;
 				}
@@ -206,7 +218,7 @@ namespace LongoMatch.Gui.Panel
 			selectedProjects = projects;
 			if (projects.Count == 1) {
 				try {
-					LoadProject (DB.GetProject (projects [0].ID));
+					LoadProject (storage.Retrieve<Project> (projects[0].ID));
 				} catch (Exception ex) {
 					Log.Exception (ex);
 					Config.GUIToolkit.ErrorMessage (ex.Message, this);
@@ -272,14 +284,15 @@ namespace LongoMatch.Gui.Panel
 					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
 						loadedProject = null;
 					}
-					DB.RemoveProject (selectedProject.ID);
+					Project p = storage.Retrieve<Project> (selectedProject.ID);
+					storage.Delete<Project> (p);
 					deletedProjects.Add (selectedProject);
 				}
 			}
 			projectlistwidget1.RemoveProjects (deletedProjects);
 
 			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.GetAllProjects ().Count == 0) {
+			if (storage.RetrieveAll<Project>().Count == 0) {
 				rbox.Visible = false;
 			}
 		}
