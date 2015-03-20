@@ -27,11 +27,11 @@ namespace LongoMatch.Core.Common
 {
 	public class Constants
 	{
-		public const string SOFTWARE_NAME = "LongoMatch";
+		public const string SOFTWARE_NAME = "TagTics";
 
 		public const string PROJECT_NAME = SOFTWARE_NAME + " project";
 
-		public const string DEFAULT_DB_NAME = "longomatch";
+		public const string DEFAULT_DB_NAME = "tagtics";
 		
 		public const string COPYRIGHT = "Copyright ©2014-2015 FLUENDO S.A.\nCopyright ©2007-2014 Andoni Morales Alastruey";
 		
