@@ -5,38 +5,71 @@ namespace LongoMatch.Gui
 	public partial class PlayerBin
 	{
 		private global::Gtk.VBox vbox3;
+		
 		private global::Gtk.HBox mainbox;
+		
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.HBox videobox;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::LongoMatch.Gui.VideoWindow videowindow;
+		
 		private global::Gtk.DrawingArea blackboarddrawingarea;
+		
 		private global::Gtk.VBox vbox5;
+		
 		private global::Gtk.VScale vscale1;
+		
 		private global::Gtk.EventBox lightbackgroundeventbox;
+		
 		private global::Gtk.HBox controlsbox;
+		
 		private global::Gtk.HBox buttonsbox;
+		
 		private global::Gtk.Button closebutton;
+		
 		private global::Gtk.Image closebuttonimage;
+		
 		private global::Gtk.Button drawbutton;
+		
 		private global::Gtk.Image drawbuttonimage;
+		
 		private global::Gtk.Button playbutton;
+		
 		private global::Gtk.Image playbuttonimage;
+		
 		private global::Gtk.Button pausebutton;
+		
 		private global::Gtk.Image pausebuttonimage;
+		
 		private global::Gtk.Button prevbutton;
+		
 		private global::Gtk.Image prevbuttonimage;
+		
 		private global::Gtk.Button nextbutton;
+		
 		private global::Gtk.Image nextbuttonimage;
+		
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.Label jumplabel;
+		
 		private global::Gtk.SpinButton jumpspinbutton;
+		
 		private global::Gtk.Label tlabel;
+		
 		private global::Gtk.HScale timescale;
+		
 		private global::Gtk.Label timelabel;
+		
 		private global::Gtk.Button volumebutton;
+		
 		private global::Gtk.Image volumebuttonimage;
+		
 		private global::Gtk.Button detachbutton;
+		
 		private global::Gtk.Image detachbuttonimage;
 
 		protected virtual void Build ()
@@ -139,7 +172,6 @@ namespace LongoMatch.Gui
 			this.closebuttonimage = new global::Gtk.Image ();
 			this.closebuttonimage.Name = "closebuttonimage";
 			this.closebutton.Add (this.closebuttonimage);
-			this.closebutton.Label = null;
 			this.buttonsbox.Add (this.closebutton);
 			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.closebutton]));
 			w10.Position = 0;
@@ -154,7 +186,6 @@ namespace LongoMatch.Gui
 			this.drawbuttonimage = new global::Gtk.Image ();
 			this.drawbuttonimage.Name = "drawbuttonimage";
 			this.drawbutton.Add (this.drawbuttonimage);
-			this.drawbutton.Label = null;
 			this.buttonsbox.Add (this.drawbutton);
 			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.drawbutton]));
 			w12.Position = 1;
@@ -169,7 +200,6 @@ namespace LongoMatch.Gui
 			this.playbuttonimage = new global::Gtk.Image ();
 			this.playbuttonimage.Name = "playbuttonimage";
 			this.playbutton.Add (this.playbuttonimage);
-			this.playbutton.Label = null;
 			this.buttonsbox.Add (this.playbutton);
 			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.playbutton]));
 			w14.Position = 2;
@@ -184,7 +214,6 @@ namespace LongoMatch.Gui
 			this.pausebuttonimage = new global::Gtk.Image ();
 			this.pausebuttonimage.Name = "pausebuttonimage";
 			this.pausebutton.Add (this.pausebuttonimage);
-			this.pausebutton.Label = null;
 			this.buttonsbox.Add (this.pausebutton);
 			global::Gtk.Box.BoxChild w16 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.pausebutton]));
 			w16.Position = 3;
@@ -199,7 +228,6 @@ namespace LongoMatch.Gui
 			this.prevbuttonimage = new global::Gtk.Image ();
 			this.prevbuttonimage.Name = "prevbuttonimage";
 			this.prevbutton.Add (this.prevbuttonimage);
-			this.prevbutton.Label = null;
 			this.buttonsbox.Add (this.prevbutton);
 			global::Gtk.Box.BoxChild w18 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.prevbutton]));
 			w18.Position = 4;
@@ -215,7 +243,6 @@ namespace LongoMatch.Gui
 			this.nextbuttonimage = new global::Gtk.Image ();
 			this.nextbuttonimage.Name = "nextbuttonimage";
 			this.nextbutton.Add (this.nextbuttonimage);
-			this.nextbutton.Label = null;
 			this.buttonsbox.Add (this.nextbutton);
 			global::Gtk.Box.BoxChild w20 = ((global::Gtk.Box.BoxChild)(this.buttonsbox [this.nextbutton]));
 			w20.Position = 5;
@@ -294,7 +321,6 @@ namespace LongoMatch.Gui
 			this.volumebuttonimage = new global::Gtk.Image ();
 			this.volumebuttonimage.Name = "volumebuttonimage";
 			this.volumebutton.Add (this.volumebuttonimage);
-			this.volumebutton.Label = null;
 			this.controlsbox.Add (this.volumebutton);
 			global::Gtk.Box.BoxChild w29 = ((global::Gtk.Box.BoxChild)(this.controlsbox [this.volumebutton]));
 			w29.Position = 5;
@@ -309,7 +335,6 @@ namespace LongoMatch.Gui
 			this.detachbuttonimage = new global::Gtk.Image ();
 			this.detachbuttonimage.Name = "detachbuttonimage";
 			this.detachbutton.Add (this.detachbuttonimage);
-			this.detachbutton.Label = null;
 			this.controlsbox.Add (this.detachbutton);
 			global::Gtk.Box.BoxChild w31 = ((global::Gtk.Box.BoxChild)(this.controlsbox [this.detachbutton]));
 			w31.Position = 6;

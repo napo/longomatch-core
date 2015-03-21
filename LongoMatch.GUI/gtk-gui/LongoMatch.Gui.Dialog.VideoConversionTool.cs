@@ -5,22 +5,39 @@ namespace LongoMatch.Gui.Dialog
 	public partial class VideoConversionTool
 	{
 		private global::Gtk.EventBox eventbox1;
+		
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.ScrolledWindow scrolledwindow1;
+		
 		private global::Gtk.VBox filesbox;
+		
 		private global::Gtk.Button addbutton1;
+		
 		private global::Gtk.Image addimage;
+		
 		private global::Gtk.HSeparator hseparator1;
+		
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.Image convertimage;
+		
 		private global::Gtk.Table table1;
+		
 		private global::Gtk.ComboBox bitratecombobox;
+		
 		private global::Gtk.Label filenamelabel;
+		
 		private global::Gtk.Label label2;
+		
 		private global::Gtk.Label label3;
+		
 		private global::LongoMatch.Gui.Component.MediaFileChooser mediafilechooser1;
+		
 		private global::Gtk.ComboBox sizecombobox;
+		
 		private global::Gtk.Button buttonCancel;
+		
 		private global::Gtk.Button buttonOk;
 
 		protected virtual void Build ()
@@ -72,7 +89,6 @@ namespace LongoMatch.Gui.Dialog
 			this.addimage = new global::Gtk.Image ();
 			this.addimage.Name = "addimage";
 			this.addbutton1.Add (this.addimage);
-			this.addbutton1.Label = null;
 			this.vbox2.Add (this.addbutton1);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.addbutton1]));
 			w7.Position = 1;

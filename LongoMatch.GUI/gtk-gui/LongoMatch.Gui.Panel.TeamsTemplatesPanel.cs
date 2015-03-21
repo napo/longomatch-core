@@ -5,36 +5,67 @@ namespace LongoMatch.Gui.Panel
 	public partial class TeamsTemplatesPanel
 	{
 		private global::Gtk.VBox teameditorvbox;
+		
 		private global::Gtk.EventBox headereventbox;
+		
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
+		
 		private global::Gtk.Alignment contentalignment;
+		
 		private global::Gtk.VBox contentvbox;
+		
 		private global::Gtk.HBox teameditorbuttonbar;
+		
 		private global::Gtk.Alignment templateimagealignment;
+		
 		private global::Gtk.Image teamimage;
+		
 		private global::Gtk.VBox editteamsvbox;
+		
 		private global::Gtk.Label editteamslabel;
+		
 		private global::Gtk.HBox hbox8;
+		
 		private global::Gtk.Button newteambutton;
+		
 		private global::Gtk.Image newteamimage;
+		
 		private global::Gtk.Button deleteteambutton;
+		
 		private global::Gtk.Image deleteteamimage;
+		
 		private global::Gtk.Button saveteambutton;
+		
 		private global::Gtk.Image saveteamimage;
+		
 		private global::Gtk.Image vseparatorimage;
+		
 		private global::Gtk.VBox editplayersvbox;
+		
 		private global::Gtk.Label editplayerslabel;
+		
 		private global::Gtk.HBox hbox7;
+		
 		private global::Gtk.Button newplayerbutton1;
+		
 		private global::Gtk.Image newplayerimage;
+		
 		private global::Gtk.Button deleteplayerbutton;
+		
 		private global::Gtk.Image deleteplayerimage;
+		
 		private global::Gtk.Alignment playerheaderalignment;
+		
 		private global::Gtk.Image playerheaderimage;
+		
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.VBox teamsvbox;
+		
 		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
+		
 		private global::Gtk.TreeView teamseditortreeview;
+		
 		private global::LongoMatch.Gui.Component.TeamTemplateEditor teamtemplateeditor1;
 
 		protected virtual void Build ()
@@ -117,7 +148,6 @@ namespace LongoMatch.Gui.Panel
 			this.newteamimage.Xpad = 5;
 			this.newteamimage.Ypad = 5;
 			this.newteambutton.Add (this.newteamimage);
-			this.newteambutton.Label = null;
 			this.hbox8.Add (this.newteambutton);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.newteambutton]));
 			w7.Position = 0;
@@ -133,7 +163,6 @@ namespace LongoMatch.Gui.Panel
 			this.deleteteamimage.Xpad = 5;
 			this.deleteteamimage.Ypad = 5;
 			this.deleteteambutton.Add (this.deleteteamimage);
-			this.deleteteambutton.Label = null;
 			this.hbox8.Add (this.deleteteambutton);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.deleteteambutton]));
 			w9.Position = 1;
@@ -149,7 +178,6 @@ namespace LongoMatch.Gui.Panel
 			this.saveteamimage.Xpad = 5;
 			this.saveteamimage.Ypad = 5;
 			this.saveteambutton.Add (this.saveteamimage);
-			this.saveteambutton.Label = null;
 			this.hbox8.Add (this.saveteambutton);
 			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.hbox8 [this.saveteambutton]));
 			w11.Position = 2;
@@ -202,7 +230,6 @@ namespace LongoMatch.Gui.Panel
 			this.newplayerimage.Xpad = 5;
 			this.newplayerimage.Ypad = 5;
 			this.newplayerbutton1.Add (this.newplayerimage);
-			this.newplayerbutton1.Label = null;
 			this.hbox7.Add (this.newplayerbutton1);
 			global::Gtk.Box.BoxChild w17 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.newplayerbutton1]));
 			w17.Position = 0;
@@ -218,7 +245,6 @@ namespace LongoMatch.Gui.Panel
 			this.deleteplayerimage.Xpad = 5;
 			this.deleteplayerimage.Ypad = 5;
 			this.deleteplayerbutton.Add (this.deleteplayerimage);
-			this.deleteplayerbutton.Label = null;
 			this.hbox7.Add (this.deleteplayerbutton);
 			global::Gtk.Box.BoxChild w19 = ((global::Gtk.Box.BoxChild)(this.hbox7 [this.deleteplayerbutton]));
 			w19.Position = 1;

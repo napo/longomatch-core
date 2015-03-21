@@ -5,13 +5,21 @@ namespace LongoMatch.Gui.Component
 	public partial class PlayListWidget
 	{
 		private global::Gtk.VBox vbox2;
+		
 		private global::Gtk.ScrolledWindow scrolledwindow1;
+		
 		private global::Gtk.VBox vbox1;
+		
 		private global::LongoMatch.Gui.Component.PlayListTreeView playlisttreeview1;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::Gtk.Button newbutton;
+		
 		private global::Gtk.Image newimage;
+		
 		private global::Gtk.Button newvideobutton;
+		
 		private global::Gtk.Image recimage;
 
 		protected virtual void Build ()
@@ -64,7 +72,6 @@ namespace LongoMatch.Gui.Component
 			this.newimage = new global::Gtk.Image ();
 			this.newimage.Name = "newimage";
 			this.newbutton.Add (this.newimage);
-			this.newbutton.Label = null;
 			this.hbox2.Add (this.newbutton);
 			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newbutton]));
 			w7.Position = 0;
@@ -79,7 +86,6 @@ namespace LongoMatch.Gui.Component
 			this.recimage = new global::Gtk.Image ();
 			this.recimage.Name = "recimage";
 			this.newvideobutton.Add (this.recimage);
-			this.newvideobutton.Label = null;
 			this.hbox2.Add (this.newvideobutton);
 			global::Gtk.Box.BoxChild w9 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.newvideobutton]));
 			w9.Position = 1;

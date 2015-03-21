@@ -5,9 +5,13 @@ namespace LongoMatch.Gui.Component
 	public partial class DatePicker
 	{
 		private global::Gtk.EventBox dateentryeventbox;
+		
 		private global::Gtk.HBox hbox2;
+		
 		private global::Gtk.Entry dateentry;
+		
 		private global::Gtk.Button datebutton;
+		
 		private global::Gtk.Image datebuttonimage;
 
 		protected virtual void Build ()
@@ -41,7 +45,6 @@ namespace LongoMatch.Gui.Component
 			this.datebuttonimage = new global::Gtk.Image ();
 			this.datebuttonimage.Name = "datebuttonimage";
 			this.datebutton.Add (this.datebuttonimage);
-			this.datebutton.Label = null;
 			this.hbox2.Add (this.datebutton);
 			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.datebutton]));
 			w3.Position = 1;

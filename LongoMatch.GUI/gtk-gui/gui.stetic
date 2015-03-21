@@ -10,7 +10,7 @@
     <widget-library name="../../LongoMatch.Drawing.Cairo/bin/Debug/LongoMatch.Drawing.Cairo.dll" />
     <widget-library name="../../bin/LongoMatch.GUI.dll" internal="true" />
   </import>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1824 741">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.Component.AnalysisComponent" design-size="1878 491">
     <action-group name="Default" />
     <property name="MemberName" />
     <property name="Visible">False</property>
@@ -2040,7 +2040,7 @@ Away</property>
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EntryDialog" design-size="339 195">
+  <widget class="Gtk.Dialog" id="LongoMatch.Gui.Dialog.EntryDialog" design-size="333 195">
     <property name="MemberName" />
     <property name="Title" translatable="yes">Select template name</property>
     <property name="Icon">stock:longomatch Dialog</property>
@@ -3212,7 +3212,6 @@ You can download it using this direct link:</property>
                             <property name="Tooltip" translatable="yes">Angle tool</property>
                             <property name="CanFocus">True</property>
                             <property name="Label" translatable="yes" />
-                            <property name="Active">True</property>
                             <property name="DrawIndicator">False</property>
                             <property name="HasLabel">False</property>
                             <property name="UseUnderline">True</property>
@@ -9696,8 +9695,6 @@ You can continue with the current capture, cancel it or save your project.
                       <widget class="LongoMatch.Gui.PlayerBin" id="main_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
-                        <property name="Volume">1</property>
-                        <property name="CloseAlwaysVisible">False</property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -9766,8 +9763,6 @@ You can continue with the current capture, cancel it or save your project.
                       <widget class="LongoMatch.Gui.PlayerBin" id="sec_cam_playerbin">
                         <property name="MemberName" />
                         <property name="Events">ButtonPressMask</property>
-                        <property name="Volume">0</property>
-                        <property name="CloseAlwaysVisible">False</property>
                       </widget>
                       <packing>
                         <property name="Position">0</property>
@@ -10351,7 +10346,7 @@ You can continue with the current capture, cancel it or save your project.
                               </widget>
                             </child>
                             <child>
-                              <widget class="Gtk.Label" id="GtkLabel">
+                              <widget class="Gtk.Label" id="GtkLabel1">
                                 <property name="MemberName" />
                                 <property name="LabelProp" translatable="yes">&lt;b&gt;Notes&lt;/b&gt;</property>
                                 <property name="UseMarkup">True</property>

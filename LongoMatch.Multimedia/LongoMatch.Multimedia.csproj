@@ -8,6 +8,8 @@
     <RootNamespace>LongoMatch.Multimedia</RootNamespace>
     <AssemblyName>LongoMatch.Multimedia</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,7 +46,6 @@
     <Compile Include="Remuxer\ObjectManager.cs" />
     <Compile Include="Converter\GstVideoConverter.cs" />
     <Compile Include="Converter\ObjectManager.cs" />
-    <Compile Include="Utils\Seeker.cs" />
     <Compile Include="Utils\MultimediaFactory.cs" />
     <Compile Include="Player\GstPlayer.cs" />
     <Compile Include="Player\ObjectManager.cs" />
@@ -61,16 +62,11 @@
     <Folder Include="Player\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Package>glib-sharp-2.0</Package>
-    </Reference>
+    <Reference Include="glib-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
     <Reference Include="Mono.Posix" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f">
-      <Private>False</Private>
-      <Package>gtk-sharp-2.0</Package>
-    </Reference>
+    <Reference Include="gdk-sharp, Version=2.12.0.0, Culture=neutral, PublicKeyToken=35e10195dab3c99f" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.csproj">

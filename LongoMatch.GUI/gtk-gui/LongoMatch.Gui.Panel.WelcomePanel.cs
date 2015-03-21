@@ -5,10 +5,15 @@ namespace LongoMatch.Gui.Panel
 	public partial class WelcomePanel
 	{
 		private global::Gtk.VBox vbox1;
+		
 		private global::Gtk.HBox hbox1;
+		
 		private global::Gtk.Label label3;
+		
 		private global::Gtk.Button preferencesbutton;
+		
 		private global::Gtk.Alignment alignment1;
+		
 		private global::Gtk.Table tablewidget;
 
 		protected virtual void Build ()
@@ -36,7 +41,6 @@ namespace LongoMatch.Gui.Panel
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.preferencesbutton = new global::Gtk.Button ();
 			this.preferencesbutton.Name = "preferencesbutton";
-			this.preferencesbutton.Label = null;
 			this.hbox1.Add (this.preferencesbutton);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.preferencesbutton]));
 			w2.Position = 1;

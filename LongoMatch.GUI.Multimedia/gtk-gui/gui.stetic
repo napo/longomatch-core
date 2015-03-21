@@ -74,7 +74,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.PlayerBin" design-size="1080 433">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.PlayerBin" design-size="695 257">
     <property name="MemberName" />
     <child>
       <widget class="Gtk.VBox" id="vbox3">
@@ -793,7 +793,7 @@
       </widget>
     </child>
   </widget>
-  <widget class="Gtk.Bin" id="LongoMatch.Gui.PlayerCapturerBin" design-size="1478 300">
+  <widget class="Gtk.Bin" id="LongoMatch.Gui.PlayerCapturerBin" design-size="1458 352">
     <property name="MemberName" />
     <property name="Visible">False</property>
     <child>
@@ -848,7 +848,6 @@
               <widget class="LongoMatch.Gui.PlayerBin" id="playerbin">
                 <property name="MemberName" />
                 <property name="Events">ButtonPressMask</property>
-                <property name="CloseAlwaysVisible">False</property>
               </widget>
               <packing>
                 <property name="Position">1</property>
