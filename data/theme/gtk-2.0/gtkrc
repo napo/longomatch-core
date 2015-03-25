@@ -4,8 +4,7 @@ gtk-icon-theme-name = "longomatch"
 gtk-icon-sizes = "gtk-menu=13,13:gtk-small-toolbar=24,24:gtk-large-toolbar=24,24:gtk-dnd=80,80:gtk-dialog=80,80"
 gtk-toolbar-icon-size = small-toolbar
 
-gtk-color-scheme = "bg_color:#252627\nbg_light_color:#3b3b3b\nbg_dark_color:#151a20\nselected_color:#f3f3f3\nactive_color:#50b44d\ntool_color:#c42527\nbase_color:#6a6a6a\ntext_color:#dfdfdf\nselected_text_color:#dfdfdf\nselected_text_color_no_focus:#151a20\ntext_selection_color:#6a6a6a\nfocus_color:#50b44d"
-
+gtk-color-scheme = "base_color:#ffffff\nfg_color:#000000\ntooltip_fg_color:#000000\nselected_bg_color:#918b7d\nselected_fg_color:#ffffff\ntext_color:#1A1A1A\nbg_color:#EDECEB\ntooltip_bg_color:#F5F5B5"
 
 # enable/disable images in menus. most "stock" microsoft apps don't use these, except sparingly.
 # the office apps use them heavily, though.
@@ -35,40 +34,34 @@ style "longomatch-default"
   GtkButton::interior-focus = 0
   GtkButton::focus-padding = 0
 
-  GtkLabel::link-color = @active_color
-  GtkLabel::visited-link-color = darker(@active_color)
-
-  #xthickness = 0
-  #ythickness = 0
-
-  fg[NORMAL]        = @text_color
-  fg[ACTIVE]        = @base_color
-  fg[PRELIGHT]      = @base_color
-  fg[INSENSITIVE]   = darker (@base_color)
-
-  base[NORMAL]      = @bg_dark_color
-  base[PRELIGHT]    = darker(@text_selection_color)
-  base[ACTIVE]      = @text_selection_color
-  base[SELECTED]    = @text_selection_color
-  base[INSENSITIVE] = darker(@bg_dark_color)
-
   bg[NORMAL]        = @bg_color
-  bg[ACTIVE]        = @bg_color
-  bg[PRELIGHT]      = @active_color
-  bg[SELECTED]      = @active_color
-  bg[INSENSITIVE]   = darker (@bg_color)
+  bg[PRELIGHT]      = shade (1.02, @bg_color)
+  bg[SELECTED]      = @selected_bg_color
+  bg[INSENSITIVE]   = @bg_color
+  bg[ACTIVE]        = shade (0.9, @bg_color)
+
+  fg[NORMAL]        = @fg_color
+  fg[PRELIGHT]      = @fg_color
+  fg[SELECTED]      = @selected_fg_color
+  fg[INSENSITIVE]   = darker (@bg_color)
+  fg[ACTIVE]        = @fg_color
 
   text[NORMAL]      = @text_color
-  text[ACTIVE]      = @selected_text_color_no_focus
-  text[PRELIGHT]    = @selected_text_color
-  text[SELECTED]    = @selected_text_color
-  text[INSENSITIVE] = darker (@text_color)
+  text[PRELIGHT]    = @text_color
+  text[SELECTED]    = @selected_fg_color
+  text[INSENSITIVE] = darker (@bg_color)
+  text[ACTIVE]      = @selected_fg_color
+
+  base[NORMAL]      = @base_color
+  base[PRELIGHT]    = shade (0.95, @bg_color)
+  base[SELECTED]    = @selected_bg_color
+  base[INSENSITIVE] = @bg_color
+  base[ACTIVE]      = shade (0.9, @selected_bg_color)
 
   stock["gtk-about"] = {{ "Stock/gtk-about.svg" }}
   stock["gtk-add"] = {{ "Stock/gtk-add.svg" }}
   stock["gtk-close"] = {{ "Stock/gtk-close.svg" }}
-  stock["gtk-dialog-info"] = {{ "Stock/gtk-dialog-info.png" }}
-  stock["gtk-dialog-warning"] = {{ "Stock/gtk-dialog-warning.png" }}
+  stock["gtk-dialog-info"] = {{ "Stock/gtk-dialog-info.svg" }}
   stock["gtk-edit"] = {{ "Stock/gtk-edit.svg" }}
   stock["gtk-fullscreen"] = {{ "Stock/gtk-fullscreen.svg" }}
   stock["gtk-help"] = {{ "Stock/gtk-help.svg" }}
@@ -92,117 +85,6 @@ style "longomatch-default"
   }
 }
 
-style "longomatch-header" {
-  base[NORMAL]      = @bg_light_color
-  bg[NORMAL]        = @bg_light_color
-  text[NORMAL]      = @base_color
-}
-
-style "longomatch-editor" {
-  text[NORMAL]      = @text_color
-  fg[NORMAL]      = @text_color
-}
-
-style "longomatch-drawingarea" {
-  bg[NORMAL]        = @bg_dark_color
-}
-
-style "longomatch-treeview" {
-  # Background color
-  base[NORMAL]       = @bg_dark_color
-  # Line color when active (default)
-  base[ACTIVE]       = @active_color
-  # Line color when selected
-  base[SELECTED]     = @active_color
-  text[NORMAL]       = @text_color
-  text[SELECTED]     = @text_color
-  text[ACTIVE]       = @text_color
-
-  # We can also customize odd/even row colors
-  #GtkTreeView::odd_row_color      = "#5f5f5f"
-  #GtkTreeView::even_row_color     = "#828282"
-}
-
-style "longomatch-light-background" {
-  bg[NORMAL]           = @bg_light_color
-}
-
-style "longomatch-menubar" {
-  bg[NORMAL]           = @bg_light_color
-}
-
-style "longomatch-menuitem" {
-  # Text colors in their different states
-  fg[NORMAL]         = @text_color
-  fg[PRELIGHT]       = @text_color
-  fg[INSENSITIVE]    = @base_color
-  # Highlight menuitem in the menu
-  bg[SELECTED]       = @bg_light_color
-  # and in the menubar
-  bg[PRELIGHT]       = @bg_color
-}
-
-style "longomatch-aspect-frame"
-{
-  xthickness = 0
-  ythickness = 0
-}
-
-include "buttons.rc"
-include "notebook.rc"
-include "combobox.rc"
-include "checkbox.rc"
-include "handles.rc"
-include "radiobutton.rc"
-include "entry.rc"
-include "range.rc"
-include "scrollbar.rc"
-include "separator.rc"
-
 class "GtkWidget"                                style "longomatch-default"
-class "GtkEntry"                                 style "longomatch-entry"
-class "GtkButton"                                style "longomatch-square-button"
-class "GtkNotebook"                              style "longomatch-notebook"
-widget_class "*<GtkNotebook>*<GtkLabel>"         style "longomatch-notebook-tab-label"
-class "GtkPaned"                                 style "longomatch-handles"
-#Remove borders completely
-class "GtkAspectFrame"                           style "longomatch-aspect-frame"
-class "GtkCheckButton"                           style "longomatch-checkbox"
-widget_class "*<GtkCheckButton>.<GtkLabel>"      style "longomatch-checkbox-label"
-class "GtkCheckMenuItem"                         style "longomatch-checkbox"
-class "GtkRadioButton"                           style "longomatch-radiobutton"
-widget_class "*<GtkRadioButton>.<GtkLabel>"      style "longomatch-radiobutton-label"
-class "GtkTreeView"                              style "longomatch-treeview"
-class "GtkIconView"                              style "longomatch-treeview"
-class "GtkTextView"                              style "longomatch-treeview"
-# Painful bug in GTK forces us to define a style for each orientation.
-# Indeed when providing different images for different orientation, GTK will pick the wrong orientation when the scale reaches boundaries…
-class "GtkHScale"                                style "longomatch-hscale"
-class "GtkVScale"                                style "longomatch-vscale"
-class "GtkScrollbar"                             style "longomatch-scrollbar"
-class "GtkSeparator"                             style "longomatch-separator"
-# Background for the menubar
-class "GtkMenuBar"                               style "longomatch-menubar"
-# Text color for the menu items in the bar and the menus
-widget_class "*.GtkMenu.*"                       style "longomatch-menuitem"
-widget_class "*.GtkMenuBar.*"                    style "longomatch-menuitem"
-# Comboboxes get a nice rounded border with green arrows
-widget_class "*<GtkComboBox>"                    style "longomatch-combobox"
-widget_class "*<GtkComboBox>*<GtkButton>"        style "longomatch-button-nofocus"
-# Custom combos for team vs team
-widget_class "*HomeTeamsComboBox*"               style "longomatch-home-teams-combobox"
-widget_class "*AwayTeamsComboBox*"               style "longomatch-away-teams-combobox"
-# Order matters here
-widget_class "*<GtkComboBox>.*"                  style "longomatch-combobox-children"
-widget_class "*TeamsComboBox*.*"                 style "longomatch-teams-combobox-children"
 
-widget "*entryeventbox"                          style "longomatch-custom-entry"
-widget "*entryeventbox.*"                        style "longomatch-custom-entry-children"
 
-widget "*editorbuttonbar.*" style "longomatch-editor"
-widget "*dashboardeditorvbox.*.drawingarea" style "longomatch-drawingarea"
-widget "*roundedbutton*" style "longomatch-rounded-button"
-widget "*rectbutton*" style "longomatch-rect-button"
-widget "*headereventbox" style "longomatch-header"
-widget "*lightbackgroundeventbox*" style "longomatch-light-background"
-widget "*videoeventbox*" style "longomatch-default"
