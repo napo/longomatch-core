@@ -1,7 +1,7 @@
 dnl Warning: This is an automatically generated file, do not edit!
 dnl Process this file with autoconf to produce a configure script.
 AC_PREREQ([2.54])
-AC_INIT([LongoMatch], [1.1])
+AC_INIT([TagTics], [1.1])
 AM_INIT_AUTOMAKE([1.11 foreign])
 AM_SILENT_RULES([yes])
 AM_MAINTAINER_MODE([enable])
@@ -28,7 +28,7 @@ AC_PROG_INSTALL
 #*******************************************************************************
 # Internationalization
 #*******************************************************************************
-GETTEXT_PACKAGE=longomatch
+GETTEXT_PACKAGE=tagtics
 AC_SUBST(GETTEXT_PACKAGE)
 AC_DEFINE_UNQUOTED(GETTEXT_PACKAGE,"$GETTEXT_PACKAGE", [GETTEXT package name])
 
