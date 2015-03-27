@@ -74,11 +74,11 @@ Petr Kovar (cs)
 Pop Eugen (po)
 Xavier Queralt Mateu (ca)";
 
-		public const string WEBSITE = "http://www.longomatch.com";
+		public const string WEBSITE = "http://www.fluendo.com";
 
 		public const string LATEST_VERSION_URL = "http://cdn.longomatch.com/latest-longomatch.json";
 
-		public const string MANUAL = "http://www.longomatch.com/documentation/manual.html";
+		public const string MANUAL = "http://www.fluendo.com";
 
 		#if HAVE_GTK
 		public const int STEP = (int)Gdk.ModifierType.ShiftMask;
