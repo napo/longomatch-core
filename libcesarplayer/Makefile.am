@@ -4,7 +4,8 @@
 AM_CPPFLAGS = \
 	-DPACKAGE_SRC_DIR=\""$(srcdir)"\" \
 	-DPACKAGE_DATA_DIR=\""$(datadir)"\" \
-	$(CESARPLAYER_CFLAGS)
+	$(GTK_CFLAGS) \
+	$(GST_CFLAGS)
 
 if OSTYPE_OS_X
 AM_CPPFLAGS += \
@@ -55,7 +56,8 @@ libcesarplayer_la_SOURCES = \
 	lgm-utils.h
 
 libcesarplayer_la_LDFLAGS = \
-	$(CESARPLAYER_LIBS)
+	$(GTK_LIBS) \
+	$(GST_LIBS)
 
 if OSTYPE_WINDOWS
 libcesarplayer_la_LDFLAGS += -no-undefined
@@ -70,16 +72,16 @@ EXTRA_DIST = \
 noinst_PROGRAMS = test-capturer test-encoder test-discoverer test-remuxer test-editor
 
 test_capturer_SOURCES = test-capturer.c
-test_capturer_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
+test_capturer_LDADD =  libcesarplayer.la
 
 test_encoder_SOURCES = test-encoder.c
-test_encoder_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
+test_encoder_LDADD =  libcesarplayer.la
 
 test_discoverer_SOURCES = test-discoverer.c
-test_discoverer_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
+test_discoverer_LDADD =  libcesarplayer.la
 
 test_remuxer_SOURCES = test-remuxer.c
-test_remuxer_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
+test_remuxer_LDADD =  libcesarplayer.la
 
 test_editor_SOURCES = test-editor.c
-test_editor_LDADD =  libcesarplayer.la $(CESARPLAYER_LIBS)
+test_editor_LDADD =  libcesarplayer.la
