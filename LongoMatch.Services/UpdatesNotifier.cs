@@ -32,7 +32,7 @@ namespace LongoMatch.Services
 				wb.DownloadFile (url, filename);
 			} catch (Exception ex) {
 				Log.WarningFormat ("UpdatesNotifier: Error downloading version file from {0} to {1} (User-Agent: {2})",
-						url, filename, userAgent);
+					url, filename, userAgent);
 				Log.Exception (ex);
 				return false;
 			}
@@ -54,7 +54,7 @@ namespace LongoMatch.Services
 
 				latestVersion = new Version (latestObject ["version"].Value<string> ());
 				downloadURL = latestObject ["url"].Value<string> ();
-				changeLog = latestObject["changes"].Value<string> ();
+				changeLog = latestObject ["changes"].Value<string> ();
 			} catch (Exception ex) {
 				Log.WarningFormat ("UpdatesNotifier: Error parsing version file {0}", filename);
 				Log.Exception (ex);
@@ -98,7 +98,7 @@ namespace LongoMatch.Services
 
 			Config.GUIToolkit.Invoke (delegate {
 				bool ignore = Config.GUIToolkit.NewVersionAvailable (currentVersion, latestVersion,
-					downloadURL, changeLog, null);
+					              downloadURL, changeLog, null);
 				if (ignore) {
 					/* User requested to ignore this version */
 					Log.InformationFormat ("UpdatesNotifier: Marking version {0} as silenced.", latestVersion);
