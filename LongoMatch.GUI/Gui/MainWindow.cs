@@ -52,7 +52,7 @@ namespace LongoMatch.Gui
 			this.guiToolKit = guiToolkit;
 			Title = Constants.SOFTWARE_NAME;
 			// Configure window icon
-			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Button);
+			Icon = Misc.LoadIcon (Config.SoftwareIconName, IconSize.Dialog);
 			projectType = ProjectType.None;
 			
 			ConnectSignals ();
