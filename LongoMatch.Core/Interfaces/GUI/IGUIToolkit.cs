@@ -113,7 +113,7 @@ namespace LongoMatch.Core.Interfaces.GUI
 
 		DateTime SelectDate (DateTime date, object widget);
 
-		EndCaptureResponse EndCapture ();
+		EndCaptureResponse EndCapture (bool isCapturing);
 
 		bool SelectMediaFiles (Project project);
 
