@@ -292,6 +292,7 @@ namespace LongoMatch.Drawing.Widgets
 					SourceTags = anchor.Tags
 				}; 
 				movingLink = new ActionLinkObject (anchor, null, link);
+				Log.Debug ("Creating link object " + anchor.SelectionArea);
 				AddObject (movingLink);
 				ClearSelection ();
 				UpdateSelection (new Selection (movingLink, SelectionPosition.LineStop, 0), false);
@@ -311,6 +312,7 @@ namespace LongoMatch.Drawing.Widgets
 					link.SourceButton.ActionLinks.Add (link);
 					movingLink.Destination = destAnchor;
 					destAnchor.Highlighted = false;
+					Log.Debug ("Created link object " + destAnchor.SelectionArea);
 					if (ActionLinkCreatedEvent != null) {
 						ActionLinkCreatedEvent (link);
 					}

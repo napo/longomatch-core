@@ -163,10 +163,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			int tagsPerRow = Math.Max (1, Button.TagsPerRow);
 			nrows = 0;
 
-			if (Button.ShowSubcategories) {
-				foreach (List<Tag> tags in tagsByGroup.Values) {
-					nrows += (int)Math.Ceiling ((float)tags.Count / tagsPerRow);
-				}
+			foreach (List<Tag> tags in tagsByGroup.Values) {
+				nrows += (int)Math.Ceiling ((float)tags.Count / tagsPerRow);
 			}
 		}
 

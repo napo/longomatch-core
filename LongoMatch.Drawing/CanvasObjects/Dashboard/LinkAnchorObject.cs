@@ -58,9 +58,17 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			set;
 		}
 
+		Point relativePosition;
 		public Point RelativePosition {
-			get;
-			set;
+			get {
+				return relativePosition;
+			}
+			set {
+				if (Double.IsNaN (value.Y)) {
+					Console.WriteLine (value);
+				}
+				relativePosition = value;
+			}
 		}
 
 		public double Width {
