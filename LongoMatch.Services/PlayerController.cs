@@ -313,6 +313,7 @@ namespace LongoMatch.Services
 		{
 			if (StillImageLoaded) {
 				imageLoadedTS = time;
+				Tick ();
 			} else {
 				EmitLoadDrawings (null);
 				if (readyToSeek) {
@@ -857,6 +858,7 @@ namespace LongoMatch.Services
 		{
 			loadedPlaylistElement = image;
 			StillImageLoaded = true;
+			Play();
 		}
 
 		void LoadFrameDrawing (PlaylistDrawing drawing)
@@ -947,6 +949,7 @@ namespace LongoMatch.Services
 			if (StillImageLoaded) {
 				EmitTimeChanged (imageLoadedTS, loadedPlaylistElement.Duration);
 				if (imageLoadedTS >= loadedPlaylistElement.Duration) {
+					Pause ();
 					Config.EventsBroker.EmitNextPlaylistElement (loadedPlaylist);
 				} else {
 					imageLoadedTS.MSeconds += TIMEOUT_MS;
@@ -1000,7 +1003,9 @@ namespace LongoMatch.Services
 						ReconfigureTimeout (0);
 					}
 				}
-				EmitPlaybackStateChanged (this, playing);
+				if (!StillImageLoaded) {
+					EmitPlaybackStateChanged (this, playing);
+				}
 			});
 		}
 
