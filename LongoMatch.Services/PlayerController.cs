@@ -495,6 +495,9 @@ namespace LongoMatch.Services
 			if (evt.Start != null && evt.Stop != null) {
 				LoadSegment (fileSet, evt.Start, evt.Stop, seekTime, evt.Rate,
 					evt.CamerasConfig, evt.CamerasLayout, playing);
+				if (loadedEvent == null) { // LoadSegment sometimes removes the loadedEvent
+					loadedEvent = evt;
+				}
 			} else if (evt.EventTime != null) {
 				Seek (evt.EventTime, true);
 			} else {
@@ -1027,8 +1030,10 @@ namespace LongoMatch.Services
 				} else {
 					Time position = null;
 					if(loadedEvent != null) {
+						Log.Debug("Seeking back to event start");
 						position = loadedEvent.Start;
 					} else {
+						Log.Debug("Seeking back to 0");
 						position = new Time (0);
 					}
 					Seek (position, true);
