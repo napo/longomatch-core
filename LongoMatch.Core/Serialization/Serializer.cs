@@ -108,7 +108,7 @@ namespace LongoMatch.Core.Common
 			}
 		}
 
-		static JsonSerializerSettings JsonSettings {
+		public static JsonSerializerSettings JsonSettings {
 			get {
 				JsonSerializerSettings settings = new JsonSerializerSettings ();
 				settings.Formatting = Formatting.Indented;
