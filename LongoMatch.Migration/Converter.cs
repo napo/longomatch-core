@@ -24,6 +24,7 @@ using LongoMatch.Store;
 using System.Collections.Generic;
 using LongoMatch.DB;
 using LongoMatch.Interfaces;
+using System.Collections.ObjectModel;
 
 namespace LongoMatch.Migration
 {
@@ -153,7 +154,7 @@ namespace LongoMatch.Migration
 			if (dashboard.ID == Guid.Empty) {
 				dashboard.ID = Guid.NewGuid ();
 			}
-			dashboard.GamePeriods = new List<string> { "1", "2" };
+			dashboard.GamePeriods = new ObservableCollection<string> { "1", "2" };
 			
 			foreach (Category cat in cats) {
 				var button = new LongoMatch.Core.Store.AnalysisEventButton {

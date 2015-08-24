@@ -109,6 +109,7 @@
     <Compile Include="Services\TestPlaylistManager.cs" />
     <Compile Include="DB\TestViews.cs" />
     <Compile Include="Core\Serialization\TestObjectChangedParser.cs" />
+    <Compile Include="Core\Store\Playlists\TestPlaylist.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
