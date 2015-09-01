@@ -22,6 +22,7 @@ using System.Reflection;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
+using LongoMatch.Core.Store;
 
 namespace LongoMatch.Services.Services
 {
@@ -39,6 +40,7 @@ namespace LongoMatch.Services.Services
 				Log.Information ("Creating directory " + basePath);
 				Directory.CreateDirectory (basePath);
 			}
+			Info = new StorageInfo ();
 		}
 
 		~FileStorage ()
@@ -122,6 +124,11 @@ namespace LongoMatch.Services.Services
 		}
 
 		#region IStorage implementation
+
+		public StorageInfo Info {
+			get;
+			set;
+		}
 
 		public void Fill (IStorable storable) {
 		}
