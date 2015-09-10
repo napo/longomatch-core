@@ -33,10 +33,8 @@ namespace LongoMatch.Services
 		IMultimediaToolkit multimediaToolkit;
 		IAnalysisWindow analysisWindow;
 
-		public ProjectsManager (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
+		public ProjectsManager ()
 		{
-			this.multimediaToolkit = multimediaToolkit;
-			this.guiToolkit = guiToolkit;
 		}
 
 		public Project OpenedProject {
@@ -431,6 +429,8 @@ namespace LongoMatch.Services
 
 		public bool Start ()
 		{
+			multimediaToolkit = Config.MultimediaToolkit;
+			guiToolkit = Config.GUIToolkit;
 			Config.EventsBroker.NewProjectEvent += NewProject;
 			Config.EventsBroker.OpenProjectEvent += OpenProject;
 			Config.EventsBroker.OpenProjectIDEvent += OpenProjectID;
@@ -445,6 +445,8 @@ namespace LongoMatch.Services
 
 		public bool Stop ()
 		{
+			multimediaToolkit = null;
+			guiToolkit = null;
 			Config.EventsBroker.NewProjectEvent -= NewProject;
 			Config.EventsBroker.OpenProjectEvent -= OpenProject;
 			Config.EventsBroker.OpenProjectIDEvent -= OpenProjectID;
