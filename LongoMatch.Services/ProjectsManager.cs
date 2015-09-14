@@ -131,16 +131,19 @@ namespace LongoMatch.Services
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				Log.Debug ("Backing up project to file");
+
+				string filePathNoExtension = Path.GetDirectoryName (filePath) + Path.DirectorySeparatorChar + Path.GetFileNameWithoutExtension (filePath);
 				string projectFile = DateTime.Now.ToString ().Replace ("-", "_");
 				projectFile = projectFile.Replace (":", "_");
 				projectFile = projectFile.Replace (" ", "_");
 				projectFile = projectFile.Replace ("/", "_");
-				projectFile = filePath + "_" + projectFile;
+				projectFile = filePathNoExtension + "_" + projectFile;
 				Project.Export (OpenedProject, projectFile);
 				guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message + "\n\n" +
 				Catalog.GetString ("The video file and a backup of the project has been " +
 				"saved. Try to import it later:\n") +
-				filePath + "\n" + projectFile);
+				filePath + "\n" + projectFile + Constants.PROJECT_EXT);
+
 			}
 		}
 
@@ -294,15 +297,17 @@ namespace LongoMatch.Services
 			if (projectType == ProjectType.FileProject) {
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
-				} catch (Exception e) {
-					Log.Exception (e);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				}
 			} else if (projectType == ProjectType.FakeCaptureProject) {
 				project.Periods = Capturer.Periods;
 				try {
 					Config.DatabaseManager.ActiveDB.UpdateProject (project);
-				} catch (Exception e) {
-					Log.Exception (e);
+				} catch (Exception ex) {
+					Log.Exception (ex);
+					guiToolkit.ErrorMessage (Catalog.GetString ("An error occured saving the project:\n") + ex.Message);
 				}
 			} else if (projectType == ProjectType.CaptureProject ||
 			           projectType == ProjectType.URICaptureProject) {
