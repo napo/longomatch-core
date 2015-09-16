@@ -153,7 +153,7 @@ namespace LongoMatch.Services
 			FrameDrawing drawing = null;
 			Time pos;
 
-			player.Pause ();
+			player.Pause (true);
 			if (play == null) {
 				play = loadedPlay;
 			}
