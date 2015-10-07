@@ -354,12 +354,6 @@ namespace LongoMatch.Services
 				guiToolkit.ErrorMessage (ex.Message);
 				return;
 			}
-			if (project.Description.FileSet.Duration == null) {
-				Log.Warning("The selected project is empty. Rediscovering files");
-				for(int i = 0; i < project.Description.FileSet.Count; i++){
-					project.Description.FileSet[i] = Config.MultimediaToolkit.DiscoverFile (project.Description.FileSet[i].FilePath);
-				}
-			}
 			// FIXME
 			if (project.IsFakeCapture) {
 				/* If it's a fake live project prompt for a video file and
@@ -367,6 +361,13 @@ namespace LongoMatch.Services
 				Log.Debug ("Importing fake live project");
 				Config.EventsBroker.EmitNewProject (project);
 				return;
+			}
+
+			if (project.Description.FileSet.Duration == null) {
+				Log.Warning("The selected project is empty. Rediscovering files");
+				for(int i = 0; i < project.Description.FileSet.Count; i++){
+					project.Description.FileSet[i] = Config.MultimediaToolkit.DiscoverFile (project.Description.FileSet[i].FilePath);
+				}
 			}
 			project.UpdateEventTypesAndTimers ();
 			SetProject (project, ProjectType.FileProject, new CaptureSettings ());
