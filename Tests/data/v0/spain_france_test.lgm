@@ -1,7 +1,6 @@
 ﻿{
   "$id": "1",
   "$type": "LongoMatch.Core.Store.Project, LongoMatch.Core",
-  "ID": "cab53400-8496-462f-8163-f9f6f97f981e",
   "Dashboard": {
     "$id": "2",
     "$type": "LongoMatch.Core.Store.Templates.Dashboard, LongoMatch.Core",
@@ -15,7 +14,6 @@
         "EventType": {
           "$id": "4",
           "$type": "LongoMatch.Core.Store.AnalysisEventType, LongoMatch.Core",
-          "ID": "e852ba03-d9b8-43c0-aeef-d0a386234ec3",
           "Tags": [
             {
               "$id": "5",
@@ -32,6 +30,7 @@
               "HotKey": "-1 -1"
             }
           ],
+          "ID": "e852ba03-d9b8-43c0-aeef-d0a386234ec3",
           "Name": "Rebounds",
           "Color": "#00FF4CFF",
           "TagGoalPosition": false,
@@ -62,8 +61,8 @@
         "EventType": {
           "$id": "8",
           "$type": "LongoMatch.Core.Store.AnalysisEventType, LongoMatch.Core",
-          "ID": "9e323e79-b30d-45cf-b20f-515d223d234f",
           "Tags": [],
+          "ID": "9e323e79-b30d-45cf-b20f-515d223d234f",
           "Name": "Assists",
           "Color": "#08AE4DFF",
           "TagGoalPosition": false,
@@ -94,7 +93,6 @@
         "EventType": {
           "$id": "10",
           "$type": "LongoMatch.Core.Store.AnalysisEventType, LongoMatch.Core",
-          "ID": "42b1a26f-2eb7-4312-92eb-75b1710536f8",
           "Tags": [
             {
               "$id": "11",
@@ -125,6 +123,7 @@
               "HotKey": "-1 -1"
             }
           ],
+          "ID": "42b1a26f-2eb7-4312-92eb-75b1710536f8",
           "Name": "Turn overs",
           "Color": "#FF00CCFF",
           "TagGoalPosition": false,
@@ -155,8 +154,8 @@
         "EventType": {
           "$id": "16",
           "$type": "LongoMatch.Core.Store.AnalysisEventType, LongoMatch.Core",
-          "ID": "1007dc2d-d69b-4604-aa4d-4968ae54ff5b",
           "Tags": [],
+          "ID": "1007dc2d-d69b-4604-aa4d-4968ae54ff5b",
           "Name": "Steals",
           "Color": "#F5FF00FF",
           "TagGoalPosition": false,
@@ -187,8 +186,8 @@
         "EventType": {
           "$id": "18",
           "$type": "LongoMatch.Core.Store.AnalysisEventType, LongoMatch.Core",
-          "ID": "547546b0-ffbd-4983-9290-c0a397a85453",
           "Tags": [],
+          "ID": "547546b0-ffbd-4983-9290-c0a397a85453",
           "Name": "Blocks",
           "Color": "#4E0089FF",
           "TagGoalPosition": false,
@@ -410,6 +409,7 @@
           "Team": 1
         },
         "Name": "Possession",
+        "StartTime": null,
         "Position": "10 110",
         "Width": 130,
         "Height": 130,
@@ -591,6 +591,7 @@
           "Team": 2
         },
         "Name": "Possession",
+        "StartTime": null,
         "Position": "160 110",
         "Width": 120,
         "Height": 130,
@@ -694,7 +695,7 @@
   },
   "LocalTeamTemplate": {
     "$id": "62",
-    "$type": "LongoMatch.Core.Store.Templates.TeamTemplate, LongoMatch.Core",
+    "$type": "LongoMatch.Core.Store.Templates.Team, LongoMatch.Core",
     "ID": "71051b34-613c-41eb-92e5-df0bfea69aa6",
     "List": [
       {
@@ -918,7 +919,7 @@
   },
   "VisitorTeamTemplate": {
     "$id": "75",
-    "$type": "LongoMatch.Core.Store.Templates.TeamTemplate, LongoMatch.Core",
+    "$type": "LongoMatch.Core.Store.Templates.Team, LongoMatch.Core",
     "ID": "66366ce0-4119-4f67-8743-e013091f2db6",
     "List": [
       {
@@ -1176,6 +1177,7 @@
       "SortMethod": 1
     }
   ],
+  "ID": "cab53400-8496-462f-8163-f9f6f97f981e",
   "Timeline": [
     {
       "$id": "89",
@@ -1224,6 +1226,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 001",
       "Start": 495840,
       "Stop": 505840,
@@ -1277,6 +1280,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 002",
       "Start": 528969,
       "Stop": 538969,
@@ -1338,6 +1342,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 002",
       "Start": 537432,
       "Stop": 547432,
@@ -1384,6 +1389,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 001",
       "Start": 536046,
       "Stop": 546046,
@@ -1438,6 +1444,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 003",
       "Start": 561615,
       "Stop": 571615,
@@ -1491,6 +1498,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 003",
       "Start": 590931,
       "Stop": 600931,
@@ -1537,6 +1545,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Possession 001",
       "Start": 592520,
       "Stop": 602520,
@@ -1590,6 +1599,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 004",
       "Start": 609189,
       "Stop": 619189,
@@ -1644,6 +1654,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 002",
       "Start": 610369,
       "Stop": 620369,
@@ -1697,6 +1708,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 005",
       "Start": 628510,
       "Stop": 638510,
@@ -1717,7 +1729,7 @@
           "$ref": "73"
         }
       ],
-      "Team": 0,
+      "Team": 1,
       "Tags": [
         {
           "$id": "139",
@@ -1751,6 +1763,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 001",
       "Start": 630654,
       "Stop": 640654,
@@ -1807,6 +1820,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 006",
       "Start": 639024,
       "Stop": 649024,
@@ -1868,6 +1882,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 003",
       "Start": 637803,
       "Stop": 647803,
@@ -1921,6 +1936,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 007",
       "Start": 657999,
       "Stop": 667999,
@@ -1974,6 +1990,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 008",
       "Start": 671427,
       "Stop": 681427,
@@ -2020,6 +2037,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 004",
       "Start": 671058,
       "Stop": 681058,
@@ -2073,6 +2091,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 009",
       "Start": 685653,
       "Stop": 695653,
@@ -2093,7 +2112,7 @@
           "$ref": "65"
         }
       ],
-      "Team": 0,
+      "Team": 1,
       "Tags": [
         {
           "$id": "174",
@@ -2127,6 +2146,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 002",
       "Start": 687696,
       "Stop": 697696,
@@ -2180,6 +2200,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 010",
       "Start": 702207,
       "Stop": 712207,
@@ -2226,6 +2247,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 005",
       "Start": 699876,
       "Stop": 709876,
@@ -2279,6 +2301,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 011",
       "Start": 718810,
       "Stop": 728810,
@@ -2299,7 +2322,7 @@
           "$ref": "83"
         }
       ],
-      "Team": 0,
+      "Team": 2,
       "Tags": [
         {
           "$id": "193",
@@ -2333,6 +2356,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 003",
       "Start": 720260,
       "Stop": 730260,
@@ -2386,6 +2410,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 012",
       "Start": 723257,
       "Stop": 733257,
@@ -2439,6 +2464,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 001",
       "Start": 724664,
       "Stop": 734664,
@@ -2492,6 +2518,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 013",
       "Start": 753502,
       "Stop": 763502,
@@ -2553,6 +2580,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 004",
       "Start": 767936,
       "Stop": 777936,
@@ -2606,6 +2634,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 014",
       "Start": 792293,
       "Stop": 802293,
@@ -2652,6 +2681,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Blocks 001",
       "Start": 790699,
       "Stop": 800699,
@@ -2672,7 +2702,7 @@
           "$ref": "73"
         }
       ],
-      "Team": 0,
+      "Team": 1,
       "Tags": [
         {
           "$id": "228",
@@ -2706,6 +2736,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 004",
       "Start": 792623,
       "Stop": 802623,
@@ -2759,6 +2790,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 015",
       "Start": 801207,
       "Stop": 811207,
@@ -2813,6 +2845,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 005",
       "Start": 803117,
       "Stop": 813117,
@@ -2867,6 +2900,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 005",
       "Start": 823100,
       "Stop": 833100,
@@ -2913,6 +2947,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 002",
       "Start": 824327,
       "Stop": 834327,
@@ -2966,6 +3001,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 016",
       "Start": 843676,
       "Stop": 853676,
@@ -3012,6 +3048,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 006",
       "Start": 844552,
       "Stop": 854552,
@@ -3065,6 +3102,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 017",
       "Start": 859619,
       "Stop": 869619,
@@ -3118,6 +3156,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 018",
       "Start": 883262,
       "Stop": 893262,
@@ -3172,6 +3211,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 006",
       "Start": 884695,
       "Stop": 894695,
@@ -3226,6 +3266,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 006",
       "Start": 903988,
       "Stop": 913988,
@@ -3272,6 +3313,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 003",
       "Start": 903880,
       "Stop": 913880,
@@ -3325,6 +3367,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 019",
       "Start": 911545,
       "Stop": 921545,
@@ -3378,6 +3421,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 020",
       "Start": 955184,
       "Stop": 965184,
@@ -3432,6 +3476,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 007",
       "Start": 955811,
       "Stop": 965811,
@@ -3485,6 +3530,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 002",
       "Start": 957266,
       "Stop": 967266,
@@ -3538,6 +3584,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 021",
       "Start": 1003756,
       "Stop": 1013756,
@@ -3591,6 +3638,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 022",
       "Start": 1019078,
       "Stop": 1029078,
@@ -3652,6 +3700,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 008",
       "Start": 1018456,
       "Stop": 1028456,
@@ -3705,6 +3754,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 023",
       "Start": 1035622,
       "Stop": 1045622,
@@ -3766,6 +3816,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 009",
       "Start": 1036110,
       "Stop": 1046110,
@@ -3819,6 +3870,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 024",
       "Start": 1052982,
       "Stop": 1062982,
@@ -3873,6 +3925,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Blocks 002",
       "Start": 1052657,
       "Stop": 1062657,
@@ -3926,6 +3979,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 003",
       "Start": 1053590,
       "Stop": 1063590,
@@ -3979,6 +4033,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 025",
       "Start": 1185815,
       "Stop": 1195815,
@@ -3999,7 +4054,7 @@
           "$ref": "80"
         }
       ],
-      "Team": 0,
+      "Team": 2,
       "Tags": [
         {
           "$id": "352",
@@ -4033,6 +4088,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 010",
       "Start": 1187130,
       "Stop": 1197130,
@@ -4086,6 +4142,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 026",
       "Start": 1204427,
       "Stop": 1214427,
@@ -4139,6 +4196,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 027",
       "Start": 1223213,
       "Stop": 1233213,
@@ -4200,6 +4258,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 011",
       "Start": 1224001,
       "Stop": 1234001,
@@ -4253,6 +4312,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 028",
       "Start": 1224428,
       "Stop": 1234428,
@@ -4307,6 +4367,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 007",
       "Start": 1241377,
       "Stop": 1251377,
@@ -4360,6 +4421,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 029",
       "Start": 1241927,
       "Stop": 1251927,
@@ -4414,6 +4476,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 007",
       "Start": 1266362,
       "Stop": 1276362,
@@ -4460,6 +4523,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Blocks 003",
       "Start": 1267042,
       "Stop": 1277042,
@@ -4506,6 +4570,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 008",
       "Start": 1281381,
       "Stop": 1291381,
@@ -4559,6 +4624,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 030",
       "Start": 1282336,
       "Stop": 1292336,
@@ -4612,6 +4678,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 031",
       "Start": 1297957,
       "Stop": 1307957,
@@ -4673,6 +4740,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 009",
       "Start": 1297138,
       "Stop": 1307138,
@@ -4719,6 +4787,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 010",
       "Start": 1314053,
       "Stop": 1324053,
@@ -4772,6 +4841,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 032",
       "Start": 1314873,
       "Stop": 1324873,
@@ -4825,6 +4895,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 033",
       "Start": 1331275,
       "Stop": 1341275,
@@ -4879,6 +4950,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 012",
       "Start": 1331992,
       "Stop": 1341992,
@@ -4932,6 +5004,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 034",
       "Start": 1349600,
       "Stop": 1359600,
@@ -4986,6 +5059,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 013",
       "Start": 1351542,
       "Stop": 1361542,
@@ -5039,6 +5113,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 004",
       "Start": 1354218,
       "Stop": 1364218,
@@ -5092,6 +5167,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 005",
       "Start": 1393679,
       "Stop": 1403679,
@@ -5145,6 +5221,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 035",
       "Start": 1420622,
       "Stop": 1430622,
@@ -5191,6 +5268,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 011",
       "Start": 1570192,
       "Stop": 1580192,
@@ -5244,6 +5322,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 036",
       "Start": 1571033,
       "Stop": 1581033,
@@ -5387,6 +5466,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 037",
       "Start": 1590166,
       "Stop": 1600166,
@@ -5441,6 +5521,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 014",
       "Start": 1592106,
       "Stop": 1602106,
@@ -5494,6 +5575,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 006",
       "Start": 1599443,
       "Stop": 1609443,
@@ -5547,6 +5629,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 038",
       "Start": 1638782,
       "Stop": 1648782,
@@ -5593,6 +5676,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 012",
       "Start": 1635847,
       "Stop": 1645847,
@@ -5646,6 +5730,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 039",
       "Start": 1657252,
       "Stop": 1667252,
@@ -5692,6 +5777,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 013",
       "Start": 1654820,
       "Stop": 1664820,
@@ -5745,6 +5831,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 040",
       "Start": 1673278,
       "Stop": 1683278,
@@ -5799,6 +5886,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 015",
       "Start": 1674982,
       "Stop": 1684982,
@@ -5853,6 +5941,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 008",
       "Start": 1686962,
       "Stop": 1696962,
@@ -5899,6 +5988,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 004",
       "Start": 1686821,
       "Stop": 1696821,
@@ -5952,6 +6042,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 041",
       "Start": 1695863,
       "Stop": 1705863,
@@ -6005,6 +6096,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 042",
       "Start": 1719127,
       "Stop": 1729127,
@@ -6066,6 +6158,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 016",
       "Start": 1720569,
       "Stop": 1730569,
@@ -6120,6 +6213,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 009",
       "Start": 1723119,
       "Stop": 1733119,
@@ -6173,6 +6267,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 043",
       "Start": 1759687,
       "Stop": 1769687,
@@ -6227,6 +6322,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 017",
       "Start": 1761325,
       "Stop": 1771325,
@@ -6281,6 +6377,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 010",
       "Start": 1778896,
       "Stop": 1788896,
@@ -6327,6 +6424,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 005",
       "Start": 1779287,
       "Stop": 1789287,
@@ -6380,6 +6478,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 007",
       "Start": 1784250,
       "Stop": 1794250,
@@ -6433,6 +6532,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 044",
       "Start": 1814584,
       "Stop": 1824584,
@@ -6486,6 +6586,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 045",
       "Start": 1829168,
       "Stop": 1839168,
@@ -6539,6 +6640,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 008",
       "Start": 1840274,
       "Stop": 1850274,
@@ -6592,6 +6694,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 046",
       "Start": 1859957,
       "Stop": 1869957,
@@ -6660,6 +6763,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 018",
       "Start": 1862205,
       "Stop": 1872205,
@@ -6713,6 +6817,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 047",
       "Start": 1877543,
       "Stop": 1887543,
@@ -6767,6 +6872,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 019",
       "Start": 1881540,
       "Stop": 1891540,
@@ -6820,6 +6926,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 048",
       "Start": 1887914,
       "Stop": 1897914,
@@ -6881,6 +6988,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 020",
       "Start": 1889847,
       "Stop": 1899847,
@@ -6934,6 +7042,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 049",
       "Start": 1907958,
       "Stop": 1917958,
@@ -6988,6 +7097,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 014",
       "Start": 1906355,
       "Stop": 1916355,
@@ -7041,6 +7151,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 050",
       "Start": 1921868,
       "Stop": 1931868,
@@ -7094,6 +7205,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 051",
       "Start": 1941451,
       "Stop": 1951451,
@@ -7147,6 +7259,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 052",
       "Start": 1988139,
       "Stop": 1998139,
@@ -7201,6 +7314,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 021",
       "Start": 1989872,
       "Stop": 1999872,
@@ -7254,6 +7368,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 053",
       "Start": 2011108,
       "Stop": 2021108,
@@ -7300,6 +7415,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Blocks 004",
       "Start": 2011604,
       "Stop": 2021604,
@@ -7354,6 +7470,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 022",
       "Start": 2012001,
       "Stop": 2022001,
@@ -7407,6 +7524,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 054",
       "Start": 2015822,
       "Stop": 2025822,
@@ -7461,6 +7579,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 023",
       "Start": 2018920,
       "Stop": 2028920,
@@ -7514,6 +7633,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 055",
       "Start": 2029230,
       "Stop": 2039230,
@@ -7568,6 +7688,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 015",
       "Start": 2028616,
       "Stop": 2038616,
@@ -7621,6 +7742,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 009",
       "Start": 2049911,
       "Stop": 2059911,
@@ -7674,6 +7796,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 056",
       "Start": 2084397,
       "Stop": 2094397,
@@ -7727,6 +7850,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 057",
       "Start": 2085637,
       "Stop": 2095637,
@@ -7780,6 +7904,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 058",
       "Start": 2100687,
       "Stop": 2110687,
@@ -7848,6 +7973,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Blocks 005",
       "Start": 2101131,
       "Stop": 2111131,
@@ -7901,6 +8027,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 059",
       "Start": 2227681,
       "Stop": 2237681,
@@ -7955,6 +8082,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 024",
       "Start": 2229946,
       "Stop": 2239946,
@@ -8008,6 +8136,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 010",
       "Start": 2235790,
       "Stop": 2245790,
@@ -8061,6 +8190,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 060",
       "Start": 2262553,
       "Stop": 2272553,
@@ -8114,6 +8244,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 061",
       "Start": 2312755,
       "Stop": 2322755,
@@ -8175,6 +8306,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 025",
       "Start": 2314634,
       "Stop": 2324634,
@@ -8229,6 +8361,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 011",
       "Start": 2333502,
       "Stop": 2343502,
@@ -8282,6 +8415,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 011",
       "Start": 2336741,
       "Stop": 2346741,
@@ -8336,6 +8470,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 012",
       "Start": 2373249,
       "Stop": 2383249,
@@ -8389,6 +8524,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 012",
       "Start": 2403575,
       "Stop": 2413575,
@@ -8442,6 +8578,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 062",
       "Start": 2435144,
       "Stop": 2445144,
@@ -8495,6 +8632,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 063",
       "Start": 2451375,
       "Stop": 2461375,
@@ -8549,6 +8687,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 026",
       "Start": 2452143,
       "Stop": 2462143,
@@ -8602,6 +8741,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 064",
       "Start": 2472429,
       "Stop": 2482429,
@@ -8655,6 +8795,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 065",
       "Start": 2581105,
       "Stop": 2591105,
@@ -8701,6 +8842,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 016",
       "Start": 2582847,
       "Stop": 2589600,
@@ -8754,6 +8896,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 066",
       "Start": 2599053,
       "Stop": 2609053,
@@ -8807,6 +8950,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 067",
       "Start": 2617847,
       "Stop": 2627847,
@@ -8861,6 +9005,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 027",
       "Start": 2620113,
       "Stop": 2630113,
@@ -8914,6 +9059,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 013",
       "Start": 2630212,
       "Stop": 2640212,
@@ -8967,6 +9113,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 068",
       "Start": 2658870,
       "Stop": 2668870,
@@ -9020,6 +9167,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 069",
       "Start": 2670854,
       "Stop": 2680854,
@@ -9073,6 +9221,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 070",
       "Start": 2687752,
       "Stop": 2697752,
@@ -9126,6 +9275,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 071",
       "Start": 2703096,
       "Stop": 2713096,
@@ -9179,6 +9329,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 014",
       "Start": 2722822,
       "Stop": 2732822,
@@ -9232,6 +9383,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 072",
       "Start": 2829316,
       "Stop": 2839316,
@@ -9286,6 +9438,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 028",
       "Start": 2836200,
       "Stop": 2843523,
@@ -9339,6 +9492,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 073",
       "Start": 2855089,
       "Stop": 2865089,
@@ -9392,6 +9546,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 015",
       "Start": 2864249,
       "Stop": 2874249,
@@ -9445,6 +9600,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 074",
       "Start": 2892322,
       "Stop": 2902322,
@@ -9499,6 +9655,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 029",
       "Start": 2892779,
       "Stop": 2902779,
@@ -9553,6 +9710,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 013",
       "Start": 3009305,
       "Stop": 3019305,
@@ -9614,6 +9772,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 075",
       "Start": 3013313,
       "Stop": 3023313,
@@ -9660,6 +9819,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 017",
       "Start": 3012866,
       "Stop": 3022866,
@@ -9714,6 +9874,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 014",
       "Start": 3035717,
       "Stop": 3045717,
@@ -9760,6 +9921,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 006",
       "Start": 3036612,
       "Stop": 3046612,
@@ -9821,6 +9983,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 076",
       "Start": 3059851,
       "Stop": 3069851,
@@ -9874,6 +10037,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 016",
       "Start": 3062996,
       "Stop": 3072996,
@@ -9935,6 +10099,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 077",
       "Start": 3103948,
       "Stop": 3113948,
@@ -9996,6 +10161,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 078",
       "Start": 3094856,
       "Stop": 3104856,
@@ -10050,6 +10216,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 015",
       "Start": 3143153,
       "Stop": 3153153,
@@ -10096,6 +10263,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 007",
       "Start": 3143980,
       "Stop": 3153980,
@@ -10157,6 +10325,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 079",
       "Start": 3147654,
       "Stop": 3157654,
@@ -10203,6 +10372,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 018",
       "Start": 3146457,
       "Stop": 3156457,
@@ -10256,6 +10426,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 080",
       "Start": 3171656,
       "Stop": 3181656,
@@ -10310,6 +10481,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 030",
       "Start": 3174856,
       "Stop": 3184856,
@@ -10363,6 +10535,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 017",
       "Start": 3180163,
       "Stop": 3190163,
@@ -10424,6 +10597,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 081",
       "Start": 3219346,
       "Stop": 3229346,
@@ -10485,6 +10659,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 082",
       "Start": 3234741,
       "Stop": 3244741,
@@ -10538,6 +10713,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 083",
       "Start": 3245736,
       "Stop": 3255736,
@@ -10584,6 +10760,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 031",
       "Start": 3246455,
       "Stop": 3256455,
@@ -10645,6 +10822,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 084",
       "Start": 3252772,
       "Stop": 3262772,
@@ -10698,6 +10876,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 085",
       "Start": 3370154,
       "Stop": 3380154,
@@ -10752,6 +10931,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 032",
       "Start": 3372617,
       "Stop": 3382617,
@@ -10798,6 +10978,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 019",
       "Start": 3381398,
       "Stop": 3391398,
@@ -10859,6 +11040,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 086",
       "Start": 3381907,
       "Stop": 3391907,
@@ -10912,6 +11094,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 018",
       "Start": 3397961,
       "Stop": 3407961,
@@ -10966,6 +11149,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 016",
       "Start": 3425525,
       "Stop": 3435525,
@@ -11012,6 +11196,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 008",
       "Start": 3426419,
       "Stop": 3436419,
@@ -11065,6 +11250,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 019",
       "Start": 3428693,
       "Stop": 3438693,
@@ -11118,6 +11304,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 087",
       "Start": 3453422,
       "Stop": 3463422,
@@ -11164,6 +11351,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 020",
       "Start": 3452078,
       "Stop": 3462078,
@@ -11217,6 +11405,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 020",
       "Start": 3469672,
       "Stop": 3479672,
@@ -11271,6 +11460,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 017",
       "Start": 3508655,
       "Stop": 3518655,
@@ -11317,6 +11507,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 009",
       "Start": 3542580,
       "Stop": 3552580,
@@ -11371,6 +11562,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 018",
       "Start": 3542760,
       "Stop": 3552760,
@@ -11424,6 +11616,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 021",
       "Start": 3544524,
       "Stop": 3554524,
@@ -11477,6 +11670,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 088",
       "Start": 3584990,
       "Stop": 3594990,
@@ -11531,6 +11725,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 033",
       "Start": 3587999,
       "Stop": 3597999,
@@ -11592,6 +11787,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 089",
       "Start": 3594735,
       "Stop": 3604735,
@@ -11646,6 +11842,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 034",
       "Start": 3594950,
       "Stop": 3604950,
@@ -11700,6 +11897,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 019",
       "Start": 3608270,
       "Stop": 3618270,
@@ -11746,6 +11944,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 010",
       "Start": 3608457,
       "Stop": 3618457,
@@ -11807,6 +12006,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 090",
       "Start": 3617827,
       "Stop": 3627827,
@@ -11853,6 +12053,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 021",
       "Start": 3619164,
       "Stop": 3629164,
@@ -11906,6 +12107,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 091",
       "Start": 3634167,
       "Stop": 3644167,
@@ -11960,6 +12162,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 035",
       "Start": 3635896,
       "Stop": 3645896,
@@ -12014,6 +12217,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Turn overs 020",
       "Start": 3645646,
       "Stop": 3655646,
@@ -12060,6 +12264,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Steals 011",
       "Start": 3645815,
       "Stop": 3655815,
@@ -12121,6 +12326,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 092",
       "Start": 3650997,
       "Stop": 3660997,
@@ -12174,6 +12380,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 022",
       "Start": 3669256,
       "Stop": 3679256,
@@ -12235,6 +12442,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 093",
       "Start": 3704592,
       "Stop": 3714592,
@@ -12296,6 +12504,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 094",
       "Start": 3716160,
       "Stop": 3726160,
@@ -12349,6 +12558,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 095",
       "Start": 3730495,
       "Stop": 3740495,
@@ -12403,6 +12613,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 036",
       "Start": 3734901,
       "Stop": 3744901,
@@ -12456,6 +12667,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 096",
       "Start": 3737596,
       "Stop": 3747596,
@@ -12510,6 +12722,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 037",
       "Start": 3739595,
       "Stop": 3749595,
@@ -12563,6 +12776,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 097",
       "Start": 3747799,
       "Stop": 3757799,
@@ -12624,6 +12838,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 098",
       "Start": 3776172,
       "Stop": 3786172,
@@ -12685,6 +12900,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 099",
       "Start": 3801836,
       "Stop": 3811836,
@@ -12739,6 +12955,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 038",
       "Start": 3803192,
       "Stop": 3813192,
@@ -12800,6 +13017,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 100",
       "Start": 3803842,
       "Stop": 3813842,
@@ -12853,6 +13071,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 023",
       "Start": 3823888,
       "Stop": 3833888,
@@ -12906,6 +13125,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 101",
       "Start": 3857617,
       "Stop": 3867617,
@@ -12960,6 +13180,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 039",
       "Start": 3860902,
       "Stop": 3870902,
@@ -13021,6 +13242,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 102",
       "Start": 3867565,
       "Stop": 3877565,
@@ -13074,6 +13296,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 024",
       "Start": 3885930,
       "Stop": 3895930,
@@ -13135,6 +13358,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 103",
       "Start": 3909225,
       "Stop": 3919225,
@@ -13196,6 +13420,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 104",
       "Start": 3925650,
       "Stop": 3935650,
@@ -13250,6 +13475,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 040",
       "Start": 3933371,
       "Stop": 3943371,
@@ -13303,6 +13529,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 105",
       "Start": 3931769,
       "Stop": 3941769,
@@ -13356,6 +13583,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 106",
       "Start": 3942933,
       "Stop": 3952933,
@@ -13410,6 +13638,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 041",
       "Start": 3940963,
       "Stop": 3950963,
@@ -13463,6 +13692,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 107",
       "Start": 3956076,
       "Stop": 3966076,
@@ -13517,6 +13747,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 042",
       "Start": 3956922,
       "Stop": 3966922,
@@ -13570,6 +13801,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 025",
       "Start": 3961716,
       "Stop": 3971716,
@@ -13631,6 +13863,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 108",
       "Start": 4016348,
       "Stop": 4026348,
@@ -13684,6 +13917,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Penalty card 026",
       "Start": 4030363,
       "Stop": 4040363,
@@ -13745,6 +13979,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 109",
       "Start": 4066322,
       "Stop": 4076322,
@@ -13806,6 +14041,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 110",
       "Start": 4089545,
       "Stop": 4099545,
@@ -13867,6 +14103,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 111",
       "Start": 4114378,
       "Stop": 4124378,
@@ -13921,6 +14158,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 043",
       "Start": 4127382,
       "Stop": 4137382,
@@ -13974,6 +14212,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 112",
       "Start": 4124876,
       "Stop": 4134876,
@@ -14035,6 +14274,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 113",
       "Start": 4137351,
       "Stop": 4147351,
@@ -14089,6 +14329,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 044",
       "Start": 4137873,
       "Stop": 4147873,
@@ -14150,6 +14391,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 114",
       "Start": 4160045,
       "Stop": 4170045,
@@ -14196,6 +14438,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Assists 022",
       "Start": 4160370,
       "Stop": 4170370,
@@ -14249,6 +14492,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Score 115",
       "Start": 4175935,
       "Stop": 4185935,
@@ -14303,6 +14547,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Rebounds 045",
       "Start": 4177808,
       "Stop": 4187808,
@@ -14421,6 +14666,7 @@
           }
         }
       ],
+      "Miniature": null,
       "Name": "Lineup Spain 2014",
       "EventTime": 474000,
       "Rate": 1.0
@@ -14429,6 +14675,8 @@
   "Description": {
     "$id": "1325",
     "$type": "LongoMatch.Core.Store.ProjectDescription, LongoMatch.Core",
+    "ID": "4f04a128-0ea1-4296-b23d-dc5dab20311f",
+    "ProjectID": "cab53400-8496-462f-8163-f9f6f97f981e",
     "FileSet": {
       "$id": "1326",
       "$type": "LongoMatch.Core.Store.MediaFileSet, LongoMatch.Core",
@@ -14436,26 +14684,23 @@
         {
           "$id": "1327",
           "$type": "LongoMatch.Core.Store.MediaFile, LongoMatch.Core",
-          "FilePath": "/home/andoni/Videos/Sports/Spain-France-mundobasket-2014.mp4",
-          "Duration": 6035193,
+          "FilePath": "/Users/andoni/Amazing_Caves_1080.wmv",
+          "Duration": 85499,
           "HasVideo": true,
-          "HasAudio": false,
+          "HasAudio": true,
           "Container": null,
-          "VideoCodec": null,
-          "AudioCodec": null,
-          "VideoWidth": 1920,
+          "VideoCodec": "Windows Media Video 9",
+          "AudioCodec": "Windows Media Audio 9 Professional",
+          "VideoWidth": 1440,
           "VideoHeight": 1080,
-          "Fps": 25,
-          "Par": 1.0,
-          "Preview": "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",
+          "Fps": 30,
+          "Par": 1.3333333333333333,
+          "Preview": "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",
           "Offset": 0,
           "Name": "Cámara principal"
         }
-      ],
-      "Capacity": 4,
-      "Count": 1
+      ]
     },
-    "DashboardName": null,
     "Season": "2014",
     "Competition": "Mundobasket",
     "Category": null,
@@ -14469,7 +14714,7 @@
     "LocalShield": "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",
     "VisitorShield": "iVBORw0KGgoAAAANSUhEUgAAAGQAAABCCAIAAAAudeQoAAAAA3NCSVQICAjb4U/gAAABLklEQVR4nO3XMUrFUBBA0ZkRRFEQ3Ik7sNFF2LgMwV24C1u34G6s7OSrPxmL78dCglyjhfEepkp4L+TympdxfhU/KSOyeoweu+Ngf+/46PD64vTy7GR3JyursxLt1xERvV2T/fF4yK7OXA/99Pxyd7+6uR0fHmP1WpVj5bqi+n06Y8jIDvbpT2re8v/FWICxAGMBxgKMBRgLMBZgLMBYgLGARcWaefX70qJixfT/5GZ64vW8zf+kzcmaKpLb+bZFxfptxgKMBRgLMBZgLMBYgLEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWICxAGMBxgKMBRgLMBZgLMBYgLEAYwHGAowFGAswFmAswFiAsQBjAcYCjAUYCzAWYCzAWICxAGMBxgKMBbwBprMp3HjOk3EAAAAASUVORK5CYII=",
     "MatchDate": "2014-09-09T11:09:15.032316Z",
-    "LastModified": "2014-11-19T20:45:31.183553Z"
+    "LastModified": "2015-11-23T15:41:25.757648Z"
   },
   "Periods": [
     {
@@ -14674,6 +14919,12 @@
         }
       ],
       "Team": 2
+    },
+    {
+      "$ref": "30"
+    },
+    {
+      "$ref": "49"
     }
   ],
   "Playlists": []
