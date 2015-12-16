@@ -966,7 +966,7 @@ namespace LongoMatch.Services
 
 			UpdateCamerasConfig (camerasConfig, camerasLayout);
 
-			if (fileSet != this.FileSet) {
+			if (fileSet != null && !fileSet.Equals (this.FileSet)) {
 				InternalOpen (fileSet, false);
 			} else {
 				ApplyCamerasConfig ();

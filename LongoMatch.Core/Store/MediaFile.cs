@@ -166,5 +166,16 @@ namespace LongoMatch.Core.Store
 		{
 			return File.Exists (FilePath);
 		}
+
+		public override bool Equals (object obj)
+		{
+			var otherMF = obj as MediaFile;
+			if (otherMF != null) {
+				return FilePath == otherMF.FilePath && Offset == otherMF.Offset &&
+				Name == otherMF.Name && !IsFakeCapture;
+			} else {
+				return base.Equals (obj);
+			}
+		}
 	}
 }

@@ -252,6 +252,16 @@ namespace LongoMatch.Core.Store
 				isLoading = false;
 			}
 		}
+
+		public override bool Equals (object obj)
+		{
+			var otherMFS = obj as MediaFileSet;
+			if (otherMFS != null) {
+				return this.SequenceEqualNoOrder (otherMFS);
+			} else {
+				return base.Equals (obj);
+			}
+		}
 	}
 }
 
