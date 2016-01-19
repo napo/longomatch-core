@@ -499,4 +499,10 @@ namespace LongoMatch.Core.Common
 		And,
 		Or,
 	}
+
+	public enum FileChangeType
+	{
+		Created,
+		Deleted,
+	}
 }
