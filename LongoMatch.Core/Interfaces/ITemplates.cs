@@ -56,6 +56,8 @@ namespace LongoMatch.Core.Interfaces
 
 		void Register (T template);
 
+		void Add (T template);
+
 		void Copy (T template, string copy);
 	}
 
