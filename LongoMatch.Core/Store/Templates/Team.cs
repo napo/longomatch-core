@@ -108,6 +108,13 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
+		[JsonIgnore]
+		public Image Image {
+			get {
+				return Shield;
+			}
+		}
+
 		public int ActiveColor {
 			get;
 			set;

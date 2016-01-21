@@ -146,13 +146,14 @@ namespace LongoMatch.Services
 			storage.Store (template, true);
 		}
 
-		public void Copy (T template, string newName)
+		public T Copy (T template, string newName)
 		{
 			CheckInvalidChars (newName);
 			Log.Information (String.Format ("Copying template {0} to {1}", template.Name, newName));
 
 			template = template.Copy (newName);
 			Save (template);
+			return template;
 		}
 
 		public void Delete (T template)

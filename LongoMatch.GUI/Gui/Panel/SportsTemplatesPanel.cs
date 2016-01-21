@@ -37,16 +37,9 @@ namespace LongoMatch.Gui.Panel
 	{
 		public event BackEventHandle BackEvent;
 
-		const int COL_PIXBUF = 0;
-		const int COL_NAME = 1;
-		const int COL_STATIC = 2;
-		const int COL_DASHBOARD = 3;
-
-		ListStore dashboardsStore;
 		Dashboard loadedDashboard;
 		ICategoriesTemplatesProvider provider;
-		TreeIter selectedIter;
-		List<Dashboard> dashboards;
+		DashboardsTreeView dashboardsTreeview;
 
 		public SportsTemplatesPanel ()
 		{
@@ -109,22 +102,13 @@ namespace LongoMatch.Gui.Panel
 			timerbutton.Clicked += (object sender, EventArgs e) =>
 				buttonswidget.AddButton ("Timer");
 
-			dashboardsStore = new ListStore (typeof(Pixbuf), typeof(string), typeof(bool), typeof(Dashboard));
-
-			// Connect treeview with Model and configure
-			dashboardseditortreeview.Model = dashboardsStore;
-			dashboardseditortreeview.HeadersVisible = false;
-			var cell = new CellRendererText { SizePoints = 14.0 };
-			//cell.Editable = true;
-			cell.Edited += HandleEdited;
-			var col = dashboardseditortreeview.AppendColumn ("Text", cell, "text", COL_NAME);
-			col.AddAttribute (cell, "editable", COL_STATIC);
-			dashboardseditortreeview.SearchColumn = 0;
-			dashboardseditortreeview.EnableGridLines = TreeViewGridLines.None;
-			dashboardseditortreeview.CursorChanged += HandleSelectionChanged;
-			
 			templatesvbox.WidthRequest = 160;
-			
+
+			dashboardsTreeview = new DashboardsTreeView ();
+			dashboardsTreeview.SelectionChanged += HandleSelectionChanged;
+			scrolledwindow1.Add (dashboardsTreeview);
+			dashboardsTreeview.Visible = true;
+
 			buttonswidget.Sensitive = false;
 			buttonswidget.ButtonsVisible = false;
 			buttonswidget.Mode = DashboardMode.Edit;
@@ -140,54 +124,13 @@ namespace LongoMatch.Gui.Panel
 			editdashboardslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
 			editbuttonslabel.ModifyFont (FontDescription.FromString (Config.Style.Font + " 9"));
 
-			Load (null);
+			dashboardsTreeview.Load (null);
 		}
 
 		protected override void OnDestroyed ()
 		{
 			buttonswidget.Destroy ();
 			base.OnDestroyed ();
-		}
-
-		void Load (Dashboard dashboard, TreeIter iter)
-		{
-			loadedDashboard = dashboard;
-			selectedIter = iter;
-		}
-
-		void Load (string templateName)
-		{
-			TreeIter templateIter = TreeIter.Zero;
-			bool first = true;
-
-			dashboards = new List<Dashboard> ();
-			dashboardsStore.Clear ();
-			foreach (Dashboard dashboard in provider.Templates) {
-				Pixbuf img;
-				TreeIter iter;
-				string name;
-				
-				if (dashboard.Image != null)
-					img = dashboard.Image.Value;
-				else
-					img = Helpers.Misc.LoadIcon ("longomatch", 20);
-				
-				name = dashboard.Name;
-				if (dashboard.Static) {
-					name += " (" + Catalog.GetString ("System") + ")";
-				} else {
-					dashboards.Add (dashboard);
-				}
-				iter = dashboardsStore.AppendValues (img, name, !dashboard.Static, dashboard);
-				if (first || dashboard.Name == templateName) {
-					templateIter = iter;
-				}
-				first = false;
-			}
-			if (dashboardsStore.IterIsValid (templateIter)) {
-				dashboardseditortreeview.Selection.SelectIter (templateIter);
-				HandleSelectionChanged (null, null);
-			}
 		}
 
 		void SaveLoadedDashboard ()
@@ -197,7 +140,7 @@ namespace LongoMatch.Gui.Panel
 			if (!SaveTemplate (loadedDashboard)) {
 				return;
 			}
-			dashboardseditortreeview.Model.SetValue (selectedIter, COL_DASHBOARD, loadedDashboard);
+			dashboardsTreeview.UpdateLoadedTemplate ();
 			buttonswidget.Edited = false;
 		}
 
@@ -222,7 +165,7 @@ namespace LongoMatch.Gui.Panel
 						loadedDashboard.Name + "_copy", this).Result;
 					if (newName == null)
 						break;
-					if (dashboards.Any (d => d.Name == newName)) {
+					if (dashboardsTreeview.Templates.Any (d => d.Name == newName)) {
 						msg = Catalog.GetString ("A dashboard with the same name already exists"); 
 						Config.GUIToolkit.ErrorMessage (msg, this);
 					} else {
@@ -236,7 +179,7 @@ namespace LongoMatch.Gui.Panel
 				newtemplate.Name = newName;
 				newtemplate.Static = false;
 				if (SaveTemplate (newtemplate)) {
-					Load (newtemplate.Name);
+					dashboardsTreeview.Load (newtemplate.Name);
 				}
 			}
 		}
@@ -298,30 +241,16 @@ namespace LongoMatch.Gui.Panel
 			editbuttonslabel.Markup = Catalog.GetString ("Manage dashboard buttons");
 		}
 
-		void HandleSelectionChanged (object sender, EventArgs e)
+		void HandleSelectionChanged (Dashboard dashboard)
 		{
-			Dashboard selected;
-			TreeIter iter;
-			
-			dashboardseditortreeview.Selection.GetSelected (out iter);
-
-			try {
-				Dashboard dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as Dashboard;
-				dashboard.Load ();
-				selected = dashboard.Clone ();
-			} catch (Exception ex) {
-				Log.Exception (ex);
-				Config.GUIToolkit.ErrorMessage (Catalog.GetString ("Could not load dashboard"));
-				return;
-			}
-			deletetemplatebutton.Visible = selected != null;
-			buttonswidget.Sensitive = selected != null;
-			if (selected != null) {
+			deletetemplatebutton.Visible = dashboard != null;
+			buttonswidget.Sensitive = dashboard != null;
+			if (dashboard != null) {
 				Save (true);
-				deletetemplatebutton.Sensitive = !selected.Static;
-				buttonswidget.Template = selected;
+				deletetemplatebutton.Sensitive = !dashboard.Static;
+				buttonswidget.Template = dashboard;
 			}
-			Load (selected, iter);
+			loadedDashboard = dashboard;
 		}
 
 		void HandleDeleteTemplateClicked (object sender, EventArgs e)
@@ -330,11 +259,8 @@ namespace LongoMatch.Gui.Panel
 				string msg = Catalog.GetString ("Do you really want to delete the dashboard: ") + loadedDashboard.Name;
 				if (MessagesHelpers.QuestionMessage (this, msg, null)) {
 					provider.Delete (loadedDashboard);
-					dashboardsStore.Remove (ref selectedIter);
-					dashboards.Remove (loadedDashboard);
-					selectedIter = TreeIter.Zero;
-					dashboardseditortreeview.Selection.SelectPath (new TreePath ("0"));
-					HandleSelectionChanged (null, null);
+					dashboardsTreeview.DeleteSelected ();
+					dashboardsTreeview.Load (null);
 				}
 			}
 		}
@@ -371,17 +297,8 @@ namespace LongoMatch.Gui.Panel
 					}
 
 					if (!abort) {
-						Pixbuf img;
-
 						provider.Save (new_dashboard);
-						if (new_dashboard.Image != null)
-							img = new_dashboard.Image.Value;
-						else
-							img = Helpers.Misc.LoadIcon ("longomatch", 20);
-
-						string name = new_dashboard.Name;
-						dashboardsStore.AppendValues (img, name, !new_dashboard.Static, new_dashboard);
-						Load (new_dashboard.Name);
+						dashboardsTreeview.AddTemplate (new_dashboard);
 					}
 				}
 			} catch (Exception ex) {
@@ -402,7 +319,7 @@ namespace LongoMatch.Gui.Panel
 			extensions = new [] { "*" + Constants.CAT_TEMPLATE_EXT };
 			/* Show a file chooser dialog to select the file to export */
 			fileName = Config.GUIToolkit.SaveFile (Catalog.GetString ("Export dashboard"),
-				System.IO.Path.ChangeExtension(loadedDashboard.Name, Constants.CAT_TEMPLATE_EXT), Config.HomeDir,
+				System.IO.Path.ChangeExtension (loadedDashboard.Name, Constants.CAT_TEMPLATE_EXT), Config.HomeDir,
 				filterName, extensions);
 
 			if (fileName != null) {
@@ -430,7 +347,7 @@ namespace LongoMatch.Gui.Panel
 			dialog.Title = dialog.Text = Catalog.GetString ("New dasboard");
 			dialog.SelectText ();
 			dialog.CountText = Catalog.GetString ("Event types:");
-			dialog.AvailableTemplates = dashboards.Select (d => d.Name).ToList ();
+			dialog.AvailableTemplates = dashboardsTreeview.Templates.Select (d => d.Name).ToList ();
 			
 			while (dialog.Run () == (int)ResponseType.Ok) {
 				if (dialog.Text == "") {
@@ -439,7 +356,7 @@ namespace LongoMatch.Gui.Panel
 				} else if (dialog.Text == dialog.SelectedTemplate) {
 					/* The new template has the same name as the orignal one,
 					 * just reload it as if we where copying it */
-					Load (dialog.Text);
+					dashboardsTreeview.Load (dialog.Text);
 					break;
 				} else if (provider.Exists (dialog.Text)) {
 					var msg = Catalog.GetString ("The dashboard already exists. " +
@@ -455,45 +372,28 @@ namespace LongoMatch.Gui.Panel
 			}
 			
 			if (create) {
+				Dashboard dashboard;
+
 				if (dialog.SelectedTemplate != null) {
 					try {
-						provider.Copy (dashboards.FirstOrDefault (d => d.Name == dialog.SelectedTemplate), dialog.Text);
+						dashboard = provider.Copy (dashboardsTreeview.Templates.FirstOrDefault (
+							d => d.Name == dialog.SelectedTemplate), dialog.Text);
 					} catch (InvalidTemplateFilenameException ex) {
 						Config.GUIToolkit.ErrorMessage (ex.Message, this);
 						dialog.Destroy ();
 						return;
 					}
 				} else {
-					Dashboard template;
-					template = Dashboard.DefaultTemplate (dialog.Count);
-					template.Name = dialog.Text;
-					if (!SaveTemplate (template)) {
+					dashboard = Dashboard.DefaultTemplate (dialog.Count);
+					dashboard.Name = dialog.Text;
+					if (!SaveTemplate (dashboard)) {
 						dialog.Destroy ();
 						return;
 					}
 				}
-				Load (dialog.Text);
+				dashboardsTreeview.AddTemplate (dashboard);
 			}
 			dialog.Destroy ();
-		}
-
-		void HandleEdited (object o, EditedArgs args)
-		{
-			TreeIter iter;
-			dashboardsStore.GetIter (out iter, new TreePath (args.Path));
- 
-			Dashboard dashboard = dashboardsStore.GetValue (iter, COL_DASHBOARD) as Dashboard;
-
-			if (dashboard.Name != args.NewText) {
-				if (dashboards.Any (d => d.Name == args.NewText)) {
-					Config.GUIToolkit.ErrorMessage (Catalog.GetString ("A dashboard with the same name already exists"), this);
-					args.RetVal = false;
-				} else {
-					dashboard.Name = args.NewText;
-					provider.Save (dashboard);
-					dashboardsStore.SetValue (iter, 1, args.NewText);
-				}
-			}
 		}
 	}
 }

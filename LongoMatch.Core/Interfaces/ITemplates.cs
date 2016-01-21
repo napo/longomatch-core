@@ -17,8 +17,8 @@
 // 
 using System;
 using System.Collections.Generic;
+using LongoMatch.Core.Common;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.Store;
 
 namespace LongoMatch.Core.Interfaces
 {
@@ -30,6 +30,7 @@ namespace LongoMatch.Core.Interfaces
 
 		int Version { get; set; }
 
+		Image Image { get; }
 	}
 
 	public interface ITemplate<T>: ITemplate
@@ -58,7 +59,7 @@ namespace LongoMatch.Core.Interfaces
 
 		void Add (T template);
 
-		void Copy (T template, string copy);
+		T Copy (T template, string copy);
 	}
 
 	public interface ICategoriesTemplatesProvider: ITemplateProvider<Dashboard>

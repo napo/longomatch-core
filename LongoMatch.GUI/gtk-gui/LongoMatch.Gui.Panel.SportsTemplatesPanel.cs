@@ -82,9 +82,7 @@ namespace LongoMatch.Gui.Panel
 		
 		private global::Gtk.VBox templatesvbox;
 		
-		private global::Gtk.ScrolledWindow GtkScrolledWindow1;
-		
-		private global::Gtk.TreeView dashboardseditortreeview;
+		private global::Gtk.ScrolledWindow scrolledwindow1;
 		
 		private global::Gtk.VBox vbox4;
 		
@@ -384,22 +382,18 @@ namespace LongoMatch.Gui.Panel
 			this.templatesvbox.Name = "templatesvbox";
 			this.templatesvbox.Spacing = 6;
 			// Container child templatesvbox.Gtk.Box+BoxChild
-			this.GtkScrolledWindow1 = new global::Gtk.ScrolledWindow ();
-			this.GtkScrolledWindow1.Name = "GtkScrolledWindow1";
-			this.GtkScrolledWindow1.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child GtkScrolledWindow1.Gtk.Container+ContainerChild
-			this.dashboardseditortreeview = new global::Gtk.TreeView ();
-			this.dashboardseditortreeview.CanFocus = true;
-			this.dashboardseditortreeview.Name = "dashboardseditortreeview";
-			this.GtkScrolledWindow1.Add (this.dashboardseditortreeview);
-			this.templatesvbox.Add (this.GtkScrolledWindow1);
-			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.GtkScrolledWindow1]));
-			w36.Position = 0;
+			this.scrolledwindow1 = new global::Gtk.ScrolledWindow ();
+			this.scrolledwindow1.CanFocus = true;
+			this.scrolledwindow1.Name = "scrolledwindow1";
+			this.scrolledwindow1.ShadowType = ((global::Gtk.ShadowType)(1));
+			this.templatesvbox.Add (this.scrolledwindow1);
+			global::Gtk.Box.BoxChild w35 = ((global::Gtk.Box.BoxChild)(this.templatesvbox [this.scrolledwindow1]));
+			w35.Position = 0;
 			this.hbox1.Add (this.templatesvbox);
-			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.templatesvbox]));
-			w37.Position = 0;
-			w37.Expand = false;
-			w37.Fill = false;
+			global::Gtk.Box.BoxChild w36 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.templatesvbox]));
+			w36.Position = 0;
+			w36.Expand = false;
+			w36.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
 			this.vbox4 = new global::Gtk.VBox ();
 			this.vbox4.Name = "vbox4";
@@ -410,18 +404,18 @@ namespace LongoMatch.Gui.Panel
 			this.buttonswidget.Name = "buttonswidget";
 			this.buttonswidget.Edited = false;
 			this.vbox4.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.buttonswidget]));
-			w38.Position = 0;
+			global::Gtk.Box.BoxChild w37 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.buttonswidget]));
+			w37.Position = 0;
 			this.hbox1.Add (this.vbox4);
-			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
-			w39.Position = 1;
+			global::Gtk.Box.BoxChild w38 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox4]));
+			w38.Position = 1;
 			this.contentvbox.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w40 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
-			w40.Position = 1;
+			global::Gtk.Box.BoxChild w39 = ((global::Gtk.Box.BoxChild)(this.contentvbox [this.hbox1]));
+			w39.Position = 1;
 			this.contentalignment.Add (this.contentvbox);
 			this.dashboardeditorvbox.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w42 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorvbox [this.contentalignment]));
-			w42.Position = 1;
+			global::Gtk.Box.BoxChild w41 = ((global::Gtk.Box.BoxChild)(this.dashboardeditorvbox [this.contentalignment]));
+			w41.Position = 1;
 			this.Add (this.dashboardeditorvbox);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();
