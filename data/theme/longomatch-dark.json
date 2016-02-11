@@ -3,6 +3,7 @@
 	'AwayTeamColor': '#0059FFFF',
 	'PaletteBackground': '#252627FF',
 	'PaletteBackgroundLight': '#3b3b3cFF',
+	'PaletteBackgroundSemiLight': '#323232FF',
 	'PaletteBackgroundDark': '#151a20FF',
 	'PaletteBackgroundDarkBright': '#292e33FF',
 	'PaletteWidgets': '#dfdfdfFF',
