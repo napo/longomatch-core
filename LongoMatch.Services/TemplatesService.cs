@@ -156,15 +156,16 @@ namespace LongoMatch.Services
 		{
 			Log.Information ("Adding new template " + template.Name);
 			try {
-				NotifyCollectionChangedAction action = NotifyCollectionChangedAction.Add;
+				NotifyCollectionChangedEventArgs eventArgs;
 
 				if (storage.Retrieve<T> (template.ID) != null) {
-					action = NotifyCollectionChangedAction.Replace;
+					eventArgs = new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Replace, template, 0);
+				} else {
+					eventArgs = new NotifyCollectionChangedEventArgs (NotifyCollectionChangedAction.Add, template);
 				}
 				storage.Store (template, true);
 				if (CollectionChanged != null) {
-					CollectionChanged (this,
-						new NotifyCollectionChangedEventArgs (action, template));
+					CollectionChanged (this, eventArgs);
 				}
 			} catch (StorageException ex) {
 				Config.GUIToolkit.ErrorMessage (ex.Message);
