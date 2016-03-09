@@ -366,16 +366,6 @@ namespace LongoMatch
 			}
 		}
 
-		public static bool FastTagging {
-			get {
-				return state.fastTagging;
-			}
-			set {
-				state.fastTagging = value;
-				Save ();
-			}
-		}
-
 		public static bool UseGameUnits {
 			get;
 			set;

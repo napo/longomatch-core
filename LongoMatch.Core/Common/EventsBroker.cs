@@ -64,8 +64,7 @@ namespace LongoMatch.Core.Common
 		public event CloseOpenendProjectHandler CloseOpenedProjectEvent;
 		public event ShowFullScreenHandler ShowFullScreenEvent;
 		public event ShowProjectStats ShowProjectStatsEvent;
-		public event TagSubcategoriesChangedHandler TagSubcategoriesChangedEvent;
-		
+
 		/* IMainController */
 		public event NewProjectHandler NewProjectEvent;
 		public event OpenNewProjectHandler OpenNewProjectEvent;
@@ -209,12 +208,6 @@ namespace LongoMatch.Core.Common
 		{
 			if (ShowProjectStatsEvent != null)
 				ShowProjectStatsEvent (project);
-		}
-
-		public void EmitTagSubcategories (bool active)
-		{
-			if (TagSubcategoriesChangedEvent != null)
-				TagSubcategoriesChangedEvent (active);
 		}
 
 		public void EmitShowFullScreen (bool active)

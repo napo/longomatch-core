@@ -135,11 +135,6 @@ namespace LongoMatch.Services
 			analysisWindow.DetachPlayer ();
 		}
 
-		void HandleTagSubcategoriesChangedEvent (bool tagsubcategories)
-		{
-			Config.FastTagging = !tagsubcategories;
-		}
-
 		void HandleShowProjectStatsEvent (Project project)
 		{
 			Config.GUIToolkit.ShowProjectStats (project);
@@ -438,7 +433,6 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlayerSubstitutionEvent += HandlePlayerSubstitutionEvent;
 			Config.EventsBroker.DashboardEditedEvent += HandleDashboardEditedEvent;
 			Config.EventsBroker.ShowProjectStatsEvent += HandleShowProjectStatsEvent;
-			Config.EventsBroker.TagSubcategoriesChangedEvent += HandleTagSubcategoriesChangedEvent;
 			Config.EventsBroker.OpenedProjectChanged += HandleOpenedProjectChanged;
 			Config.EventsBroker.DrawFrame += HandleDrawFrame;
 			Config.EventsBroker.Detach += HandleDetach;
@@ -460,7 +454,6 @@ namespace LongoMatch.Services
 			Config.EventsBroker.PlayerSubstitutionEvent -= HandlePlayerSubstitutionEvent;
 			Config.EventsBroker.DashboardEditedEvent -= HandleDashboardEditedEvent;
 			Config.EventsBroker.ShowProjectStatsEvent -= HandleShowProjectStatsEvent;
-			Config.EventsBroker.TagSubcategoriesChangedEvent -= HandleTagSubcategoriesChangedEvent;
 			Config.EventsBroker.OpenedProjectChanged -= HandleOpenedProjectChanged;
 			Config.EventsBroker.DrawFrame -= HandleDrawFrame;
 			Config.EventsBroker.Detach -= HandleDetach;
