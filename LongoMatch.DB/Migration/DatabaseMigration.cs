@@ -26,6 +26,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using System.Threading;
 
 namespace LongoMatch.DB
 {
@@ -223,7 +224,6 @@ namespace LongoMatch.DB
 			float totalProjects = projectFiles.Count * 2;
 			float percent = 0;
 			List<Task> tasks = new List<Task> ();
-			ConcurrentQueue<Project> projects = new ConcurrentQueue<Project> ();
 			bool ret = true;
 
 			Log.Information ("Start migrating " + databaseName);
@@ -244,45 +244,40 @@ namespace LongoMatch.DB
 					try {
 						Log.Information ("Migrating project " + projectFile);
 						project = Serializer.Instance.Load<Project> (projectFile);
-						if (project != null) {
-							projects.Enqueue (project);
-						}
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;
 					}
 					percent += 1 / totalProjects;
 					progress.Report (percent, "Imported project " + project?.Description.Title, id);
-				});
-				tasks.Add (importTask);
-			}
-			Task.WaitAll (tasks.ToArray ());
 
-			foreach (Project project in projects) {
-				if (project.LocalTeamTemplate.ID != Guid.Empty) {
-					teamNameToID [project.LocalTeamTemplate.Name] = project.LocalTeamTemplate.ID;
-				}
-				if (project.VisitorTeamTemplate.ID != Guid.Empty) {
-					teamNameToID [project.VisitorTeamTemplate.Name] = project.VisitorTeamTemplate.ID;
-				}
-			}
-
-			foreach (Project project in projects) {
-				var importTask = Task.Run (() => {
-					try {
-						ProjectMigration.Migrate0 (project, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
-						database.Store<Project> (project, true);
-					} catch (Exception ex) {
-						Log.Exception (ex);
-						ret = false;
+					if (project != null) {
+						if (project.LocalTeamTemplate.ID != Guid.Empty) {
+							teamNameToID [project.LocalTeamTemplate.Name] = project.LocalTeamTemplate.ID;
+						}
+						if (project.VisitorTeamTemplate.ID != Guid.Empty) {
+							teamNameToID [project.VisitorTeamTemplate.Name] = project.VisitorTeamTemplate.ID;
+						}
+						try {
+							ProjectMigration.Migrate0 (project, scoreNameToID, penaltyNameToID, teamNameToID, dashboardNameToID);
+							database.Store<Project> (project, true);
+						} catch (Exception ex) {
+							Log.Exception (ex);
+							ret = false;
+						}
+						percent += 1 / totalProjects;
+						progress.Report (percent, "Migrated project " + project?.Description.Title, id);
+						project.Dispose ();
+						project = null;
+						GC.Collect ();
 					}
-					percent += 1 / totalProjects;
-					progress.Report (percent, "Migrated project " + project?.Description.Title, id);
 				});
 				tasks.Add (importTask);
 			}
 			Task.WaitAll (tasks.ToArray ());
+
 			Log.Information ("Database " + databaseName + " migrated correctly");
+			database.RetrieveAll<Project> ();
 			return ret;
 		}
 	}

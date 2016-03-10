@@ -27,19 +27,25 @@ namespace LongoMatch.Core.Store
 	/// Player of a team
 	/// </summary>
 	[Serializable]
-	public class Player: StorableBase
+	public class Player: StorableBase, IDisposable
 	{
 
 		#region Constructors
-		public Player()
+
+		public Player ()
 		{
 			ID = Guid.NewGuid ();
 		}
-		
+
+		public void Dispose ()
+		{
+			Photo?.Dispose ();
+		}
+
 		#endregion
 
 		#region Properties
-		
+
 		/// <summary>
 		/// My name
 		/// </summary>
@@ -129,7 +135,7 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		/// <summary>
 		/// Gets or sets the player e-mail.
 		/// </summary>
@@ -147,7 +153,7 @@ namespace LongoMatch.Core.Store
 			get;
 			set;
 		}
-		
+
 		public override string ToString ()
 		{
 			string displayName;
@@ -157,7 +163,7 @@ namespace LongoMatch.Core.Store
 			} else {
 				displayName = Name + " " + LastName;
 			}
-			return String.Format("{0}-{1}", Number, displayName);
+			return String.Format ("{0}-{1}", Number, displayName);
 		}
 
 		#endregion
