@@ -24,7 +24,6 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
