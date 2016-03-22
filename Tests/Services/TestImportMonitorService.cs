@@ -28,6 +28,7 @@ using LongoMatch.DB;
 using LongoMatch.Services;
 using Moq;
 using NUnit.Framework;
+using VAS.DB;
 
 namespace Tests.Services
 {
