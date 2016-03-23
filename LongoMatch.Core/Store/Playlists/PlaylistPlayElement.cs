@@ -23,7 +23,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store.Playlists
+namespace VAS.Core.Store.Playlists
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]

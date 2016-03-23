@@ -26,7 +26,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store.Playlists
+namespace VAS.Core.Store.Playlists
 {
 	[Serializable]
 	public class Playlist: StorableBase

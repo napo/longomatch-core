@@ -24,7 +24,7 @@ using Newtonsoft.Json;
 using SImage = Gdk.Pixbuf;
 #endif
 
-namespace LongoMatch.Core.Store.Playlists
+namespace VAS.Core.Store.Playlists
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
@@ -34,7 +34,7 @@ namespace LongoMatch.Core.Store.Playlists
 		{
 			Image = image;
 			Miniature = image.Scale (Constants.MAX_THUMBNAIL_SIZE,
-			                         Constants.MAX_THUMBNAIL_SIZE);
+				Constants.MAX_THUMBNAIL_SIZE);
 			Duration = duration;
 		}
 
