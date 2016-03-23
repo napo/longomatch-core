@@ -18,7 +18,7 @@
 using System;
 using LongoMatch.Core.Common;
 
-namespace LongoMatch.Core.Store.Drawables
+namespace VAS.Core.Store.Drawables
 {
 	[Serializable]
 	public class Quadrilateral: Drawable
@@ -26,7 +26,7 @@ namespace LongoMatch.Core.Store.Drawables
 		public Quadrilateral ()
 		{
 		}
-		
+
 		public Quadrilateral (Point tl, Point tr, Point bl, Point br)
 		{
 			TopLeft = tl;
@@ -34,27 +34,27 @@ namespace LongoMatch.Core.Store.Drawables
 			BottomLeft = bl;
 			BottomRight = br;
 		}
-		
+
 		public Point TopLeft {
 			get;
 			set;
 		}
-		
+
 		public Point TopRight {
 			get;
 			set;
 		}
-		
-		public Point BottomLeft  {
+
+		public Point BottomLeft {
 			get;
 			set;
 		}
-		
-		public Point BottomRight  {
+
+		public Point BottomRight {
 			get;
 			set;
 		}
-		
+
 		public override Area Area {
 			get {
 				double xmin, xmax, ymin, ymax;
@@ -68,7 +68,8 @@ namespace LongoMatch.Core.Store.Drawables
 			}
 		}
 
-		public override Selection GetSelection (Point p, double pr, bool inMotion=false) {
+		public override Selection GetSelection (Point p, double pr, bool inMotion = false)
+		{
 			double xmin, xmax, ymin, ymax;
 			double d;
 			
@@ -90,12 +91,13 @@ namespace LongoMatch.Core.Store.Drawables
 				return new Selection (this, SelectionPosition.BottomRight, d);
 			} else {
 				Point center = new Point ((TopRight.X - TopLeft.X) / 2,
-				                          (BottomLeft.Y - TopLeft.Y) / 2);
+					               (BottomLeft.Y - TopLeft.Y) / 2);
 				return new Selection (this, SelectionPosition.All, center.Distance (p));
 			}
 		}
-		
-		public override void Move (Selection sel,  Point p, Point moveStart) {
+
+		public override void Move (Selection sel, Point p, Point moveStart)
+		{
 			switch (sel.Position) {
 			case SelectionPosition.TopLeft:
 				TopLeft = p;
@@ -109,21 +111,22 @@ namespace LongoMatch.Core.Store.Drawables
 			case SelectionPosition.BottomRight:
 				BottomRight = p;
 				break;
-			case SelectionPosition.All: {
-				double xdiff, ydiff;
+			case SelectionPosition.All:
+				{
+					double xdiff, ydiff;
 				
-				xdiff = p.X - moveStart.X;
-				ydiff = p.Y - moveStart.Y;
-				TopLeft.X += xdiff;
-				TopLeft.Y += ydiff;
-				TopRight.X += xdiff;
-				TopRight.Y += ydiff;
-				BottomRight.X += xdiff;
-				BottomRight.Y += ydiff;
-				BottomLeft.X += xdiff;
-				BottomLeft.Y += ydiff;
-				break;
-			}
+					xdiff = p.X - moveStart.X;
+					ydiff = p.Y - moveStart.Y;
+					TopLeft.X += xdiff;
+					TopLeft.Y += ydiff;
+					TopRight.X += xdiff;
+					TopRight.Y += ydiff;
+					BottomRight.X += xdiff;
+					BottomRight.Y += ydiff;
+					BottomLeft.X += xdiff;
+					BottomLeft.Y += ydiff;
+					break;
+				}
 			default:
 				throw new Exception ("Unsupported move for quadrilateral:  " + sel.Position);
 			}

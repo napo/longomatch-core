@@ -21,7 +21,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.Drawing;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store.Drawables
+namespace VAS.Core.Store.Drawables
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
@@ -42,38 +42,40 @@ namespace LongoMatch.Core.Store.Drawables
 			get;
 			set;
 		}
-		
+
 		public int LineWidth {
 			get;
 			set;
 		}
-		
+
 		public Color FillColor {
 			get;
 			set;
 		}
-		
+
 		public bool Selected {
 			get;
 			set;
 		}
-		
-		public LineStyle Style{
+
+		public LineStyle Style {
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public virtual Area Area {
 			get;
 			protected set;
 		}
-		
-		public virtual void Reorder () {
+
+		public virtual void Reorder ()
+		{
 		}
-		
-		public virtual Selection GetSelection (Point point, double pr, bool inMotion=false) {
+
+		public virtual Selection GetSelection (Point point, double pr, bool inMotion = false)
+		{
 			Point[] vertices;
 			double d;
 			
@@ -90,24 +92,24 @@ namespace LongoMatch.Core.Store.Drawables
 			
 			/* Check vertices */
 			vertices = Area.Vertices;
-			if (MatchPoint (vertices[0], point, pr, out d)) {
+			if (MatchPoint (vertices [0], point, pr, out d)) {
 				return new Selection (this, SelectionPosition.TopLeft, d);
-			} else if (MatchPoint (vertices[1], point, pr, out d)) {
+			} else if (MatchPoint (vertices [1], point, pr, out d)) {
 				return new Selection (this, SelectionPosition.TopRight, d);
-			} else if (MatchPoint (vertices[2], point, pr, out d)) {
+			} else if (MatchPoint (vertices [2], point, pr, out d)) {
 				return new Selection (this, SelectionPosition.BottomRight, d);
-			} else if (MatchPoint (vertices[3], point, pr, out d)) {
+			} else if (MatchPoint (vertices [3], point, pr, out d)) {
 				return new Selection (this, SelectionPosition.BottomLeft, d);
 			}
 			
 			vertices = Area.VerticesCenter;
-			if (MatchPoint (vertices[0], point, pr, out d)) {
+			if (MatchPoint (vertices [0], point, pr, out d)) {
 				return new Selection (this, SelectionPosition.Top, d);
-			} else if (MatchPoint (vertices[1], point, pr, out d)) {
+			} else if (MatchPoint (vertices [1], point, pr, out d)) {
 				return new Selection (this, SelectionPosition.Right, d);
-			} else if (MatchPoint (vertices[2], point, pr, out d)) {
+			} else if (MatchPoint (vertices [2], point, pr, out d)) {
 				return new Selection (this, SelectionPosition.Bottom, d);
-			} else if (MatchPoint (vertices[3], point, pr, out d)) {
+			} else if (MatchPoint (vertices [3], point, pr, out d)) {
 				return new Selection (this, SelectionPosition.Left, d);
 			}
 			
@@ -115,19 +117,22 @@ namespace LongoMatch.Core.Store.Drawables
 		}
 
 		public abstract void Move (Selection s, Point dst, Point start);
-		
-		public  void Move (SelectionPosition s, Point dst, Point start) {
+
+		public  void Move (SelectionPosition s, Point dst, Point start)
+		{
 			Move (new Selection (null, s, 0), dst, start);
 		}
 
-		public static bool MatchPoint (Point p1, Point p2, double precision, out double accuracy) {
+		public static bool MatchPoint (Point p1, Point p2, double precision, out double accuracy)
+		{
 			accuracy = p1.Distance (p2);
 			return accuracy <= precision;
 		}
-		
-		public static bool MatchAxis (double c1, double c2, double precision, out double accuracy) {
-				accuracy = Math.Abs (c1 - c2);
-				return accuracy <= precision;
+
+		public static bool MatchAxis (double c1, double c2, double precision, out double accuracy)
+		{
+			accuracy = Math.Abs (c1 - c2);
+			return accuracy <= precision;
 		}
 	}
 }

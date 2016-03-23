@@ -20,7 +20,7 @@ using System.Linq;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store.Drawables
+namespace VAS.Core.Store.Drawables
 {
 	[Serializable]
 	public class Rectangle: Quadrilateral
@@ -28,12 +28,12 @@ namespace LongoMatch.Core.Store.Drawables
 		public Rectangle ()
 		{
 		}
-		
+
 		public Rectangle (Point origin, double width, double height)
 		{
 			Update (origin, width, height);
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public double Width {
@@ -41,7 +41,7 @@ namespace LongoMatch.Core.Store.Drawables
 				return TopRight.X - TopLeft.X;
 			}
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public double Height {
@@ -49,7 +49,7 @@ namespace LongoMatch.Core.Store.Drawables
 				return BottomLeft.Y - TopLeft.Y;
 			}
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public Point Center {
@@ -57,7 +57,7 @@ namespace LongoMatch.Core.Store.Drawables
 				return new Point (TopLeft.X + Width / 2, TopLeft.Y + Height / 2);
 			}
 		}
-		
+
 		public void Update (Point origin, double width, double height)
 		{
 			TopLeft = origin;
@@ -65,18 +65,20 @@ namespace LongoMatch.Core.Store.Drawables
 			BottomLeft = new Point (origin.X, origin.Y + height);
 			BottomRight = new Point (origin.X + width, origin.Y + height);
 		}
-		
-		public override void Reorder () {
-			Point [] array = new Point[] {TopLeft, TopRight, BottomLeft, BottomRight};
+
+		public override void Reorder ()
+		{
+			Point[] array = new Point[] { TopLeft, TopRight, BottomLeft, BottomRight };
 			
-			array = array.OrderBy (p=> p.X).ThenBy (p=> p.Y).ToArray();
-			TopLeft = array[0];
-			BottomLeft = array[1];
-			TopRight = array[2];
-			BottomRight = array[3];
+			array = array.OrderBy (p => p.X).ThenBy (p => p.Y).ToArray ();
+			TopLeft = array [0];
+			BottomLeft = array [1];
+			TopRight = array [2];
+			BottomRight = array [3];
 		}
-		
-		public override Selection GetSelection (Point p, double pr=0.05, bool inMotion=false) {
+
+		public override Selection GetSelection (Point p, double pr = 0.05, bool inMotion = false)
+		{
 			Selection selection;
 			double d;
 			
@@ -92,13 +94,14 @@ namespace LongoMatch.Core.Store.Drawables
 				} else if (MatchAxis (p.Y, TopLeft.Y, pr, out d)) {
 					return new Selection (this, SelectionPosition.Top, d);
 				} else if (MatchAxis (p.Y, BottomLeft.Y, pr, out d)) {
-					return new Selection(this, SelectionPosition.Bottom, d);
+					return new Selection (this, SelectionPosition.Bottom, d);
 				}
 			}
 			return selection;
 		}
-		
-		public override void Move (Selection sel, Point p, Point moveStart) {
+
+		public override void Move (Selection sel, Point p, Point moveStart)
+		{
 			switch (sel.Position) {
 			case SelectionPosition.Left:
 				TopLeft.X = BottomLeft.X = p.X;

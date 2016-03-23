@@ -19,7 +19,7 @@ using System;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store.Drawables
+namespace VAS.Core.Store.Drawables
 {
 	[Serializable]
 	public class Line: Drawable

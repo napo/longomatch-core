@@ -19,28 +19,28 @@ using System;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces.Drawing;
 
-namespace LongoMatch.Core.Store.Drawables
+namespace VAS.Core.Store.Drawables
 {
 	[Serializable]
 	public class Selection
 	{
-		public Selection (IMovableObject drawable, SelectionPosition selpos, double accuracy=0)
+		public Selection (IMovableObject drawable, SelectionPosition selpos, double accuracy = 0)
 		{
 			Drawable = drawable;
 			Position = selpos;
 			Accuracy = accuracy;
 		}
-		
+
 		public IMovableObject Drawable {
 			get;
 			set;
 		}
-		
+
 		public SelectionPosition Position {
 			get;
 			set;
 		}
-		
+
 		public double Accuracy {
 			get;
 			set;

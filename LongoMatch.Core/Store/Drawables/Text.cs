@@ -18,30 +18,31 @@
 using System;
 using LongoMatch.Core.Common;
 
-namespace LongoMatch.Core.Store.Drawables
+namespace VAS.Core.Store.Drawables
 {
 	[Serializable]
 	public class Text: Rectangle
 	{
-		public Text () {
+		public Text ()
+		{
 			TextSize = 12;
 		}
 
-		public Text (Point origin, double width, double height, String text): base (origin, width, height)
+		public Text (Point origin, double width, double height, String text) : base (origin, width, height)
 		{
 			Value = text;
 		}
-		
+
 		public string Value {
 			get;
 			set;	
 		}
-		
+
 		public Color TextColor {
 			get;
 			set;
 		}
-		
+
 		public int TextSize {
 			get;
 			set;

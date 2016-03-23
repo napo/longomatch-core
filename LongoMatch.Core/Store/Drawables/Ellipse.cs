@@ -19,7 +19,7 @@ using System;
 using Newtonsoft.Json;
 using LongoMatch.Core.Common;
 
-namespace LongoMatch.Core.Store.Drawables
+namespace VAS.Core.Store.Drawables
 {
 	[Serializable]
 	public class Ellipse: Drawable
@@ -36,23 +36,23 @@ namespace LongoMatch.Core.Store.Drawables
 			AxisY = axisY;
 			Text = text;
 		}
-		
+
 		public Point Center {
 			get;
 			set;
 		}
-		
+
 		public virtual double AxisX {
 			get;
 			set;
 		}
-		
+
 		public virtual double AxisY {
 			get;
 			set;
 		}
-		
-		public string Text  {
+
+		public string Text {
 			get;
 			set;
 		}
@@ -61,7 +61,7 @@ namespace LongoMatch.Core.Store.Drawables
 			get;
 			set;
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public Point Top {
@@ -69,7 +69,7 @@ namespace LongoMatch.Core.Store.Drawables
 				return new Point (Center.X, Center.Y + AxisY);
 			}
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public Point Bottom {
@@ -77,7 +77,7 @@ namespace LongoMatch.Core.Store.Drawables
 				return new Point (Center.X, Center.Y - AxisY);
 			}
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public Point Left {
@@ -85,7 +85,7 @@ namespace LongoMatch.Core.Store.Drawables
 				return new Point (Center.X - AxisX, Center.Y);
 			}
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public Point Right {
@@ -93,17 +93,18 @@ namespace LongoMatch.Core.Store.Drawables
 				return new Point (Center.X + AxisX, Center.Y);
 			}
 		}
-		
+
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override Area Area {
 			get {
 				return new Area (new Point (Center.X - AxisX, Center.Y - AxisY),
-				                 AxisX * 2, AxisY * 2);
+					AxisX * 2, AxisY * 2);
 			}
 		}
 
-		public override Selection GetSelection (Point p, double pr=0.05, bool inMotion=false) {
+		public override Selection GetSelection (Point p, double pr = 0.05, bool inMotion = false)
+		{
 			double d;
 			
 			if (Selected) {
@@ -129,32 +130,37 @@ namespace LongoMatch.Core.Store.Drawables
 				}
 			}
 		}
-		
-		public override void Move (Selection sel, Point p, Point moveStart) {
+
+		public override void Move (Selection sel, Point p, Point moveStart)
+		{
 			switch (sel.Position) {
 			case SelectionPosition.Top:
-			case SelectionPosition.Bottom: {
-				AxisY = Math.Abs (p.Y - Center.Y);
-				break;
-			}
+			case SelectionPosition.Bottom:
+				{
+					AxisY = Math.Abs (p.Y - Center.Y);
+					break;
+				}
 			case SelectionPosition.Left:
-			case SelectionPosition.Right: {
-				AxisX = Math.Abs (p.X - Center.X);
-				break;
-			}
+			case SelectionPosition.Right:
+				{
+					AxisX = Math.Abs (p.X - Center.X);
+					break;
+				}
 			case SelectionPosition.TopLeft:
 			case SelectionPosition.TopRight:
 			case SelectionPosition.BottomLeft:
-			case SelectionPosition.BottomRight: {
-				AxisX = Math.Abs (p.X - Center.X);
-				AxisY = Math.Abs (p.Y - Center.Y);
-				break;
-			}
-			case SelectionPosition.All: {
-				Center.X += p.X - moveStart.X;
-				Center.Y += p.Y - moveStart.Y;
-				break;
-			}
+			case SelectionPosition.BottomRight:
+				{
+					AxisX = Math.Abs (p.X - Center.X);
+					AxisY = Math.Abs (p.Y - Center.Y);
+					break;
+				}
+			case SelectionPosition.All:
+				{
+					Center.X += p.X - moveStart.X;
+					Center.Y += p.Y - moveStart.Y;
+					break;
+				}
 			default:
 				throw new Exception ("Unsupported move for line:  " + sel.Position);
 			}

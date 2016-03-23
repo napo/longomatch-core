@@ -22,22 +22,22 @@ using System.Collections.Specialized;
 using System.Linq;
 using LongoMatch.Core.Common;
 
-namespace LongoMatch.Core.Store.Drawables
+namespace VAS.Core.Store.Drawables
 {
 	[Serializable]
 	public class MultiPoints: Rectangle
 	{
 		ObservableCollection<Point> points;
-		
+
 		public MultiPoints ()
 		{
 		}
-		
+
 		public MultiPoints (List<Point> points)
 		{
 			Points = new ObservableCollection<Point> (points);
 		}
-		
+
 		public ObservableCollection<Point> Points {
 			get {
 				return points;
@@ -53,8 +53,8 @@ namespace LongoMatch.Core.Store.Drawables
 				UpdateArea ();
 			}
 		}
-		
-		public override Selection GetSelection (Point p, double pr, bool inMotion=false)
+
+		public override Selection GetSelection (Point p, double pr, bool inMotion = false)
 		{
 			Selection s = base.GetSelection (p, pr);
 			if (s != null) {
@@ -62,26 +62,29 @@ namespace LongoMatch.Core.Store.Drawables
 			}
 			return s;
 		}
-	
-		public override void Move (Selection sel, Point p, Point moveStart) {
+
+		public override void Move (Selection sel, Point p, Point moveStart)
+		{
 			switch (sel.Position) {
-			case SelectionPosition.All: {
-				double xdiff, ydiff;
+			case SelectionPosition.All:
+				{
+					double xdiff, ydiff;
 				
-				xdiff = p.X - moveStart.X;
-				ydiff = p.Y - moveStart.Y;
-				foreach (Point point in Points) {
-					point.X += xdiff;
-					point.Y += ydiff;
+					xdiff = p.X - moveStart.X;
+					ydiff = p.Y - moveStart.Y;
+					foreach (Point point in Points) {
+						point.X += xdiff;
+						point.Y += ydiff;
+					}
+					break;
 				}
-				break;
-			}
 			default:
 				throw new Exception ("Unsupported move for multipoints:  " + sel.Position);
 			}
 		}
-		
-		void UpdateArea () {
+
+		void UpdateArea ()
+		{
 			double xmin, xmax, ymin, ymax;
 			List<Point> px, py;
 
@@ -93,17 +96,17 @@ namespace LongoMatch.Core.Store.Drawables
 				return;
 			}
 
-			px = Points.OrderBy (p => p.X).ToList();
-			py = Points.OrderBy (p => p.X).ToList();
-			xmin = px[0].X;
-			xmax = px[px.Count-1].X;
-			ymin = py[0].Y;
-			ymax = py[py.Count-1].Y; 
+			px = Points.OrderBy (p => p.X).ToList ();
+			py = Points.OrderBy (p => p.X).ToList ();
+			xmin = px [0].X;
+			xmax = px [px.Count - 1].X;
+			ymin = py [0].Y;
+			ymax = py [py.Count - 1].Y;
 			TopLeft = new Point (xmin, ymin);
 			TopRight = new Point (xmax, ymin);
 			BottomLeft = new Point (xmin, ymax);
 			BottomRight = new Point (xmax, ymax);
-		} 
+		}
 
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
