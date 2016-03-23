@@ -29,7 +29,7 @@ using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
 using Image = LongoMatch.Core.Common.Image;
 
-namespace LongoMatch.Core.Store.Templates
+namespace VAS.Core.Store.Templates
 {
 
 	/// <summary>
