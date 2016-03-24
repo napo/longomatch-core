@@ -19,13 +19,13 @@ using System;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
 	public class Tag: IChanged
 	{
-		public Tag (string value, string grp="Default")
+		public Tag (string value, string grp = "Default")
 		{
 			Group = grp;
 			Value = value;
@@ -72,7 +72,8 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		public override string ToString () {
+		public override string ToString ()
+		{
 			return String.Format ("{0} ({1})", Value, Group);
 		}
 	}

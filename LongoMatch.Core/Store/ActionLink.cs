@@ -22,7 +22,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	/// <summary>
 	/// Defines an action link between 2 buttons in a <see cref="LongoMatch.Core.Store.Templates.Dashboard"/>.

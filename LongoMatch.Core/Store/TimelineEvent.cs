@@ -28,7 +28,7 @@ using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store.Templates;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	/// <summary>
 	/// Represents a tagged event in the game at a specific position in the timeline.

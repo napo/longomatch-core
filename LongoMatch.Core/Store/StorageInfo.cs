@@ -17,7 +17,7 @@
 //
 using System;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	[Serializable]
 	public class StorageInfo: StorableBase

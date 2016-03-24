@@ -20,7 +20,7 @@ using System;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Common
+namespace VAS.Core.Common
 {
 	
 	[Serializable]

@@ -19,7 +19,7 @@ using System;
 using System.Linq;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	[Serializable]
 	public class Period: Timer

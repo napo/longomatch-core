@@ -21,14 +21,14 @@ using System.Collections.Specialized;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Common
+namespace VAS.Core.Common
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
 	public class Coordinates: IChanged
 	{
 		ObservableCollection<Point> points;
-		
+
 		public Coordinates ()
 		{
 			Points = new ObservableCollection<Point> ();

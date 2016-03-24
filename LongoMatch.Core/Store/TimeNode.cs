@@ -24,7 +24,7 @@ using LongoMatch.Core.Serialization;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 
 	/// <summary>

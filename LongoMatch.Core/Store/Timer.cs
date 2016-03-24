@@ -24,7 +24,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
@@ -43,6 +43,7 @@ namespace LongoMatch.Core.Store
 		}
 
 		ObservableCollection<TimeNode> nodes;
+
 		public ObservableCollection<TimeNode> Nodes {
 			get {
 				return nodes;
@@ -67,7 +68,7 @@ namespace LongoMatch.Core.Store
 		[PropertyChanged.DoNotNotify]
 		public Time TotalTime {
 			get {
-				return new Time (Nodes.Where (tn=>tn.Start != null && tn.Stop != null)
+				return new Time (Nodes.Where (tn => tn.Start != null && tn.Stop != null)
 					.Sum (tn => tn.Duration.MSeconds));
 			}
 		}

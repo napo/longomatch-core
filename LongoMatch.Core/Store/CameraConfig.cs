@@ -20,7 +20,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	/// <summary>
 	/// Defines a configuration for a camera.

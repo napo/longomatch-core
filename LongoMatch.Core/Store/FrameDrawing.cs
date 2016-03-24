@@ -24,7 +24,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store.Drawables;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 
 	[Serializable]

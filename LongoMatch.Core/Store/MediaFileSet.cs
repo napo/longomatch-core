@@ -22,7 +22,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]

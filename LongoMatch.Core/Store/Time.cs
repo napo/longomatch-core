@@ -22,7 +22,7 @@ using System;
 using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	/// <summary>
 	/// Represents a time instant. Other objects uses it to keep consistency in the time units consitency.

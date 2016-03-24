@@ -23,7 +23,7 @@ using System.IO;
 
 using LongoMatch.Core.Common;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 
 	/// <summary>
