@@ -143,6 +143,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDirectoryMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ProjectLongoMatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\ProjectDescriptionLongoMatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />
