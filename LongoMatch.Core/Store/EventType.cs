@@ -23,10 +23,10 @@ using System.Linq;
 using LongoMatch.Core.Common;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	[Serializable]
-	public class EventType: StorableBase
+	abstract public class EventType: StorableBase
 	{
 
 		public EventType ()
@@ -141,80 +141,6 @@ namespace LongoMatch.Core.Store
 		void ListChanged (object sender, NotifyCollectionChangedEventArgs e)
 		{
 			IsChanged = true;
-		}
-	}
-
-	[Serializable]
-	public class PenaltyCardEventType: EventType
-	{
-		public override Color Color {
-			get {
-				return PenaltyCard != null ? PenaltyCard.Color : null;
-			}
-			set {
-				if (PenaltyCard != null) {
-					PenaltyCard.Color = value;
-				}
-			}
-		}
-
-		public override string Name {
-			get {
-				return PenaltyCard != null ? PenaltyCard.Name : null;
-			}
-			set {
-				if (PenaltyCard != null) {
-					PenaltyCard.Name = value;
-				}
-			}
-		}
-
-		public PenaltyCard PenaltyCard {
-			get;
-			set;
-		}
-	}
-
-	[Serializable]
-	public class ScoreEventType: EventType
-	{
-		public override string Name {
-			get {
-				return Score != null ? Score.Name : null;
-			}
-			set {
-				if (Score != null) {
-					Score.Name = value;
-				}
-			}
-		}
-
-		public Score Score {
-			get;
-			set;
-		}
-	}
-
-	[Serializable]
-	public class SubstitutionEventType: EventType
-	{
-		public SubstitutionEventType ()
-		{
-			ID = Constants.SubsID;
-			Name = Catalog.GetString ("Substitution");
-		}
-
-		public override bool Equals (object obj)
-		{
-			SubstitutionEventType sc = obj as SubstitutionEventType;
-			if (sc == null)
-				return false;
-			return sc.ID == ID;
-		}
-
-		public override int GetHashCode ()
-		{
-			return ID.GetHashCode ();
 		}
 	}
 }
