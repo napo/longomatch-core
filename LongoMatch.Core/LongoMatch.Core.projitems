@@ -144,6 +144,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ProjectLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\ProjectDescriptionLongoMatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\DashboardButtonLongoMatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

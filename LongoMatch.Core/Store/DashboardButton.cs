@@ -24,11 +24,11 @@ using LongoMatch.Core.Interfaces;
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class DashboardButton: IChanged
+	abstract public class DashboardButton: IChanged
 	{
 		ObservableCollection<ActionLink> actionLinks;
 
@@ -344,106 +344,6 @@ namespace LongoMatch.Core.Store
 		public AnalysisEventType AnalysisEventType {
 			get {
 				return EventType as AnalysisEventType;
-			}
-		}
-	}
-
-	[Serializable]
-	public class PenaltyCardButton: EventButton
-	{
-		public PenaltyCardButton ()
-		{
-			EventType = new PenaltyCardEventType ();
-		}
-
-		// We keep it for backwards compatibility, to be able to retrieve the PenaltyCard from this object
-		[JsonProperty ("PenaltyCard")]
-		[Obsolete ("Do not use, it's only kept here for migrations")]
-		public PenaltyCard OldPenaltyCard {
-			set;
-			get;
-		}
-
-		public override Color BackgroundColor {
-			get {
-				return PenaltyCard?.Color;
-			}
-			set {
-				if (PenaltyCard != null) {
-					PenaltyCard.Color = value;
-				}
-			}
-		}
-
-		public override string Name {
-			get {
-				return PenaltyCard?.Name;
-			}
-			set {
-				if (PenaltyCard != null) {
-					PenaltyCard.Name = value;
-				}
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public PenaltyCard PenaltyCard {
-			get {
-				return PenaltyCardEventType?.PenaltyCard;
-			}
-			set {
-				if (PenaltyCardEventType != null) {
-					PenaltyCardEventType.PenaltyCard = value;
-				}
-			}
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public PenaltyCardEventType PenaltyCardEventType {
-			get {
-				return EventType as PenaltyCardEventType;
-			}
-		}
-	}
-
-	[Serializable]
-	public class ScoreButton: EventButton
-	{
-
-		public ScoreButton ()
-		{
-			EventType = new ScoreEventType ();
-		}
-
-		// We keep it for backwards compatibility, to be able to retrieve the Score from this object
-		[JsonProperty ("Score")]
-		[Obsolete ("Do not use, it's only kept here for migrations")]
-		public Score OldScore {
-			set;
-			get;
-		}
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public Score Score {
-			get {
-				return ScoreEventType?.Score;
-			}
-			set {
-				if (ScoreEventType != null) {
-					ScoreEventType.Score = value;
-				}
-			}
-		}
-
-
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public ScoreEventType ScoreEventType {
-			get {
-				return EventType as ScoreEventType;
 			}
 		}
 	}
