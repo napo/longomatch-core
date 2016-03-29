@@ -21,17 +21,18 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Serialization;
 using Newtonsoft.Json;
 
-namespace LongoMatch.Core.Store
+namespace VAS.Core.Store
 {
 	/// <summary>
 	/// Player of a team
 	/// </summary>
 	[Serializable]
-	public class Player: StorableBase, IDisposable
+	abstract public class Player: StorableBase, IDisposable
 	{
 
 		#region Constructors
-		public Player()
+
+		public Player ()
 		{
 			ID = Guid.NewGuid ();
 		}
@@ -44,7 +45,7 @@ namespace LongoMatch.Core.Store
 		#endregion
 
 		#region Properties
-		
+
 		/// <summary>
 		/// My name
 		/// </summary>
@@ -70,34 +71,10 @@ namespace LongoMatch.Core.Store
 		}
 
 		/// <summary>
-		/// My position in the field
-		/// </summary>
-		public string Position {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// My shirt number
-		/// </summary>
-		public int Number {
-			get;
-			set;
-		}
-
-		/// <summary>
 		/// My photo
 		/// </summary>
 		[LongoMatchPropertyPreload]
 		public Image Photo {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Date of birth
-		/// </summary>
-		public DateTime Birthday {
 			get;
 			set;
 		}
@@ -110,31 +87,6 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		/// <summary>
-		/// Height
-		/// </summary>
-		public float Height {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Weight
-		/// </summary>
-		public int Weight {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// Whether this player is playing or not and shouldn't be added the
-		/// list of taggable players
-		/// </summary>
-		public bool Playing {
-			get;
-			set;
-		}
-		
 		/// <summary>
 		/// Gets or sets the player e-mail.
 		/// </summary>
@@ -151,18 +103,6 @@ namespace LongoMatch.Core.Store
 		public Color Color {
 			get;
 			set;
-		}
-		
-		public override string ToString ()
-		{
-			string displayName;
-			
-			if (NickName != null) {
-				displayName = NickName;
-			} else {
-				displayName = Name + " " + LastName;
-			}
-			return String.Format("{0}-{1}", Number, displayName);
 		}
 
 		#endregion
