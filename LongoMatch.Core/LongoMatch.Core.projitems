@@ -147,6 +147,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Store\DashboardButtonLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\EventTypeLongoMatch.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Store\PlayerLongoMatch.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Store\TagLongoMatch.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

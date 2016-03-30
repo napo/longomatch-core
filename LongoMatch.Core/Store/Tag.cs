@@ -23,14 +23,12 @@ namespace VAS.Core.Store
 {
 	[Serializable]
 	[PropertyChanged.ImplementPropertyChanged]
-	public class Tag: IChanged
+	abstract public class Tag: IChanged
 	{
 		public Tag (string value, string grp = "Default")
 		{
 			Group = grp;
 			Value = value;
-			HotKey = new HotKey ();
-			HotKey.IsChanged = false;
 		}
 
 		[JsonIgnore]
@@ -46,11 +44,6 @@ namespace VAS.Core.Store
 		}
 
 		public string Value {
-			get;
-			set;
-		}
-
-		public HotKey HotKey {
 			get;
 			set;
 		}
