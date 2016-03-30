@@ -35,15 +35,12 @@ namespace VAS.Core.Store
 	/// </summary>
 
 	[Serializable]
-	public class TimelineEvent : PixbufTimeNode, IStorable, IDisposable
+	abstract public class TimelineEvent : PixbufTimeNode, IStorable, IDisposable
 	{
 		[NonSerialized]
 		IStorage storage;
 		ObservableCollection<FrameDrawing> drawings;
-		ObservableCollection<Player> players;
-		ObservableCollection<Tag> tags;
 		ObservableCollection<CameraConfig> camerasConfig;
-		ObservableCollection<Team> teams;
 
 		#region Constructors
 
@@ -51,9 +48,6 @@ namespace VAS.Core.Store
 		{
 			IsLoaded = true;
 			Drawings = new ObservableCollection<FrameDrawing> ();
-			Players = new ObservableCollection<Player> ();
-			Tags = new ObservableCollection<Tag> ();
-			Teams = new ObservableCollection<Team> ();
 			Rate = 1.0f;
 			ID = Guid.NewGuid ();
 			CamerasConfig = new ObservableCollection<CameraConfig> { new CameraConfig (0) };
@@ -247,90 +241,6 @@ namespace VAS.Core.Store
 		}
 
 		/// <summary>
-		/// List of players tagged in this event.
-		/// </summary>
-		[LongoMatchPropertyIndex (0)]
-		public ObservableCollection<Player> Players {
-			get {
-				return players;
-			}
-			set {
-				if (players != null) {
-					players.CollectionChanged -= ListChanged;
-				}
-				players = value;
-				if (players != null) {
-					players.CollectionChanged += ListChanged;
-				}
-			}
-		}
-
-		[PropertyChanged.DoNotNotify]
-		[Obsolete ("Use Teams instead of Team to tag a team in a TimelineEvent")]
-		public TeamType Team {
-			get;
-			set;
-		}
-
-		/// <summary>
-		/// A list of teams tagged in this event.
-		/// </summary>
-		[LongoMatchPropertyIndex (3)]
-		public ObservableCollection<Team> Teams {
-			get {
-				return teams;
-			}
-			set {
-				if (teams != null) {
-					teams.CollectionChanged -= ListChanged;
-				}
-				teams = value ?? new ObservableCollection<Team> ();
-				if (teams != null) {
-					teams.CollectionChanged += ListChanged;
-				}
-			}
-		}
-
-		[JsonIgnore]
-		public List<Team> TaggedTeams {
-			get {
-				if (Project == null) {
-					return Teams.ToList ();
-				}
-				List<Team> teams = new List<Team> ();
-				if (Teams.Contains (Project.LocalTeamTemplate) ||
-				    Players.Intersect (Project.LocalTeamTemplate.List).Any ()) {
-					teams.Add (Project.LocalTeamTemplate);
-				}
-				if (Teams.Contains (Project.VisitorTeamTemplate) ||
-				    Players.Intersect (Project.VisitorTeamTemplate.List).Any ()) {
-					teams.Add (Project.VisitorTeamTemplate);
-				}
-				return teams;
-			}
-		}
-
-
-		/// <summary>
-		/// List of tags describing this event.
-		/// </summary>
-		/// <value>The tags.</value>
-		public ObservableCollection<Tag> Tags {
-			get {
-				return tags;
-			}
-			set {
-				if (tags != null) {
-					tags.CollectionChanged -= ListChanged;
-				}
-				tags = value;
-				if (tags != null) {
-					tags.CollectionChanged += ListChanged;
-				}
-			}
-		}
-
-		/// <summary>
 		/// Position of this event in the field.
 		/// </summary>
 		/// <value>The field position.</value>
@@ -424,11 +334,6 @@ namespace VAS.Core.Store
 				IsLoaded = true;
 				IsLoading = false;
 			}
-		}
-
-		public string TagsDescription ()
-		{
-			return String.Join ("-", Tags.Select (t => t.Value));
 		}
 
 		public string TimesDesription ()
@@ -548,45 +453,6 @@ namespace VAS.Core.Store
 		}
 	}
 
-	/// <summary>
-	/// An event in the game for a penalty.
-	/// </summary>
-	[Serializable]
-	[Obsolete ("Create a TimelineEvent with a PenaltyCardEventType")]
-	public class PenaltyCardEvent: TimelineEvent
-	{
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public PenaltyCardEventType PenaltyCardEventType {
-			get {
-				return EventType as PenaltyCardEventType;
-			}
-		}
-
-		public PenaltyCard PenaltyCard {
-			get;
-			set;
-		}
-	}
-
-	[Serializable]
-	[Obsolete ("Create a TimelineEvent with a ScoreEventType")]
-	public class ScoreEvent: TimelineEvent
-	{
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public ScoreEventType ScoreEventType {
-			get {
-				return EventType as ScoreEventType;
-			}
-		}
-
-		public Score Score {
-			get;
-			set;
-		}
-	}
-
 	[Serializable]
 	public class StatEvent: TimelineEvent
 	{
@@ -649,30 +515,6 @@ namespace VAS.Core.Store
 				}
 				return desc += "\n" + EventTime.ToMSecondsString ();
 			}
-		}
-	}
-
-	[Serializable]
-	public class LineupEvent: StatEvent
-	{
-		public List<Player> HomeStartingPlayers {
-			get;
-			set;
-		}
-
-		public List<Player> HomeBenchPlayers {
-			get;
-			set;
-		}
-
-		public List<Player> AwayStartingPlayers {
-			get;
-			set;
-		}
-
-		public List<Player> AwayBenchPlayers {
-			get;
-			set;
 		}
 	}
 }
