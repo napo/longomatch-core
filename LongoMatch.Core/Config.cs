@@ -17,7 +17,7 @@
 // 
 using System;
 using System.IO;
-
+using ProgramFiles = System.Environment.SpecialFolder;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
@@ -247,6 +247,31 @@ namespace LongoMatch
 			get {
 				return RelativeToPrefix (String.Format ("lib/{0}/plugins",
 					Constants.SOFTWARE_NAME.ToLower ()));
+			}
+		}
+
+		public static string ExtraPluginsDir {
+			get {
+				switch (Utils.OS) {
+				case OperatingSystemID.Windows:
+					return String.Concat (Environment.GetFolderPath (Environment.SpecialFolder.ProgramFiles), "\\", "LongoMatch Plugin");
+				case OperatingSystemID.Linux:
+					return "/opt/longomatch-plugins";
+				case OperatingSystemID.OSX:
+					return "/Applications/LongoMatchPlugins.app/Contents/Home/";
+				default:
+					return String.Empty;
+				}
+			}
+		}
+
+		private static List<string> pluginsDirList = new List<string> () {
+			ExtraPluginsDir
+		};
+
+		public static List<string> PluginsDirList {
+			get {
+				return pluginsDirList;
 			}
 		}
 

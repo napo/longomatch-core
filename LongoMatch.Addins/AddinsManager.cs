@@ -29,6 +29,8 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services;
 using Mono.Addins;
 using Mono.Addins.Description;
+using System.Xml.Serialization;
+using LongoMatch.Addins.AddinsPathSerializer;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -47,6 +49,30 @@ namespace LongoMatch.Addins
 			searchPath = Path.GetFullPath (searchPath);
 			Log.Information ("Initializing addins at path: " + searchPath);
 			/* First initialization can fail after upgrades */
+
+			LongoMatch.Addins.AddinsPathSerializer.Addins addins = new LongoMatch.Addins.AddinsPathSerializer.Addins ();
+			List<AddinsDirectory> lDir = new List<AddinsDirectory> ();
+			foreach (string sPath in Config.PluginsDirList) {
+				lDir.Add (new AddinsDirectory () {
+					includesubdirs = "true",
+					Value = sPath
+				});
+			}
+			addins.Items = lDir.ToArray ();
+			string addinsPath = Path.Combine (searchPath, "addins");
+			try {
+				if (!Directory.Exists (addinsPath)) {
+					Directory.CreateDirectory (addinsPath);
+				}
+				XmlSerializer ser = new XmlSerializer (typeof(LongoMatch.Addins.AddinsPathSerializer.Addins));
+				using (StreamWriter sw = new StreamWriter (Path.Combine (addinsPath, ".addins"))) {
+					ser.Serialize (sw, addins);
+				}
+
+			} catch (Exception ex) {
+			}
+
+
 			try {
 				AddinManager.Initialize (configPath, searchPath);
 			} catch (Exception ex1) {
@@ -65,8 +91,16 @@ namespace LongoMatch.Addins
 			AddinManager.Registry.Update ();
 			foreach (Addin addin in AddinManager.Registry.GetAddins ()) {
 				string addinPath = addin.Description.AddinFile;
-				
+
+				bool listStartsWith = false;
+				foreach (string dir in Config.PluginsDirList) {
+					if (addinPath.StartsWith (dir)) {
+						listStartsWith = true;
+					}
+				}
+
 				if (!addinPath.StartsWith (searchPath) &&
+				    !listStartsWith &&
 				    !addinPath.StartsWith (Path.GetFullPath (Config.baseDirectory))) {
 					AddinManager.Registry.DisableAddin (addin.Id);
 					Log.Debug ("Disable addin at path " + addinPath);

@@ -8,6 +8,8 @@
     <RootNamespace>LongoMatch.Addins</RootNamespace>
     <AssemblyName>LongoMatch.Addins</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -42,6 +44,7 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="ExtensionPoints\IServicesPlugin.cs" />
+    <Compile Include="AddinsPathSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
@@ -53,6 +56,7 @@
       <Package>newtonsoft-json</Package>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
