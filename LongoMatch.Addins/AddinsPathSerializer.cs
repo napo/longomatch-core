@@ -15,24 +15,29 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+
+using System;
+using System.CodeDom.Compiler;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace LongoMatch.Addins.AddinsPathSerializer
 {
-	[System.CodeDom.Compiler.GeneratedCodeAttribute ("xsd", "4.6.1055.0")]
-	[System.SerializableAttribute ()]
-	[System.Diagnostics.DebuggerStepThroughAttribute ()]
-	[System.ComponentModel.DesignerCategoryAttribute ("code")]
-	[System.Xml.Serialization.XmlTypeAttribute (AnonymousType = true)]
-	[System.Xml.Serialization.XmlRootAttribute (Namespace = "", IsNullable = false)]
+	[GeneratedCodeAttribute ("xsd", "4.6.1055.0")]
+	[SerializableAttribute ()]
+	[DebuggerStepThroughAttribute ()]
+	[DesignerCategoryAttribute ("code")]
+	[XmlTypeAttribute (AnonymousType = true)]
+	[XmlRootAttribute (Namespace = "", IsNullable = false)]
 	public partial class Addins
 	{
-
 		private object[] itemsField;
 
 		/// <remarks/>
-		[System.Xml.Serialization.XmlElementAttribute ("Directory", typeof(AddinsDirectory), Form = System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable = true)]
-		[System.Xml.Serialization.XmlElementAttribute ("Exclude", typeof(AddinsExclude), Form = System.Xml.Schema.XmlSchemaForm.Unqualified, IsNullable = true)]
+		[XmlElementAttribute ("Directory", typeof(AddinsDirectory), Form = XmlSchemaForm.Unqualified, IsNullable = true)]
+		[XmlElementAttribute ("Exclude", typeof(AddinsExclude), Form = XmlSchemaForm.Unqualified, IsNullable = true)]
 		public object[] Items {
 			get {
 				return this.itemsField;
@@ -44,20 +49,19 @@ namespace LongoMatch.Addins.AddinsPathSerializer
 	}
 
 	/// <remarks/>
-	[System.CodeDom.Compiler.GeneratedCodeAttribute ("xsd", "4.6.1055.0")]
-	[System.SerializableAttribute ()]
-	[System.Diagnostics.DebuggerStepThroughAttribute ()]
-	[System.ComponentModel.DesignerCategoryAttribute ("code")]
-	[System.Xml.Serialization.XmlTypeAttribute (AnonymousType = true)]
+	[GeneratedCodeAttribute ("xsd", "4.6.1055.0")]
+	[SerializableAttribute ()]
+	[DebuggerStepThroughAttribute ()]
+	[DesignerCategoryAttribute ("code")]
+	[XmlTypeAttribute (AnonymousType = true)]
 	public partial class AddinsDirectory
 	{
-
 		private string includesubdirsField;
 
 		private string valueField;
 
 		/// <remarks/>
-		[System.Xml.Serialization.XmlAttributeAttribute ("include-subdirs")]
+		[XmlAttributeAttribute ("include-subdirs")]
 		public string includesubdirs {
 			get {
 				return this.includesubdirsField;
@@ -68,7 +72,7 @@ namespace LongoMatch.Addins.AddinsPathSerializer
 		}
 
 		/// <remarks/>
-		[System.Xml.Serialization.XmlTextAttribute ()]
+		[XmlTextAttribute ()]
 		public string Value {
 			get {
 				return this.valueField;
@@ -80,18 +84,17 @@ namespace LongoMatch.Addins.AddinsPathSerializer
 	}
 
 	/// <remarks/>
-	[System.CodeDom.Compiler.GeneratedCodeAttribute ("xsd", "4.6.1055.0")]
-	[System.SerializableAttribute ()]
-	[System.Diagnostics.DebuggerStepThroughAttribute ()]
-	[System.ComponentModel.DesignerCategoryAttribute ("code")]
-	[System.Xml.Serialization.XmlTypeAttribute (AnonymousType = true)]
+	[GeneratedCodeAttribute ("xsd", "4.6.1055.0")]
+	[SerializableAttribute ()]
+	[DebuggerStepThroughAttribute ()]
+	[DesignerCategoryAttribute ("code")]
+	[XmlTypeAttribute (AnonymousType = true)]
 	public partial class AddinsExclude
 	{
-
 		private string valueField;
 
 		/// <remarks/>
-		[System.Xml.Serialization.XmlTextAttribute ()]
+		[XmlTextAttribute ()]
 		public string Value {
 			get {
 				return this.valueField;
@@ -102,4 +105,3 @@ namespace LongoMatch.Addins.AddinsPathSerializer
 		}
 	}
 }
-

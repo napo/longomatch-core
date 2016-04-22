@@ -19,6 +19,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Xml.Serialization;
+using LongoMatch.Addins.AddinsPathSerializer;
 using LongoMatch.Addins.ExtensionPoints;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
@@ -29,8 +31,7 @@ using LongoMatch.Core.Store.Templates;
 using LongoMatch.Services;
 using Mono.Addins;
 using Mono.Addins.Description;
-using System.Xml.Serialization;
-using LongoMatch.Addins.AddinsPathSerializer;
+using LMAddins = LongoMatch.Addins.AddinsPathSerializer.Addins;
 
 [assembly:AddinRoot ("LongoMatch", "1.1")]
 namespace LongoMatch.Addins
@@ -50,7 +51,7 @@ namespace LongoMatch.Addins
 			Log.Information ("Initializing addins at path: " + searchPath);
 			/* First initialization can fail after upgrades */
 
-			LongoMatch.Addins.AddinsPathSerializer.Addins addins = new LongoMatch.Addins.AddinsPathSerializer.Addins ();
+			LMAddins addins = new LMAddins ();
 			List<AddinsDirectory> lDir = new List<AddinsDirectory> ();
 			foreach (string sPath in Config.PluginsDirList) {
 				lDir.Add (new AddinsDirectory () {
@@ -68,10 +69,8 @@ namespace LongoMatch.Addins
 				using (StreamWriter sw = new StreamWriter (Path.Combine (addinsPath, ".addins"))) {
 					ser.Serialize (sw, addins);
 				}
-
 			} catch (Exception ex) {
 			}
-
 
 			try {
 				AddinManager.Initialize (configPath, searchPath);

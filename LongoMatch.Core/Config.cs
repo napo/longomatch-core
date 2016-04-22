@@ -16,17 +16,14 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 // 
 using System;
+using System.Collections.Generic;
 using System.IO;
-using ProgramFiles = System.Environment.SpecialFolder;
+using LongoMatch.Core;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Interfaces.Drawing;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
-using LongoMatch.Core.Interfaces.Drawing;
-using LongoMatch.Core.Store;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using LongoMatch.Core;
 
 namespace LongoMatch
 {
