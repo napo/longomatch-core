@@ -70,29 +70,29 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
-		void DrawLine (IDrawingToolkit tk, double start, double stop, int lineWidth)
+		void DrawLine (IContext context, double start, double stop, int lineWidth)
 		{
 			double y;
 			
 			y = OffsetY + Height / 2;
-			tk.LineWidth = lineWidth;
-			tk.FillColor = Event.Color;
-			tk.StrokeColor = Event.Color;
+			context.LineWidth = lineWidth;
+			context.FillColor = Event.Color;
+			context.StrokeColor = Event.Color;
 			if (stop - start <= lineWidth) {
-				tk.LineWidth = 0;
-				tk.DrawCircle (new Point (start + (stop - start) / 2, y), 3);
+				context.LineWidth = 0;
+				context.DrawCircle (new Point (start + (stop - start) / 2, y), 3);
 			} else {
-				tk.DrawLine (new Point (start + lineWidth / 2, y),
+				context.DrawLine (new Point (start + lineWidth / 2, y),
 					new Point (stop - lineWidth / 2, y));
 			}
 		}
 
-		void DrawBorders (IDrawingToolkit tk, double start, double stop, int lineWidth)
+		void DrawBorders (IContext context, double start, double stop, int lineWidth)
 		{
 			Color color;
 			double y1, y2;
 
-			tk.LineWidth = lineWidth;
+			context.LineWidth = lineWidth;
 			List<SportsTeam> teams = Event.TaggedTeams;
 			if (teams.Count == 1) {
 				color = teams [0].Color;
@@ -100,40 +100,40 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 				color = Config.Style.PaletteWidgets;
 			}
 
-			tk.FillColor = color;
-			tk.StrokeColor = color;
+			context.FillColor = color;
+			context.StrokeColor = color;
 			y1 = OffsetY + 6;
 			y2 = OffsetY + Height - 6;
-			tk.DrawLine (new Point (start, y1), new Point (start, y2));
-			tk.DrawLine (new Point (stop, y1), new Point (stop, y2));
+			context.DrawLine (new Point (start, y1), new Point (start, y2));
+			context.DrawLine (new Point (stop, y1), new Point (stop, y2));
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			double start, stop;
 			int lineWidth = StyleConf.TimelineLineSize;
 
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
 
-			tk.Begin ();
+			context.Begin ();
 			
 			start = StartX;
 			stop = StopX;
 			
 			if (stop - start <= lineWidth) {
-				DrawBorders (tk, start, stop, lineWidth);
-				DrawLine (tk, start, stop, lineWidth);
+				DrawBorders (context, start, stop, lineWidth);
+				DrawLine (context, start, stop, lineWidth);
 			} else {
-				DrawLine (tk, start, stop, lineWidth);
-				DrawBorders (tk, start, stop, lineWidth);
+				DrawLine (context, start, stop, lineWidth);
+				DrawBorders (context, start, stop, lineWidth);
 			}
 			if (Selected) {
-				tk.DrawSurface (new Point (start - SelectionLeft.Width / 2, OffsetY), StyleConf.TimelineSelectionLeftWidth, StyleConf.TimelineSelectionLeftHeight, SelectionLeft, ScaleMode.AspectFit);
-				tk.DrawSurface (new Point (stop - SelectionRight.Width / 2, OffsetY), StyleConf.TimelineSelectionRightWidth, StyleConf.TimelineSelectionRightHeight, SelectionRight, ScaleMode.AspectFit);
+				context.DrawSurface (new Point (start - SelectionLeft.Width / 2, OffsetY), StyleConf.TimelineSelectionLeftWidth, StyleConf.TimelineSelectionLeftHeight, SelectionLeft, ScaleMode.AspectFit);
+				context.DrawSurface (new Point (stop - SelectionRight.Width / 2, OffsetY), StyleConf.TimelineSelectionRightWidth, StyleConf.TimelineSelectionRightHeight, SelectionRight, ScaleMode.AspectFit);
 			}
-			tk.End ();
+			context.End ();
 		}
 	}
 }

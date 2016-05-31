@@ -29,6 +29,7 @@ using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using LMCommon = LongoMatch.Core.Common;
+using GLib;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -103,7 +104,7 @@ namespace LongoMatch.Drawing.Widgets
 				currentTime = value;
 				if (widget != null) {
 					area = new Area (new Point (start - 1, 0), stop - start + 2, widget.Height);
-					widget.ReDraw (area);
+					widget.ReDraw (new List<Area> { area });
 				}
 			}
 		}

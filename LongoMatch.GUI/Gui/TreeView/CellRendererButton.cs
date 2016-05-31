@@ -64,25 +64,21 @@ namespace LongoMatch.Gui.Component
 		protected override void Render (Drawable window, Widget widget, Rectangle backgroundArea,
 		                                Rectangle cellArea, Rectangle exposeArea, CellRendererState flags)
 		{
-			IDrawingToolkit tk = Config.DrawingToolkit;
-
 			using (IContext context = new CairoContext (window)) {
 				int width = cellArea.Width - StyleConf.FilterTreeViewOnlyRightOffset;
 				int height = cellArea.Height - StyleConf.FilterTreeViewOnlyTopOffset * 2;
 				Point pos = new Point (cellArea.X + backgroundArea.Width - cellArea.Width,
 					            cellArea.Y + StyleConf.FilterTreeViewOnlyTopOffset);
-				tk.Context = context;
-				tk.Begin ();
-				tk.FontSize = 12;
-				tk.FillColor = null;
-				tk.LineWidth = 1;
-				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
-				tk.DrawRoundedRectangle (pos, width, height, 3);
-				tk.StrokeColor = Config.Style.PaletteText;
-				tk.FontAlignment = FontAlignment.Center;
-				tk.DrawText (pos, width, height, Text);
-				tk.End ();
-				tk.Context = null;
+				context.Begin ();
+				context.FontSize = 12;
+				context.FillColor = null;
+				context.LineWidth = 1;
+				context.StrokeColor = Config.Style.PaletteBackgroundDark;
+				context.DrawRoundedRectangle (pos, width, height, 3);
+				context.StrokeColor = Config.Style.PaletteText;
+				context.FontAlignment = FontAlignment.Center;
+				context.DrawText (pos, width, height, Text);
+				context.End ();
 			}
 		}
 	}

@@ -29,14 +29,13 @@ namespace LongoMatch.Drawing
 	/// </summary>
 	public class Canvas: ICanvas
 	{
-		protected IDrawingToolkit tk;
+		protected IContext context;
 		protected IWidget widget;
 		bool disposed;
 		int widthRequest, heightRequest;
 
 		public Canvas (IWidget widget)
 		{
-			tk = Config.DrawingToolkit;
 			Objects = new List<ICanvasObject> ();
 			ScaleX = 1;
 			ScaleY = 1;
@@ -239,7 +238,7 @@ namespace LongoMatch.Drawing
 			}
 		}
 
-		void HandleRedrawEvent (ICanvasObject co, Area area)
+		void HandleRedrawEvent (ICanvasObject co, IEnumerable<Area> area)
 		{
 			if (!IgnoreRedraws) {
 				widget?.ReDraw (area);
@@ -262,12 +261,12 @@ namespace LongoMatch.Drawing
 		/// <param name="context">Context to draw</param>
 		protected void Begin (IContext context)
 		{
-			tk.Context = context;
-			tk.Begin ();
+			this.context = context;
+			context.Begin ();
 			if (ClipRegion != null) {
-				tk.Clip (ClipRegion);
+				context.Clip (ClipRegion);
 			}
-			tk.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
+			context.TranslateAndScale (Translation, new Point (ScaleX, ScaleY));
 		}
 
 		/// <summary>
@@ -275,16 +274,16 @@ namespace LongoMatch.Drawing
 		/// </summary>
 		protected void End ()
 		{
-			tk.End ();
-			tk.Context = null;
+			context.End ();
+			this.context = null;
 		}
 
 		protected void DrawBackground ()
 		{
-			tk.Clear (BackgroundColor);
+			context.Clear (BackgroundColor);
 		}
 
-		protected void DrawObjects (Area area)
+		protected void DrawObjects (IEnumerable<Area> areas)
 		{
 			List<CanvasObject> highlighted = new List<CanvasObject> ();
 			foreach (ICanvasObject co in Objects) {
@@ -298,16 +297,16 @@ namespace LongoMatch.Drawing
 							continue;
 						}
 					}
-					co.Draw (tk, area);
+					co.Draw (context, areas);
 				}
 			}
 			foreach (ICanvasSelectableObject co in Objects.OfType<ICanvasSelectableObject>()) {
 				if (co.Selected && co.Visible) {
-					co.Draw (tk, area);
+					co.Draw (context, areas);
 				}
 			}
 			foreach (CanvasObject co in highlighted) {
-				co.Draw (tk, area);
+				co.Draw (context, areas);
 			}
 		}
 
@@ -320,18 +319,18 @@ namespace LongoMatch.Drawing
 		/// </summary>
 		/// <param name="context">The context where the canvas is drawn.</param>
 		/// <param name="area">The affected area.</param>
-		public virtual void Draw (IContext context, Area area)
+		public virtual void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			// If there is translation or zoom, the background needs be painted before applying it
 			if (HasTranslationOrZoom) {
-				tk.Context = context;
+				this.context = context;
 				DrawBackground ();
 			}
 			Begin (context);
 			if (!HasTranslationOrZoom) {
 				DrawBackground ();
 			}
-			DrawObjects (area);
+			DrawObjects (areas);
 			End ();
 		}
 	}

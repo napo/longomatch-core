@@ -21,6 +21,7 @@ using LongoMatch.Core.Store;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store.Drawables;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects.Teams
 {
@@ -116,7 +117,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			Point zero, start, p;
 			double size, scale;
@@ -137,31 +138,31 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				arrowout = ArrowIn;
 			}
 
-			tk.Begin ();
+			context.Begin ();
 			start = new Point (Size / 2, Size / 2);
-			tk.TranslateAndScale (Position - start, new Point (scale, scale));
+			context.TranslateAndScale (Position - start, new Point (scale, scale));
 
-			if (!UpdateDrawArea (tk, area, new Area (zero, size, size))) {
-				tk.End ();
+			if (!UpdateDrawArea (context, areas, new Area (zero, size, size))) {
+				context.End ();
 				return;
 			}
 
 			/* Background */
-			tk.FillColor = Config.Style.PaletteBackgroundDark;
-			tk.LineWidth = 0;
-			tk.DrawRectangle (zero, StyleConf.PlayerSize, StyleConf.PlayerSize);
+			context.FillColor = Config.Style.PaletteBackgroundDark;
+			context.LineWidth = 0;
+			context.DrawRectangle (zero, StyleConf.PlayerSize, StyleConf.PlayerSize);
 			
 			/* Image */
 			if (Player.Photo != null) {
-				tk.DrawImage (zero, size, size, Player.Photo, ScaleMode.AspectFit);
+				context.DrawImage (zero, size, size, Player.Photo, ScaleMode.AspectFit);
 			} else {
-				tk.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, Photo, ScaleMode.AspectFit);
+				context.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, Photo, ScaleMode.AspectFit);
 			}
 
 			/* Bottom line */
 			p = new Point (0, size - StyleConf.PlayerLineWidth);
-			tk.FillColor = Color;
-			tk.DrawRectangle (p, size, 3);
+			context.FillColor = Color;
+			context.DrawRectangle (p, size, 3);
 			
 			/* Draw Arrow */
 			if (SubstitutionMode && (Highlighted || Active)) {
@@ -174,34 +175,34 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 					arrow = arrowin;
 				}
 				ap = new Point (StyleConf.PlayerArrowX, StyleConf.PlayerArrowY);
-				tk.DrawRectangle (ap, StyleConf.PlayerArrowSize, StyleConf.PlayerArrowSize);
-				tk.DrawSurface (arrow, ap);
+				context.DrawRectangle (ap, StyleConf.PlayerArrowSize, StyleConf.PlayerArrowSize);
+				context.DrawSurface (arrow, ap);
 			}
 
 			/* Draw number */
 			p = new Point (StyleConf.PlayerNumberX, StyleConf.PlayerNumberY);
-			tk.FillColor = Color;
-			tk.DrawRectangle (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize);
+			context.FillColor = Color;
+			context.DrawRectangle (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize);
 			
-			tk.FillColor = Color.White;
-			tk.StrokeColor = Color.White;
-			tk.FontWeight = FontWeight.Normal;
+			context.FillColor = Color.White;
+			context.StrokeColor = Color.White;
+			context.FontWeight = FontWeight.Normal;
 			if (Player.Number >= 100) {
-				tk.FontSize = 12;
+				context.FontSize = 12;
 			} else {
-				tk.FontSize = 16;
+				context.FontSize = 16;
 			}
-			tk.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
+			context.DrawText (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize,
 				Player.Number.ToString ());
 			
 			if (Active) {
 				Color c = Color.Copy ();
 				c.A = (byte)(c.A * 60 / 100);
-				tk.FillColor = c;
-				tk.DrawRectangle (zero, size, size);
+				context.FillColor = c;
+				context.DrawRectangle (zero, size, size);
 			}
 			
-			tk.End ();
+			context.End ();
 		}
 
 		void Init (Point pos = null)

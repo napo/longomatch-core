@@ -355,7 +355,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			emitEvent = delayEvent = moved = editClicked = applyClicked = false;
 		}
 
-		void DrawTagsGroup (IDrawingToolkit tk, List<Tag> tags, ref double yptr)
+		void DrawTagsGroup (IContext context, List<Tag> tags, ref double yptr)
 		{
 			double rowwidth;
 			Point start;
@@ -365,8 +365,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			rowwidth = catWidth / tagsPerRow;
 
 			start = new Point (Position.X, Position.Y + HeaderHeight);
-			tk.FontSize = 12;
-			tk.FontWeight = FontWeight.Light;
+			context.FontSize = 12;
+			context.FontWeight = FontWeight.Light;
 
 			/* Draw tags */
 			for (int i = 0; i < tags.Count; i++) {
@@ -386,39 +386,39 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 					continue;
 				}
 
-				tk.StrokeColor = Button.DarkColor;
-				tk.LineWidth = 1;
+				context.StrokeColor = Button.DarkColor;
+				context.LineWidth = 1;
 				/* Draw last vertical line when the last row is not fully filled*/
 				if (col == 0) {
 					if (i + tagsPerRow > tags.Count) {
-						tk.LineStyle = LineStyle.Dashed;
+						context.LineStyle = LineStyle.Dashed;
 						var st = new Point (pos.X + rowwidth * ((i + 1) % tagsPerRow), pos.Y);
-						tk.DrawLine (st, new Point (st.X, st.Y + heightPerRow)); 
-						tk.LineStyle = LineStyle.Normal;
+						context.DrawLine (st, new Point (st.X, st.Y + heightPerRow)); 
+						context.LineStyle = LineStyle.Normal;
 					}
 				}
 
 				if (col == 0) {
 					if (row != 0) {
-						tk.LineStyle = LineStyle.Dashed;
+						context.LineStyle = LineStyle.Dashed;
 					}
 					/* Horizontal line */
-					tk.DrawLine (pos, new Point (pos.X + catWidth, pos.Y));
-					tk.LineStyle = LineStyle.Normal;
+					context.DrawLine (pos, new Point (pos.X + catWidth, pos.Y));
+					context.LineStyle = LineStyle.Normal;
 				} else {
 					/* Vertical line */
-					tk.LineStyle = LineStyle.Dashed;
-					tk.DrawLine (pos, new Point (pos.X, pos.Y + heightPerRow));
-					tk.LineStyle = LineStyle.Normal;
+					context.LineStyle = LineStyle.Dashed;
+					context.DrawLine (pos, new Point (pos.X, pos.Y + heightPerRow));
+					context.LineStyle = LineStyle.Normal;
 				}
-				tk.StrokeColor = Button.TextColor;
-				tk.DrawText (pos, rowwidth, heightPerRow, tag.Value);
+				context.StrokeColor = Button.TextColor;
+				context.DrawText (pos, rowwidth, heightPerRow, tag.Value);
 				rects.Add (new Rectangle (pos, rowwidth, heightPerRow), tag);
 			}
 			yptr += heightPerRow * (row + 1);
 		}
 
-		void DrawHeader (IDrawingToolkit tk)
+		void DrawHeader (IContext context)
 		{
 			Color textColor;
 			Point pos;
@@ -453,14 +453,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				}
 				rects.Add (new Rectangle (Position, Width, Height), Button);
 			}
-			tk.FontSize = fontSize;
-			tk.StrokeColor = BackgroundColor;
-			tk.StrokeColor = textColor;
-			tk.FontWeight = FontWeight.Light;
-			tk.DrawText (pos, width, height, Button.AnalysisEventType.Name, false, ellipsize);
+			context.FontSize = fontSize;
+			context.StrokeColor = BackgroundColor;
+			context.StrokeColor = textColor;
+			context.FontWeight = FontWeight.Light;
+			context.DrawText (pos, width, height, Button.AnalysisEventType.Name, false, ellipsize);
 		}
 
-		void DrawEditButton (IDrawingToolkit tk)
+		void DrawEditButton (IContext context)
 		{
 			Point pos;
 			Color c;
@@ -475,20 +475,20 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			height = HeaderHeight;
 			pos = new Point (Position.X + Width - StyleConf.ButtonRecWidth,
 				Position.Y + Height - height);
-			tk.LineWidth = 0;
-			tk.FillColor = new Color (c.R, c.G, c.B, 200);
-			tk.StrokeColor = BackgroundColor;
-			tk.DrawRectangle (pos, width, height);
-			tk.StrokeColor = Color.Green1;
-			tk.FillColor = Color.Green1;
-			tk.FontSize = StyleConf.ButtonButtonsFontSize;
+			context.LineWidth = 0;
+			context.FillColor = new Color (c.R, c.G, c.B, 200);
+			context.StrokeColor = BackgroundColor;
+			context.DrawRectangle (pos, width, height);
+			context.StrokeColor = Color.Green1;
+			context.FillColor = Color.Green1;
+			context.FontSize = StyleConf.ButtonButtonsFontSize;
 			editRect.Update (pos, width, height);
 			buttonsRects [editRect] = editbutton;
 			pos = new Point (pos.X, pos.Y + 5);
-			tk.DrawImage (pos, width, height - 10, editImage, ScaleMode.AspectFit, true);
+			context.DrawImage (pos, width, height - 10, editImage, ScaleMode.AspectFit, true);
 		}
 
-		void DrawSelectedTags (IDrawingToolkit tk)
+		void DrawSelectedTags (IContext context)
 		{
 			if (Mode == DashboardMode.Edit) {
 				return;
@@ -496,40 +496,40 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			foreach (Rectangle r in rects.Keys) {
 				object obj = rects [r];
 				if (obj is Tag && SelectedTags.Contains (obj as Tag)) {
-					tk.LineWidth = 0;
-					tk.FontWeight = FontWeight.Light;
-					tk.FillColor = TextColor;
-					tk.FontSize = 12;
-					tk.DrawRectangle (new Point (r.TopLeft.X, r.TopLeft.Y), r.Width, r.Height);
-					tk.StrokeColor = BackgroundColor;
-					tk.DrawText (new Point (r.TopLeft.X, r.TopLeft.Y), r.Width, r.Height,
+					context.LineWidth = 0;
+					context.FontWeight = FontWeight.Light;
+					context.FillColor = TextColor;
+					context.FontSize = 12;
+					context.DrawRectangle (new Point (r.TopLeft.X, r.TopLeft.Y), r.Width, r.Height);
+					context.StrokeColor = BackgroundColor;
+					context.DrawText (new Point (r.TopLeft.X, r.TopLeft.Y), r.Width, r.Height,
 						(obj as Tag).Value);
 				}
 			}
 		}
 
-		void DrawRecordTime (IDrawingToolkit tk)
+		void DrawRecordTime (IContext context)
 		{
 			if (Recording && Mode != DashboardMode.Edit) {
 				if (ShowTags) {
-					tk.FontSize = 12;
-					tk.FontWeight = FontWeight.Normal;
-					tk.StrokeColor = BackgroundColor;
-					tk.DrawText (new Point (Position.X + HeaderTextOffset, Position.Y),
+					context.FontSize = 12;
+					context.FontWeight = FontWeight.Normal;
+					context.StrokeColor = BackgroundColor;
+					context.DrawText (new Point (Position.X + HeaderTextOffset, Position.Y),
 						HeaderTextWidth, HeaderHeight,
 						(CurrentTime - Start).ToSecondsString ());
 				} else {
-					tk.FontSize = 24;
-					tk.FontWeight = FontWeight.Bold;
-					tk.StrokeColor = BackgroundColor;
-					tk.DrawText (new Point (Position.X, Position.Y + HeaderHeight),
+					context.FontSize = 24;
+					context.FontWeight = FontWeight.Bold;
+					context.StrokeColor = BackgroundColor;
+					context.DrawText (new Point (Position.X, Position.Y + HeaderHeight),
 						Width, Height - HeaderHeight,
 						(CurrentTime - Start).ToSecondsString ());
 				}
 			}
 		}
 
-		void DrawApplyButton (IDrawingToolkit tk)
+		void DrawApplyButton (IContext context)
 		{
 			Point pos;
 			double width, height;
@@ -543,19 +543,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				Position.Y);
 			width = StyleConf.ButtonRecWidth;
 			height = HeaderHeight;
-			tk.FillColor = Config.Style.PaletteBackgroundDark;
-			tk.LineWidth = 0;
-			tk.DrawRectangle (pos, width, height);
-			tk.StrokeColor = Color.Green1;
-			tk.FillColor = Color.Green1;
-			tk.FontSize = 12;
+			context.FillColor = Config.Style.PaletteBackgroundDark;
+			context.LineWidth = 0;
+			context.DrawRectangle (pos, width, height);
+			context.StrokeColor = Color.Green1;
+			context.FillColor = Color.Green1;
+			context.FontSize = 12;
 			applyRect.Update (pos, width, height);
 			buttonsRects [applyRect] = applyButton; 
 			pos = new Point (pos.X, pos.Y + 5);
-			tk.DrawImage (pos, width, height - 10, applyImage, ScaleMode.AspectFit, true);
+			context.DrawImage (pos, width, height - 10, applyImage, ScaleMode.AspectFit, true);
 		}
 
-		void DrawRecordButton (IDrawingToolkit tk)
+		void DrawRecordButton (IContext context)
 		{
 			Point pos, bpos;
 			double width, height;
@@ -570,64 +570,64 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			
 			width = StyleConf.ButtonRecWidth;
 			height = HeaderHeight;
-			tk.FontSize = StyleConf.ButtonButtonsFontSize;
+			context.FontSize = StyleConf.ButtonButtonsFontSize;
 			if (!Recording) {
-				tk.FillColor = Config.Style.PaletteBackgroundDark;
-				tk.StrokeColor = BackgroundColor;
-				tk.LineWidth = StyleConf.ButtonLineWidth;
-				tk.DrawRectangle (pos, width, height);
-				tk.StrokeColor = Color.Red1;
-				tk.FillColor = Color.Red1;
-				tk.DrawImage (bpos, width, height - 10, recImage, ScaleMode.AspectFit, true);
+				context.FillColor = Config.Style.PaletteBackgroundDark;
+				context.StrokeColor = BackgroundColor;
+				context.LineWidth = StyleConf.ButtonLineWidth;
+				context.DrawRectangle (pos, width, height);
+				context.StrokeColor = Color.Red1;
+				context.FillColor = Color.Red1;
+				context.DrawImage (bpos, width, height - 10, recImage, ScaleMode.AspectFit, true);
 			} else {
-				tk.FillColor = tk.StrokeColor = BackgroundColor;
-				tk.DrawRectangle (pos, width, height);
-				tk.StrokeColor = TextColor;
-				tk.FillColor = TextColor;
-				tk.DrawImage (bpos, width, height - 10, cancelImage, ScaleMode.AspectFit, true);
+				context.FillColor = context.StrokeColor = BackgroundColor;
+				context.DrawRectangle (pos, width, height);
+				context.StrokeColor = TextColor;
+				context.FillColor = TextColor;
+				context.DrawImage (bpos, width, height - 10, cancelImage, ScaleMode.AspectFit, true);
 				cancelRect.Update (pos, width, height);
 				buttonsRects [cancelRect] = cancelButton;
 			}
 		}
 
-		void DrawAnchors (IDrawingToolkit tk)
+		void DrawAnchors (IContext context)
 		{
 			if (!ShowLinks)
 				return;
 
 			anchor.Height = HeaderHeight;
-			DrawAnchor (tk, null);
+			DrawAnchor (context, null);
 			foreach (LinkAnchorObject a in subcatAnchors.Values) {
-				a.Draw (tk, null);
+				a.Draw (context, null);
 			}
 		}
 
-		new void DrawButton (IDrawingToolkit tk)
+		new void DrawButton (IContext context)
 		{
 			if (!ShowTags) {
-				base.DrawButton (tk);
+				base.DrawButton (context);
 			} else {
-				tk.FillColor = BackgroundColor;
-				tk.StrokeColor = TextColor;
-				tk.LineWidth = 0;
-				tk.DrawRectangle (Position, Width, Height);
+				context.FillColor = BackgroundColor;
+				context.StrokeColor = TextColor;
+				context.LineWidth = 0;
+				context.DrawRectangle (Position, Width, Height);
 				if (Active) {
-					tk.FillColor = TextColor;
-					tk.DrawRectangle (Position, Width, HeaderHeight);
+					context.FillColor = TextColor;
+					context.DrawRectangle (Position, Width, HeaderHeight);
 				}
 				if (Icon != null) {
 					if (Active) {
-						tk.FillColor = BackgroundColor;
+						context.FillColor = BackgroundColor;
 					} else {
-						tk.FillColor = TextColor;
+						context.FillColor = TextColor;
 					}
-					tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
+					context.DrawImage (new Point (Position.X + 5, Position.Y + 5),
 						StyleConf.ButtonHeaderWidth, StyleConf.ButtonHeaderHeight, Icon, ScaleMode.AspectFit, true);
 				}
 			}
 		}
 
-		void DrawBackbuffer (IDrawingToolkit tk)
+		void DrawBackbuffer (IContext context)
 		{
 			Point pos;
 			double yptr = 0;
@@ -640,19 +640,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			catWidth = Width;
 			pos = Position;
 
-			tk.Begin ();
-			tk.TranslateAndScale (new Point (-Position.X, -Position.Y),
+			context.Begin ();
+			context.TranslateAndScale (new Point (-Position.X, -Position.Y),
 				new Point (1, 1));
-			tk.FontWeight = FontWeight.Bold;
+			context.FontWeight = FontWeight.Bold;
 
 			/* Draw Rectangle */
-			DrawButton (tk);
-			DrawImage (tk);
-			DrawHeader (tk);
-			DrawRecordButton (tk);
+			DrawButton (context);
+			DrawImage (context);
+			DrawHeader (context);
+			DrawRecordButton (context);
 
 			foreach (List<Tag> tags in tagsByGroup.Values) {
-				DrawTagsGroup (tk, tags, ref yptr);
+				DrawTagsGroup (context, tags, ref yptr);
 			}
 
 			/* Remove anchor object that where not reused
@@ -663,22 +663,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				}
 			}
 			if (!ShowLinks) {
-				DrawEditButton (tk);
+				DrawEditButton (context);
 			}
 
-			tk.End ();
+			context.End ();
 		}
 
 		void CreateBackBufferSurface ()
 		{
-			IDrawingToolkit tk = Config.DrawingToolkit;
-
 			ResetBackbuffer ();
 
-			backBufferSurface = tk.CreateSurface ((int)Width, (int)Height);
+			backBufferSurface = Config.DrawingToolkit.CreateSurface ((int)Width, (int)Height);
 			using (IContext c = backBufferSurface.Context) {
-				tk.Context = c;
-				DrawBackbuffer (tk);
+				DrawBackbuffer (c);
 			}
 		}
 
@@ -696,24 +693,22 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			IContext ctx = tk.Context;
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
 			if (backBufferSurface == null) {
 				CreateBackBufferSurface ();
 			}
-			tk.Context = ctx;
-			tk.Begin ();
-			tk.DrawSurface (backBufferSurface, Position);
-			DrawSelectedTags (tk);
-			DrawRecordTime (tk);
-			DrawApplyButton (tk);
-			DrawSelectionArea (tk);
-			DrawAnchors (tk);
-			tk.End ();
+			context.Begin ();
+			context.DrawSurface (backBufferSurface, Position);
+			DrawSelectedTags (context);
+			DrawRecordTime (context);
+			DrawApplyButton (context);
+			DrawSelectionArea (context);
+			DrawAnchors (context);
+			context.End ();
 		}
 	}
 }

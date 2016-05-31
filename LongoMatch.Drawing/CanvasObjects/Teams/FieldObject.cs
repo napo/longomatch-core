@@ -143,19 +143,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			tk.Begin ();
-			tk.TranslateAndScale (Position, new Point (1, 1));
+			context.Begin ();
+			context.TranslateAndScale (Position, new Point (1, 1));
 			if (background != null) {
-				tk.DrawImage (background);
+				context.DrawImage (background);
 			}
 			if (HomePlayingPlayers != null) {
 				foreach (PlayerObject po in HomePlayingPlayers) {
 					po.Playing = true;
 					po.SubstitutionMode = SubstitutionMode;
 					po.Size = playerSize;
-					po.Draw (tk, area);
+					po.Draw (context, areas);
 				}
 			}
 			if (AwayPlayingPlayers != null) {
@@ -163,10 +163,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 					po.Playing = true;
 					po.SubstitutionMode = SubstitutionMode;
 					po.Size = playerSize;
-					po.Draw (tk, area);
+					po.Draw (context, areas);
 				}
 			}
-			tk.End ();
+			context.End ();
 		}
 
 		public Selection GetSelection (Point point, double precision, bool inMotion)

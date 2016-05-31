@@ -16,10 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Common;
-using VAS.Core.Interfaces.Drawing;
+using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
@@ -35,57 +35,57 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			set;
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			Color front, back;
 			int width;
 
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
-			tk.Begin ();
+			context.Begin ();
 
 			if (Active) {
-				tk.LineWidth = StyleConf.ButtonLineWidth;
-				tk.StrokeColor = BackgroundColor;
-				tk.FillColor = TextColor;
+				context.LineWidth = StyleConf.ButtonLineWidth;
+				context.StrokeColor = BackgroundColor;
+				context.FillColor = TextColor;
 			} else {
-				tk.LineWidth = 0;
-				tk.StrokeColor = TextColor;
-				tk.FillColor = BackgroundColor;
+				context.LineWidth = 0;
+				context.StrokeColor = TextColor;
+				context.FillColor = BackgroundColor;
 			}
 
 			/* Draw Shape */
 			switch (Button.PenaltyCard.Shape) {
 			case CardShape.Rectangle:
-				tk.DrawRoundedRectangle (Button.Position, Button.Width, Button.Height, 3);
+				context.DrawRoundedRectangle (Button.Position, Button.Width, Button.Height, 3);
 				break;
 			case CardShape.Circle:
-				tk.DrawCircle (new Point (Button.Position.X + Button.Width / 2,
+				context.DrawCircle (new Point (Button.Position.X + Button.Width / 2,
 					Button.Position.Y + Button.Height / 2),
 					Math.Min (Button.Width, Button.Height) / 2);
 				break;
 			case CardShape.Triangle:
-				tk.DrawTriangle (new Point (Button.Position.X + Button.Width / 2, Button.Position.Y),
+				context.DrawTriangle (new Point (Button.Position.X + Button.Width / 2, Button.Position.Y),
 					Button.Width, Button.Height, SelectionPosition.Top);
 				break;
 			}
 
 			/* Draw header */
-			tk.LineWidth = 2;
-			tk.FontSize = StyleConf.ButtonNameFontSize;
-			tk.FontWeight = FontWeight.Light;
-			tk.FontAlignment = FontAlignment.Center;
+			context.LineWidth = 2;
+			context.FontSize = StyleConf.ButtonNameFontSize;
+			context.FontWeight = FontWeight.Light;
+			context.FontAlignment = FontAlignment.Center;
 			if (Recording) {
-				tk.DrawText (Position, Button.Width, Button.Height, (CurrentTime - Start).ToSecondsString ());
+				context.DrawText (Position, Button.Width, Button.Height, (CurrentTime - Start).ToSecondsString ());
 			} else {
-				tk.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
+				context.DrawText (Position, Button.Width, Button.Height, Button.PenaltyCard.Name);
 			}
-			DrawSelectionArea (tk);
+			DrawSelectionArea (context);
 			if (ShowLinks) {
-				GetAnchor (null).Draw (tk, area);
+				GetAnchor (null).Draw (context, areas);
 			}
-			tk.End ();
+			context.End ();
 		}
 	}
 }

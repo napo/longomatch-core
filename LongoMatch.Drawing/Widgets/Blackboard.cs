@@ -24,6 +24,7 @@ using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -91,10 +92,10 @@ namespace LongoMatch.Drawing.Widgets
 					foreach (IBlackboardObject d in drawing.Drawables) {
 						Add (d);
 					}
-					backbuffer = tk.CreateSurface (Background.Width, Background.Height,
+					backbuffer = Config.DrawingToolkit.CreateSurface (Background.Width, Background.Height,
 						drawing.Freehand);
 				} else {
-					backbuffer = tk.CreateSurface (Background.Width, Background.Height);
+					backbuffer = Config.DrawingToolkit.CreateSurface (Background.Width, Background.Height);
 				}
 				Accuracy = Background.Width / 100;
 			}
@@ -225,9 +226,7 @@ namespace LongoMatch.Drawing.Widgets
 			}
 			if (backbuffer != null) {
 				using (IContext c = backbuffer.Context) {
-					tk.Context = c;
-					tk.Clear (new Color (0, 0, 0, 0));
-					tk.Context = null;
+					context.Clear (new Color (0, 0, 0, 0));
 				}
 				;
 			}
@@ -247,7 +246,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (roi == null || roi.Empty) {
 				roi = new Area (0, 0, Background.Width, Background.Height);
 			}
-			return tk.Copy (this, roi);
+			return Config.DrawingToolkit.Copy (this, roi);
 		}
 
 		/// <summary>
@@ -262,7 +261,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (area == null || area.Empty) {
 				area = new Area (0, 0, Background.Width, Background.Height); 
 			}
-			tk.Save (this, area, filename);
+			Config.DrawingToolkit.Save (this, area, filename);
 		}
 
 		/// <summary>
@@ -500,19 +499,18 @@ namespace LongoMatch.Drawing.Widgets
 				RegionOfInterest = RegionOfInterest;
 			} else if (handdrawing) {
 				using (IContext c = backbuffer.Context) {
-					tk.Context = c;
-					tk.Begin ();
-					tk.LineStyle = LineStyle.Normal;
-					tk.LineWidth = LineWidth;
+					context.Begin ();
+					context.LineStyle = LineStyle.Normal;
+					context.LineWidth = LineWidth;
 					if (tool == DrawTool.Eraser) {
-						tk.StrokeColor = tk.FillColor = new Color (0, 0, 0, 255);
-						tk.LineWidth = LineWidth * 4;
-						tk.ClearOperation = true;
+						context.StrokeColor = context.FillColor = new Color (0, 0, 0, 255);
+						context.LineWidth = LineWidth * 4;
+						context.ClearOperation = true;
 					} else {
-						tk.StrokeColor = tk.FillColor = Color;
+						context.StrokeColor = context.FillColor = Color;
 					}
-					tk.DrawLine (MoveStart, coords);
-					tk.End ();
+					context.DrawLine (MoveStart, coords);
+					context.End ();
 				}
 				widget.ReDraw ();
 			} else {
@@ -528,17 +526,17 @@ namespace LongoMatch.Drawing.Widgets
 			}
 		}
 
-		public override void Draw (IContext context, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			tk.Context = context;
-			tk.Begin ();
-			tk.Clear (Config.Style.PaletteBackground);
-			tk.End ();
+			this.context = context;
+			context.Begin ();
+			context.Clear (Config.Style.PaletteBackground);
+			context.End ();
 			
-			base.Draw (context, area);
+			base.Draw (context, areas);
 			if (backbuffer != null) {
 				Begin (context);
-				tk.DrawSurface (backbuffer);
+				context.DrawSurface (backbuffer);
 				End ();
 			}
 		}

@@ -164,10 +164,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			return anchor;
 		}
 
-		protected void DrawAnchor (IDrawingToolkit tk, Area area)
+		protected void DrawAnchor (IContext context, IEnumerable<Area> areas)
 		{
 			if (ShowLinks && SupportsLinks) {
-				anchor.Draw (tk, area);
+				anchor.Draw (context, areas);
 			}
 		}
 
@@ -177,10 +177,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			base.ResetDrawArea ();
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			base.Draw (tk, area);
-			DrawAnchor (tk, area);
+			base.Draw (context, areas);
+			DrawAnchor (context, areas);
 		}
 
 		public override Selection GetSelection (Point p, double precision, bool inMotion = false)

@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Collections.Generic;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
@@ -32,39 +33,39 @@ namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 			Drawable = line;
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
+			if (!UpdateDrawArea (context, areas, Drawable.Area)) {
 				return;
 			}
 
-			tk.Begin ();
-			tk.FillColor = Drawable.FillColor;
-			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = Drawable.LineWidth;
-			tk.LineStyle = Drawable.Style;
-			tk.DrawLine (Drawable.Start, Drawable.Stop);
-			tk.LineStyle = LineStyle.Normal;
+			context.Begin ();
+			context.FillColor = Drawable.FillColor;
+			context.StrokeColor = Drawable.StrokeColor;
+			context.LineWidth = Drawable.LineWidth;
+			context.LineStyle = Drawable.Style;
+			context.DrawLine (Drawable.Start, Drawable.Stop);
+			context.LineStyle = LineStyle.Normal;
 			if (Drawable.Type == LineType.Arrow ||
 			    Drawable.Type == LineType.DoubleArrow) {
-				tk.DrawArrow (Drawable.Start, Drawable.Stop, 5 * Drawable.LineWidth / 2, 0.3, true);
+				context.DrawArrow (Drawable.Start, Drawable.Stop, 5 * Drawable.LineWidth / 2, 0.3, true);
 			}
 			if (Drawable.Type == LineType.DoubleArrow) {
-				tk.DrawArrow (Drawable.Stop, Drawable.Start, 5 * Drawable.LineWidth / 2, 0.3, true);
+				context.DrawArrow (Drawable.Stop, Drawable.Start, 5 * Drawable.LineWidth / 2, 0.3, true);
 			}
 			if (Drawable.Type == LineType.Dot ||
 			    Drawable.Type == LineType.DoubleDot) {
-				tk.DrawPoint (Drawable.Stop);
+				context.DrawPoint (Drawable.Stop);
 			}
 			if (Drawable.Type == LineType.DoubleDot) {
-				tk.DrawPoint (Drawable.Start);
+				context.DrawPoint (Drawable.Start);
 			}
 			
 			if (Selected) {
-				DrawCornerSelection (tk, Drawable.Start);
-				DrawCornerSelection (tk, Drawable.Stop);
+				DrawCornerSelection (context, Drawable.Start);
+				DrawCornerSelection (context, Drawable.Stop);
 			}
-			tk.End ();
+			context.End ();
 		}
 	}
 }

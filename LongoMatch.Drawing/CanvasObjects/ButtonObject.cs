@@ -16,11 +16,10 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using LongoMatch.Core.Common;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -187,109 +186,103 @@ namespace LongoMatch.Drawing.CanvasObjects
 			ResetBackbuffer ();
 		}
 
-		protected void DrawSelectionArea (IDrawingToolkit tk)
+		protected void DrawSelectionArea (IContext context)
 		{
 			if (!Selected || !DrawsSelectionArea) {
 				return;
 			}
-			tk.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;
-			tk.StrokeColor = Config.Style.PaletteActive;
-			tk.FillColor = null;
-			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = 2;
-			tk.DrawRectangle (Position, Width, Height);
+			context.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;
+			context.StrokeColor = Config.Style.PaletteActive;
+			context.FillColor = null;
+			context.LineStyle = LineStyle.Dashed;
+			context.LineWidth = 2;
+			context.DrawRectangle (Position, Width, Height);
 
-			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
-			tk.LineStyle = LineStyle.Normal;
-			tk.DrawRectangle (new Point (Position.X + Width - SELECTION_SIZE / 2,
+			context.StrokeColor = context.FillColor = Constants.SELECTION_INDICATOR_COLOR;
+			context.LineStyle = LineStyle.Normal;
+			context.DrawRectangle (new Point (Position.X + Width - SELECTION_SIZE / 2,
 				Position.Y + Height - SELECTION_SIZE / 2),
 				SELECTION_SIZE, SELECTION_SIZE);
 		}
 
-		protected void DrawButton (IDrawingToolkit tk)
+		protected void DrawButton (IContext context)
 		{
 			Color front, back;
 			
 			if (Active) {
-				tk.LineWidth = StyleConf.ButtonLineWidth;
+				context.LineWidth = StyleConf.ButtonLineWidth;
 				front = BackgroundColor;
 				back = BorderColor;
 			} else {
-				tk.LineWidth = 0;
+				context.LineWidth = 0;
 				front = BorderColor;
 				back = BackgroundColor;
 			}
-			tk.FillColor = back;
-			tk.StrokeColor = front;
-			tk.DrawRectangle (Position, Width, Height);
+			context.FillColor = back;
+			context.StrokeColor = front;
+			context.DrawRectangle (Position, Width, Height);
 			if (Icon != null) {
-				tk.FillColor = front;
-				tk.DrawImage (new Point (Position.X + 5, Position.Y + 5),
+				context.FillColor = front;
+				context.DrawImage (new Point (Position.X + 5, Position.Y + 5),
 					StyleConf.ButtonHeaderWidth, StyleConf.ButtonHeaderHeight, Icon, ScaleMode.AspectFit, true);
 			}
 		}
 
-		protected void DrawImage (IDrawingToolkit tk)
+		protected void DrawImage (IContext context)
 		{
 			Point pos = new Point (Position.X + BORDER_SIZE / 2, Position.Y + BORDER_SIZE / 2);
 
 			if (Active && BackgroundImageActive != null) {
-				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImageActive,
+				context.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImageActive,
 					ScaleMode.AspectFit);
 			} else if (BackgroundImage != null) {
-				tk.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImage,
+				context.DrawImage (pos, Width - BORDER_SIZE, Height - BORDER_SIZE, BackgroundImage,
 					ScaleMode.AspectFit);
 			}
 		}
 
-		protected void DrawText (IDrawingToolkit tk)
+		protected void DrawText (IContext context)
 		{
 			if (Text != null) {
 				if (Active) {
-					tk.FillColor = BackgroundColor;
-					tk.StrokeColor = BackgroundColor;
+					context.FillColor = BackgroundColor;
+					context.StrokeColor = BackgroundColor;
 				} else {
-					tk.FillColor = TextColor;
-					tk.StrokeColor = TextColor;
+					context.FillColor = TextColor;
+					context.StrokeColor = TextColor;
 				}
-				tk.FontSize = StyleConf.ButtonNameFontSize;
-				tk.FontWeight = FontWeight.Light;
-				tk.FontAlignment = FontAlignment.Center;
-				tk.DrawText (Position, Width, Height, Text);
+				context.FontSize = StyleConf.ButtonNameFontSize;
+				context.FontWeight = FontWeight.Light;
+				context.FontAlignment = FontAlignment.Center;
+				context.DrawText (Position, Width, Height, Text);
 			}
 		}
 
 		void CreateBackBufferSurface ()
 		{
-			IDrawingToolkit tk = Config.DrawingToolkit;
-
 			ResetBackbuffer ();
-			backBufferSurface = tk.CreateSurface ((int)Width, (int)Height);
+			backBufferSurface = Config.DrawingToolkit.CreateSurface ((int)Width, (int)Height);
 			using (IContext c = backBufferSurface.Context) {
-				tk.Context = c;
-				tk.TranslateAndScale (new Point (-Position.X, -Position.Y),
+				c.TranslateAndScale (new Point (-Position.X, -Position.Y),
 					new Point (1, 1));
-				DrawButton (tk);
-				DrawImage (tk);
-				DrawText (tk);
+				DrawButton (c);
+				DrawImage (c);
+				DrawText (c);
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			IContext ctx = tk.Context;
-
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
 			if (backBufferSurface == null) {
 				CreateBackBufferSurface ();
 			}
-			tk.Context = ctx;
-			tk.Begin ();
-			tk.DrawSurface (backBufferSurface, Position);
-			DrawSelectionArea (tk);
-			tk.End ();
+			context.Begin ();
+			context.DrawSurface (backBufferSurface, Position);
+			DrawSelectionArea (context);
+			context.End ();
 		}
 	}
 }

@@ -149,34 +149,35 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			return true;
 		}
 
-		protected virtual void DrawBackground (IDrawingToolkit tk, Area area)
+		protected virtual void DrawBackground (IContext context, Area area)
 		{
-			tk.FillColor = BackgroundColor;
-			tk.StrokeColor = BackgroundColor;
-			tk.LineWidth = 0;
+			context.FillColor = BackgroundColor;
+			context.StrokeColor = BackgroundColor;
+			context.LineWidth = 0;
 			
-			tk.DrawRectangle (new Point (area.Start.X, OffsetY), area.Width, Height);
+			context.DrawRectangle (new Point (area.Start.X, OffsetY), area.Width, Height);
 		}
 
-		void HandleRedrawEvent (ICanvasObject co, Area area)
+		void HandleRedrawEvent (ICanvasObject co, IEnumerable<Area> areas)
 		{
-			EmitRedrawEvent (co as CanvasObject, area);
+			EmitRedrawEvent (co as CanvasObject, areas);
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			double position;
 			List<TimeNodeObject> selected;
-			
+
 			selected = new List<TimeNodeObject> ();
 
-			if (!UpdateDrawArea (tk, area, new Area (new Point (0, OffsetY), Width, Height))) {
+			if (!UpdateDrawArea (context, areas, new Area (new Point (0, OffsetY), Width, Height))) {
 				return;
 			}
-			;
 
-			tk.Begin ();
-			DrawBackground (tk, area);
+			context.Begin ();
+			foreach (Area area in areas) {
+				DrawBackground (context, area);
+			}
 			foreach (TimeNodeObject p in nodes) {
 				if (!TimeNodeObjectIsVisible (p))
 					continue;
@@ -185,21 +186,21 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 					continue;
 				}
 				p.OffsetY = OffsetY;
-				p.Draw (tk, area);
+				p.Draw (context, areas);
 			}
 			foreach (TimeNodeObject p in selected) {
 				p.OffsetY = OffsetY;
-				p.Draw (tk, area);
+				p.Draw (context, areas);
 			}
 
-			tk.FillColor = Config.Style.PaletteTool;
-			tk.StrokeColor = Config.Style.PaletteTool;
-			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
+			context.FillColor = Config.Style.PaletteTool;
+			context.StrokeColor = Config.Style.PaletteTool;
+			context.LineWidth = Constants.TIMELINE_LINE_WIDTH;
 			position = Utils.TimeToPos (CurrentTime, secondsPerPixel);
-			tk.DrawLine (new Point (position, OffsetY),
+			context.DrawLine (new Point (position, OffsetY),
 				new Point (position, OffsetY + Height));
 			
-			tk.End ();
+			context.End ();
 		}
 
 		public Selection GetSelection (Point point, double precision, bool inMotion = false)
@@ -378,17 +379,17 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
-		protected override void DrawBackground (IDrawingToolkit tk, Area area)
+		protected override void DrawBackground (IContext context, Area area)
 		{
-			base.DrawBackground (tk, area);
+			base.DrawBackground (context, area);
 
 			if (ShowLine) {
 				// We want the background line and overlay to use the same starting point although they have different sizes.
 				double linepos = OffsetY + Height / 2 + StyleConf.TimelineLineSize / 2;
-				tk.FillColor = Config.Style.PaletteBackgroundDark;
-				tk.StrokeColor = Config.Style.PaletteBackgroundDark;
-				tk.LineWidth = StyleConf.TimelineBackgroundLineSize;
-				tk.DrawLine (new Point (0, linepos),
+				context.FillColor = Config.Style.PaletteBackgroundDark;
+				context.StrokeColor = Config.Style.PaletteBackgroundDark;
+				context.LineWidth = StyleConf.TimelineBackgroundLineSize;
+				context.DrawLine (new Point (0, linepos),
 					new Point (Width, linepos));
 			}
 		}

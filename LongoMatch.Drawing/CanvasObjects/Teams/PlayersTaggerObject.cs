@@ -416,7 +416,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			field.HomePlayingPlayers = homePlayingPlayers;
 			field.AwayPlayingPlayers = awayPlayingPlayers;
 			Update ();
-			EmitRedrawEvent (this, new Area (Position, Width, Height));
+			EmitRedrawEvent (this, new List<Area> { new Area (Position, Width, Height) });
 		}
 
 		void BenchWidth (int colSize, int height, int playerSize)
@@ -734,7 +734,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			double width, height;
 			
@@ -747,8 +747,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				(int)Height - BUTTONS_HEIGHT, ScaleMode.AspectFit,
 				out scaleX, out scaleY, out offset);
 			offset.Y += BUTTONS_HEIGHT;
-			tk.Begin ();
-			tk.Clear (BackgroundColor);
+			context.Begin ();
+			context.Clear (BackgroundColor);
 
 			/* Draw substitution buttons */
 			if (subPlayers.Visible) {
@@ -756,25 +756,25 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 					offset.Y - BUTTONS_HEIGHT);
 				subPlayers.Width = BUTTONS_WIDTH;
 				subPlayers.Height = BUTTONS_HEIGHT;
-				subPlayers.Draw (tk, area);
+				subPlayers.Draw (context, areas);
 			}
 			if (homeButton.Visible) {
 				/* Draw local team button */
 				double x = Position.X + Config.Style.TeamTaggerBenchBorder * scaleX + offset.X; 
 				homeButton.Position = new Point (x, offset.Y - homeButton.Height);
-				homeButton.Draw (tk, area);
+				homeButton.Draw (context, areas);
 			}
 			if (awayButton.Visible) {
 				double x = (Position.X + Width - offset.X - Config.Style.TeamTaggerBenchBorder * scaleX) - awayButton.Width; 
 				awayButton.Position = new Point (x, offset.Y - awayButton.Height);
-				awayButton.Draw (tk, area);
+				awayButton.Draw (context, areas);
 			}
 
-			tk.TranslateAndScale (Position + offset, new Point (scaleX, scaleY));
-			homeBench.Draw (tk, area);
-			awayBench.Draw (tk, area);
-			field.Draw (tk, area);
-			tk.End ();
+			context.TranslateAndScale (Position + offset, new Point (scaleX, scaleY));
+			homeBench.Draw (context, areas);
+			awayBench.Draw (context, areas);
+			field.Draw (context, areas);
+			context.End ();
 		}
 
 		public Selection GetSelection (Point point, double precision, bool inMotion = false)

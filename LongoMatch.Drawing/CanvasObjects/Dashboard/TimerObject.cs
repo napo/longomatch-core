@@ -15,7 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Common;
+using System.Collections.Generic;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
 using VAS.Core.Common;
@@ -159,53 +159,53 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
 
-			base.Draw (tk, area);
+			base.Draw (context, areas);
 
-			tk.Begin ();
+			context.Begin ();
 
 			cancelRect = new Rectangle (
 				new Point ((Position.X + Width) - StyleConf.ButtonRecWidth, Position.Y),
 				StyleConf.ButtonRecWidth, HeaderHeight);
 
 			if (Active && Mode != DashboardMode.Edit) {
-				tk.LineWidth = StyleConf.ButtonLineWidth;
-				tk.StrokeColor = Button.BackgroundColor;
-				tk.FillColor = Button.BackgroundColor;
-				tk.FontWeight = FontWeight.Normal;
-				tk.FontSize = StyleConf.ButtonHeaderFontSize;
-				tk.FontAlignment = FontAlignment.Left;
-				tk.DrawText (new Point (Position.X + TextHeaderX, Position.Y),
+				context.LineWidth = StyleConf.ButtonLineWidth;
+				context.StrokeColor = Button.BackgroundColor;
+				context.FillColor = Button.BackgroundColor;
+				context.FontWeight = FontWeight.Normal;
+				context.FontSize = StyleConf.ButtonHeaderFontSize;
+				context.FontAlignment = FontAlignment.Left;
+				context.DrawText (new Point (Position.X + TextHeaderX, Position.Y),
 					Button.Width - TextHeaderX, iconImage.Height, Button.Timer.Name);
-				tk.FontWeight = FontWeight.Bold;
-				tk.FontSize = StyleConf.ButtonTimerFontSize;
-				tk.FontAlignment = FontAlignment.Center;
-				tk.DrawText (new Point (Position.X, Position.Y + iconImage.Height),
+				context.FontWeight = FontWeight.Bold;
+				context.FontSize = StyleConf.ButtonTimerFontSize;
+				context.FontAlignment = FontAlignment.Center;
+				context.DrawText (new Point (Position.X, Position.Y + iconImage.Height),
 					Button.Width, Button.Height - iconImage.Height,
 					PartialTime.ToSecondsString (), false, true);
 
-				tk.FillColor = tk.StrokeColor = BackgroundColor;
-				tk.DrawRectangle (cancelRect.TopLeft, cancelRect.Width, cancelRect.Height);
-				tk.StrokeColor = TextColor;
-				tk.FillColor = TextColor;
-				tk.DrawImage (new Point (cancelRect.TopLeft.X, cancelRect.TopLeft.Y + 5),
+				context.FillColor = context.StrokeColor = BackgroundColor;
+				context.DrawRectangle (cancelRect.TopLeft, cancelRect.Width, cancelRect.Height);
+				context.StrokeColor = TextColor;
+				context.FillColor = TextColor;
+				context.DrawImage (new Point (cancelRect.TopLeft.X, cancelRect.TopLeft.Y + 5),
 					cancelRect.Width, cancelRect.Height - 10, cancelImage, ScaleMode.AspectFit, true);
 			} else {
 				Text = Button.Name;
-				DrawText (tk);
+				DrawText (context);
 				Text = null;
 			}
 			
 			if (TeamImage != null) {
-				tk.DrawImage (new Point (Position.X + Width - 40, Position.Y + 5), 40,
+				context.DrawImage (new Point (Position.X + Width - 40, Position.Y + 5), 40,
 					iconImage.Height, TeamImage, ScaleMode.AspectFit);
 			}
-			tk.End ();
+			context.End ();
 		}
 	}
 }

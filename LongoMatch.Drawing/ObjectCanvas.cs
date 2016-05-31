@@ -3,10 +3,10 @@
 //
 //
 using System;
-using VAS.Core.Interfaces.Drawing;
+using System.Collections.Generic;
 using LongoMatch.Drawing.CanvasObjects;
-using LongoMatch.Core.Common;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.Drawing;
 
 namespace LongoMatch.Drawing
 {
@@ -27,14 +27,14 @@ namespace LongoMatch.Drawing
 		{
 		}
 
-		public override void Draw (IContext context, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			Begin (context);
 			DrawBackground ();
 			canvasObject.Position = new Point (0, 0);
 			canvasObject.Width = widget.Width;
 			canvasObject.Height = widget.Height;
-			canvasObject.Draw (tk, area);
+			canvasObject.Draw (context, areas);
 			End ();
 		}
 	}

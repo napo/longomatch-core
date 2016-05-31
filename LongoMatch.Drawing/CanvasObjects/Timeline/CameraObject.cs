@@ -21,6 +21,7 @@ using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -59,34 +60,34 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
 
-			tk.Begin ();
+			context.Begin ();
 
-			tk.StrokeColor = Config.Style.PaletteBackgroundDark;
+			context.StrokeColor = Config.Style.PaletteBackgroundDark;
 			if (Selected) {
-				tk.FillColor = Config.Style.PaletteActive;
+				context.FillColor = Config.Style.PaletteActive;
 			} else {
-				tk.FillColor = LineColor;
+				context.FillColor = LineColor;
 			}
-			tk.LineWidth = 1;
+			context.LineWidth = 1;
 
-			tk.DrawRoundedRectangle (new Point (StartX, OffsetY), StopX - StartX, Height, 5);
+			context.DrawRoundedRectangle (new Point (StartX, OffsetY), StopX - StartX, Height, 5);
 
 			if (ShowName) {
-				tk.FontSize = 16;
-				tk.FontWeight = FontWeight.Bold;
-				tk.FillColor = Config.Style.PaletteActive;
-				tk.StrokeColor = Config.Style.PaletteActive;
-				tk.DrawText (new Point (StartX, OffsetY), StopX - StartX,
+				context.FontSize = 16;
+				context.FontWeight = FontWeight.Bold;
+				context.FillColor = Config.Style.PaletteActive;
+				context.StrokeColor = Config.Style.PaletteActive;
+				context.DrawText (new Point (StartX, OffsetY), StopX - StartX,
 					Height - StyleConf.TimelineLineSize,
 					TimeNode.Name);
 			}
-			tk.End ();
+			context.End ();
 		}
 	}
 }

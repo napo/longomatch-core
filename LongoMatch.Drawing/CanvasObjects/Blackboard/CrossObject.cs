@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Collections.Generic;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
@@ -32,22 +33,22 @@ namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 			Drawable = cross;
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
+			if (!UpdateDrawArea (context, areas, Drawable.Area)) {
 				return;
 			}
 			;
 
-			tk.Begin ();
-			tk.FillColor = Drawable.FillColor;
-			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = Drawable.LineWidth;
-			tk.LineStyle = Drawable.Style;
-			tk.DrawLine (Drawable.Start, Drawable.Stop);
-			tk.DrawLine (Drawable.StartI, Drawable.StopI);
-			DrawSelectionArea (tk);
-			tk.End ();
+			context.Begin ();
+			context.FillColor = Drawable.FillColor;
+			context.StrokeColor = Drawable.StrokeColor;
+			context.LineWidth = Drawable.LineWidth;
+			context.LineStyle = Drawable.Style;
+			context.DrawLine (Drawable.Start, Drawable.Stop);
+			context.DrawLine (Drawable.StartI, Drawable.StopI);
+			DrawSelectionArea (context);
+			context.End ();
 		}
 	}
 }

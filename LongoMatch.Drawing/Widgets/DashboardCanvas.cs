@@ -354,26 +354,26 @@ namespace LongoMatch.Drawing.Widgets
 			base.StopMove (moved);
 		}
 
-		public override void Draw (IContext context, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			tk.Context = context;
+			this.context = context;
 			DrawBackground ();
 			Begin (context);
 			if (Mode != DashboardMode.Code) {
 				/* Draw grid */
-				tk.LineWidth = 1;
-				tk.StrokeColor = Color.Grey1;
-				tk.FillColor = Color.Grey1;
+				context.LineWidth = 1;
+				context.StrokeColor = Color.Grey1;
+				context.FillColor = Color.Grey1;
 				/* Vertical lines */
 				for (int i = 0; i <= templateHeight; i += Constants.CATEGORY_TPL_GRID) {
-					tk.DrawLine (new Point (0, i), new Point (templateWidth, i));
+					context.DrawLine (new Point (0, i), new Point (templateWidth, i));
 				}
 				/* Horizontal lines */
 				for (int i = 0; i < templateWidth; i += Constants.CATEGORY_TPL_GRID) {
-					tk.DrawLine (new Point (i, 0), new Point (i, templateHeight));
+					context.DrawLine (new Point (i, 0), new Point (i, templateHeight));
 				}
 			}
-			DrawObjects (area);
+			DrawObjects (areas);
 			End ();
 		}
 

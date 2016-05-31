@@ -6,6 +6,7 @@ using System;
 using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
 using VAS.Core.Common;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -48,29 +49,29 @@ namespace LongoMatch.Drawing.CanvasObjects
 			set;
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			tk.Begin ();
+			context.Begin ();
 			var center = new Point (Position.X + Width / 2, Position.Y + Height / 2);
 			var radius = Math.Min (Width, Height) / 2;
 
-			tk.FillColor = BackgroundColor;
-			tk.StrokeColor = BackgroundColor;
-			tk.LineWidth = 0;
+			context.FillColor = BackgroundColor;
+			context.StrokeColor = BackgroundColor;
+			context.LineWidth = 0;
 
 			if (Image != null) {
-				tk.DrawCircleImage (center, radius, Image);
+				context.DrawCircleImage (center, radius, Image);
 			} else {
-				tk.DrawCircle (center, radius);
+				context.DrawCircle (center, radius);
 				if (!String.IsNullOrEmpty (BackupText)) {
-					tk.FontSize = (int)(radius * 1.3);
-					tk.FontWeight = FontWeight.Bold;
-					tk.FontAlignment = FontAlignment.Center;
-					tk.StrokeColor = TextColor;
-					tk.DrawText (Position, Width, Height, BackupText [0].ToString ());
+					context.FontSize = (int)(radius * 1.3);
+					context.FontWeight = FontWeight.Bold;
+					context.FontAlignment = FontAlignment.Center;
+					context.StrokeColor = TextColor;
+					context.DrawText (Position, Width, Height, BackupText [0].ToString ());
 				}
 			}
-			tk.End ();
+			context.End ();
 		}
 	}
 }

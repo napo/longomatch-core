@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Collections.Generic;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
@@ -32,25 +33,24 @@ namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 			Drawable = text;
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			if (!UpdateDrawArea (tk, area, Drawable.Area)) {
+			if (!UpdateDrawArea (context, areas, Drawable.Area)) {
 				return;
 			}
-			;
 
-			tk.Begin ();
-			tk.FillColor = Drawable.FillColor;
-			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = 1;
-			tk.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
-			tk.StrokeColor = Drawable.TextColor;
-			tk.FontSize = Drawable.TextSize;
-			tk.FontAlignment = FontAlignment.Center;
-			tk.DrawText (Drawable.TopLeft, Drawable.Width, Drawable.Height,
+			context.Begin ();
+			context.FillColor = Drawable.FillColor;
+			context.StrokeColor = Drawable.StrokeColor;
+			context.LineWidth = 1;
+			context.DrawRectangle (Drawable.TopLeft, Drawable.Width, Drawable.Height);
+			context.StrokeColor = Drawable.TextColor;
+			context.FontSize = Drawable.TextSize;
+			context.FontAlignment = FontAlignment.Center;
+			context.DrawText (Drawable.TopLeft, Drawable.Width, Drawable.Height,
 				Drawable.Value);
-			DrawSelectionArea (tk);
-			tk.End ();
+			DrawSelectionArea (context);
+			context.End ();
 		}
 	}
 }

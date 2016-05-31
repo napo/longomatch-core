@@ -6,6 +6,7 @@
 using System;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Common;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing
 {
@@ -84,17 +85,17 @@ namespace LongoMatch.Drawing
 			base.HandleSizeChangedEvent ();
 		}
 
-		public override void Draw (IContext context, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			// Draw the background before any translation or scalling is applied to the canvas.
-			tk.Context = context;
+			this.context = context;
 			DrawBackground ();
 
 			Begin (context);
 			if (Background != null) {
-				tk.DrawImage (Background);
+				context.DrawImage (Background);
 			}
-			DrawObjects (area);
+			DrawObjects (areas);
 			End ();
 		}
 	}

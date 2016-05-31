@@ -129,18 +129,18 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			Color fillColor, strokeColor;
 			double relSize;
 
 			relSize = Math.Max (1, (double)Width / 200);
 
-			if (!UpdateDrawArea (tk, area, GetArea (relSize))) {
+			if (!UpdateDrawArea (context, areas, GetArea (relSize))) {
 				return;
 			}
 
-			tk.Begin ();
+			context.Begin ();
 			if (Play != null) {
 				fillColor = Play.Color;
 				strokeColor = fillColor;
@@ -157,17 +157,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 				fillColor = Config.Style.PaletteActive;
 			}
 
-			tk.FillColor = fillColor;
-			tk.StrokeColor = strokeColor;
-			tk.LineWidth = (int)relSize;
-			tk.DrawCircle (Start, relSize * 1.5);
+			context.FillColor = fillColor;
+			context.StrokeColor = strokeColor;
+			context.LineWidth = (int)relSize;
+			context.DrawCircle (Start, relSize * 1.5);
 			if (Points.Count == 2) {
-				tk.StrokeColor = fillColor;
-				tk.LineWidth = (int)relSize;
-				tk.DrawLine (Start, Stop);
-				tk.DrawArrow (Start, Stop, 10, 0.3, true);
+				context.StrokeColor = fillColor;
+				context.LineWidth = (int)relSize;
+				context.DrawLine (Start, Stop);
+				context.DrawArrow (Start, Stop, 10, 0.3, true);
 			}
-			tk.End ();
+			context.End ();
 		}
 	}
 }

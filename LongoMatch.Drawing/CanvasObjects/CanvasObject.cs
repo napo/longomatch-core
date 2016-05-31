@@ -19,8 +19,8 @@ using System;
 using VAS.Core.Common;
 using VAS.Core.Handlers.Drawing;
 using VAS.Core.Interfaces.Drawing;
-using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects
 {
@@ -105,7 +105,12 @@ namespace LongoMatch.Drawing.CanvasObjects
 
 		public virtual void ReDraw ()
 		{
-			EmitRedrawEvent (this, DrawArea);
+			List<Area> areas = null;
+
+			if (DrawArea != null) {
+				areas = new List<Area> { DrawArea };
+			}
+			EmitRedrawEvent (this, areas);
 		}
 
 		public virtual void ClickPressed (Point p, ButtonModifier modif)
@@ -123,29 +128,36 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		protected void EmitRedrawEvent (CanvasObject co, Area area)
+		protected void EmitRedrawEvent (CanvasObject co, IEnumerable<Area> areas)
 		{
 			if (RedrawEvent != null) {
-				RedrawEvent (co, area);
+				RedrawEvent (co, areas);
 			}
 		}
 
-		protected bool NeedsRedraw (Area area)
+		protected bool NeedsRedraw (IEnumerable<Area> areas)
 		{
-			return DrawArea == null || area == null || area.IntersectsWith (DrawArea);
-		}
-
-		protected virtual bool UpdateDrawArea (IDrawingToolkit tk, Area redrawArea, Area drawArea)
-		{
-			if (NeedsRedraw (redrawArea)) {
-				DrawArea = tk.UserToDevice (drawArea);
+			if (DrawArea == null) {
 				return true;
-			} else {
-				return false;
 			}
+			foreach (Area area in areas) {
+				if (area == null || area.IntersectsWith (DrawArea)) {
+					return true;
+				}
+			}
+			return false;
 		}
 
-		public abstract void Draw (IDrawingToolkit tk, Area area);
+		protected virtual bool UpdateDrawArea (IContext context, IEnumerable<Area> redrawAreas, Area drawArea)
+		{
+			if (NeedsRedraw (redrawAreas)) {
+				DrawArea = context.UserToDevice (drawArea);
+				return true;
+			}
+			return false;
+		}
+
+		public abstract void Draw (IContext context, IEnumerable<Area> areas);
 	}
 
 	/// <summary>
@@ -275,28 +287,28 @@ namespace LongoMatch.Drawing.CanvasObjects
 			s.Drawable = this;
 		}
 
-		protected void DrawCornerSelection (IDrawingToolkit tk, Point p)
+		protected void DrawCornerSelection (IContext context, Point p)
 		{
-			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
-			tk.LineStyle = LineStyle.Normal;
-			tk.LineWidth = 0;
-			tk.DrawRectangle (new Point (p.X - selectionSize,
+			context.StrokeColor = context.FillColor = Constants.SELECTION_INDICATOR_COLOR;
+			context.LineStyle = LineStyle.Normal;
+			context.LineWidth = 0;
+			context.DrawRectangle (new Point (p.X - selectionSize,
 				p.Y - selectionSize),
 				selectionSize * 2, selectionSize * 2);
 		}
 
-		protected void DrawCenterSelection (IDrawingToolkit tk, Point p)
+		protected void DrawCenterSelection (IContext context, Point p)
 		{
-			tk.StrokeColor = tk.FillColor = Constants.SELECTION_INDICATOR_COLOR;
-			tk.LineWidth = 0;
-			tk.LineStyle = LineStyle.Normal;
-			tk.DrawCircle (p, selectionSize);
+			context.StrokeColor = context.FillColor = Constants.SELECTION_INDICATOR_COLOR;
+			context.LineWidth = 0;
+			context.LineStyle = LineStyle.Normal;
+			context.DrawCircle (p, selectionSize);
 		}
 
-		protected override bool UpdateDrawArea (IDrawingToolkit tk, Area redrawArea, Area drawArea)
+		protected override bool UpdateDrawArea (IContext context, IEnumerable<Area> redrawAreas, Area drawArea)
 		{
-			if (NeedsRedraw (redrawArea)) {
-				DrawArea = tk.UserToDevice (drawArea);
+			if (NeedsRedraw (redrawAreas)) {
+				DrawArea = context.UserToDevice (drawArea);
 				DrawArea.Start.X -= selectionSize + 2;
 				DrawArea.Start.Y -= selectionSize + 2;
 				DrawArea.Width += selectionSize * 2 + 4;
@@ -307,7 +319,7 @@ namespace LongoMatch.Drawing.CanvasObjects
 			}
 		}
 
-		protected void DrawSelectionArea (IDrawingToolkit tk)
+		protected void DrawSelectionArea (IContext context)
 		{
 			Area area;
 			
@@ -315,17 +327,17 @@ namespace LongoMatch.Drawing.CanvasObjects
 			if (!Selected || area == null) {
 				return;
 			}
-			tk.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;
-			tk.StrokeColor = Config.Style.PaletteActive;
-			tk.FillColor = null;
-			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = 2;
-			tk.DrawRectangle (area.Start, area.Width, area.Height);
+			context.StrokeColor = Constants.SELECTION_INDICATOR_COLOR;
+			context.StrokeColor = Config.Style.PaletteActive;
+			context.FillColor = null;
+			context.LineStyle = LineStyle.Dashed;
+			context.LineWidth = 2;
+			context.DrawRectangle (area.Start, area.Width, area.Height);
 			foreach (Point p in area.Vertices) {
-				DrawCornerSelection (tk, p);
+				DrawCornerSelection (context, p);
 			}
 			foreach (Point p in area.VerticesCenter) {
-				DrawCenterSelection (tk, p);
+				DrawCenterSelection (context, p);
 			}
 		}
 	}

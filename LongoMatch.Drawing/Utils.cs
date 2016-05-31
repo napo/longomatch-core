@@ -23,6 +23,8 @@ using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using System.Net.NetworkInformation;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing
 {
@@ -80,24 +82,23 @@ namespace LongoMatch.Drawing
 			return d;
 		}
 
-		protected static Image RenderFrameDrawing (IDrawingToolkit tk, Area area, FrameDrawing fd, Image image)
+		protected static Image RenderFrameDrawing (Area area, FrameDrawing fd, Image image)
 		{
 			Image img;
 			ISurface surface;
 
 			Log.Debug ("Rendering frame drawing with ROI: " + area);
-			surface = tk.CreateSurface ((int)area.Width, (int)area.Height);
-			using (IContext c = surface.Context) {
-				tk.Context = c;
-				tk.TranslateAndScale (new Point (-area.Start.X, -area.Start.Y), new Point (1, 1));
-				tk.DrawImage (image);
+			surface = Config.DrawingToolkit.CreateSurface ((int)area.Width, (int)area.Height);
+			using (IContext context = surface.Context) {
+				context.TranslateAndScale (new Point (-area.Start.X, -area.Start.Y), new Point (1, 1));
+				context.DrawImage (image);
 				foreach (Drawable d in fd.Drawables) {
 					ICanvasSelectableObject obj = CanvasFromDrawableObject (d);
-					obj.Draw (tk, null);
+					obj.Draw (context, null);
 					obj.Dispose ();
 				}
 				if (fd.Freehand != null) {
-					tk.DrawImage (fd.Freehand);
+					context.DrawImage (fd.Freehand);
 				}
 			}
 			img = surface.Copy ();
@@ -105,23 +106,42 @@ namespace LongoMatch.Drawing
 			return img;
 		}
 
-		public static Image RenderFrameDrawing (IDrawingToolkit tk, int width, int height, FrameDrawing fd)
+		public static Image RenderFrameDrawing (int width, int height, FrameDrawing fd)
 		{
-			return RenderFrameDrawing (tk, new Area (0, 0, width, height), fd, null);
+			return RenderFrameDrawing (new Area (0, 0, width, height), fd, null);
 		}
 
-		public static Image RenderFrameDrawingToImage (IDrawingToolkit tk, Image image, FrameDrawing fd)
+		public static Image RenderFrameDrawingToImage (Image image, FrameDrawing fd)
 		{
 			Area area = fd.RegionOfInterest;
 			if (area == null || area.Empty)
 				area = new Area (0, 0, image.Width, image.Height);
-			return RenderFrameDrawing (tk, area, fd, image);
+			return RenderFrameDrawing (area, fd, image);
 		}
 
 		public static Point ToUserCoords (Point p, Point offset, double scaleX, double scaleY)
 		{
 			return new Point ((p.X - offset.X) / scaleX,
 				(p.Y - offset.Y) / scaleY);
+		}
+
+		public static Area MergeAreas (IEnumerable<Area> areas)
+		{
+			double minx, miny, maxx, maxy;
+
+			if (areas == null) {
+				return null;
+			}
+			if (areas.Count () == 1) {
+				return areas.First ();
+			}
+
+			minx = areas.Min (a => a.Left);
+			miny = areas.Min (a => a.Bottom);
+			maxy = areas.Max (a => a.Top);
+			maxx = areas.Max (a => a.Right);
+
+			return new Area (minx, miny, maxx - minx, maxy - miny);
 		}
 	}
 }

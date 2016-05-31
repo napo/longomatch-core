@@ -26,6 +26,8 @@ using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
 using VAS.Core.Interfaces;
 using LMCommon = LongoMatch.Core.Common;
+using System.Collections.Generic;
+using GLib;
 
 namespace LongoMatch.Drawing.Widgets
 {
@@ -114,7 +116,7 @@ namespace LongoMatch.Drawing.Widgets
 				area = new Area (new Point (start - 1, needle.TopLeft.Y), stop - start + 2, needle.Height);
 				currentTime = value;
 				needle.ResetDrawArea ();
-				widget?.ReDraw (area);
+				widget?.ReDraw (new List<Area> { area });
 			}
 		}
 
@@ -191,7 +193,7 @@ namespace LongoMatch.Drawing.Widgets
 				fontSize = value;
 				int theight;
 				int twidth;
-				tk.MeasureText ("99:99:99", out twidth, out theight, "", fontSize, FontWeight.Normal);
+				Config.DrawingToolkit.MeasureText ("99:99:99", out twidth, out theight, "", fontSize, FontWeight.Normal);
 				TextWidth = twidth;
 			}
 		}
@@ -268,7 +270,7 @@ namespace LongoMatch.Drawing.Widgets
 			PlayingState = playing;
 		}
 
-		public override void Draw (IContext context, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			double start, stop, tpos, height, width;
 			double interval = secondsPerPixel * timeSpacing;
@@ -276,6 +278,8 @@ namespace LongoMatch.Drawing.Widgets
 			if (Duration == null) {
 				return;
 			}
+
+			Area area = Utils.MergeAreas (areas);
 
 			height = widget.Height;
 			width = widget.Width;
@@ -297,20 +301,20 @@ namespace LongoMatch.Drawing.Widgets
 			}
 
 			Begin (context);
-			tk.LineWidth = 0;
+			context.LineWidth = 0;
 			BackgroundColor = Config.Style.PaletteBackground;
 			DrawBackground ();
 
-			tk.FillColor = Config.Style.PaletteBackgroundDark;
-			tk.DrawRectangle (new Point (area.Start.X, area.Start.Y + area.Height - RuleHeight), area.Width, RuleHeight);
+			context.FillColor = Config.Style.PaletteBackgroundDark;
+			context.DrawRectangle (new Point (area.Start.X, area.Start.Y + area.Height - RuleHeight), area.Width, RuleHeight);
 
 
-			tk.StrokeColor = Config.Style.PaletteWidgets;
-			tk.FillColor = Config.Style.PaletteWidgets;
-			tk.LineWidth = Constants.TIMELINE_LINE_WIDTH;
-			tk.FontSlant = FontSlant.Normal;
-			tk.FontSize = FontSize;
-			tk.DrawLine (new Point (area.Start.X, height), new Point (area.Start.X + area.Width, height));
+			context.StrokeColor = Config.Style.PaletteWidgets;
+			context.FillColor = Config.Style.PaletteWidgets;
+			context.LineWidth = Constants.TIMELINE_LINE_WIDTH;
+			context.FontSlant = FontSlant.Normal;
+			context.FontSize = FontSize;
+			context.DrawLine (new Point (area.Start.X, height), new Point (area.Start.X + area.Width, height));
 
 			start = (Scroll * SecondsPerPixel);
 			start = start - (start % interval);
@@ -322,15 +326,15 @@ namespace LongoMatch.Drawing.Widgets
 				int pixel = (int)(i / secondsPerPixel);
 				double pos = pixel - Scroll;
 
-				tk.DrawLine (new Point (pos, height), new Point (pos, height - bigLineHeight));
-				tk.FontAlignment = FontAlignment.Center;
+				context.DrawLine (new Point (pos, height), new Point (pos, height - bigLineHeight));
+				context.FontAlignment = FontAlignment.Center;
 				string timeText = new Time { TotalSeconds = (int)i }.ToSecondsString ();
-				tk.DrawText (new Point (pos - TextWidth / 2, 2), TextWidth, height - bigLineHeight - 2, timeText);
+				context.DrawText (new Point (pos - TextWidth / 2, 2), TextWidth, height - bigLineHeight - 2, timeText);
 
 				//Draw 9 small lines to separate each interval in 10 partitions
 				for (int j = 1; j < 10; j++) {
 					double position = pos + intervalLot * j;
-					tk.DrawLine (new Point (position, height), new Point (position, height - smallLineHeight));
+					context.DrawLine (new Point (position, height), new Point (position, height - smallLineHeight));
 				}
 			}
 
@@ -342,7 +346,7 @@ namespace LongoMatch.Drawing.Widgets
 				tpos -= Scroll;
 				needle.X = tpos;
 			}
-			needle.Draw (tk, area);
+			needle.Draw (context, areas);
 			End ();
 		}
 	}

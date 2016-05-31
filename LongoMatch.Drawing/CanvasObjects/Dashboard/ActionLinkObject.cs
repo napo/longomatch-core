@@ -15,7 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Common;
+using System.Collections.Generic;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
@@ -114,12 +114,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			return true;
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			Color lineColor;
 			int lineWidth = 4;
 
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
 
@@ -131,15 +131,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 				lineColor = StyleConf.ActionLinkNormal;
 			}
 
-			tk.Begin ();
-			tk.FillColor = lineColor;
-			tk.StrokeColor = lineColor;
-			tk.LineWidth = lineWidth;
-			tk.LineStyle = LineStyle.Normal;
-			tk.DrawLine (line.Start, line.Stop);
-			tk.FillColor = tk.StrokeColor = Config.Style.PaletteActive;
-			tk.DrawCircle (line.Stop, 2);
-			tk.End ();
+			context.Begin ();
+			context.FillColor = lineColor;
+			context.StrokeColor = lineColor;
+			context.LineWidth = lineWidth;
+			context.LineStyle = LineStyle.Normal;
+			context.DrawLine (line.Start, line.Stop);
+			context.FillColor = context.StrokeColor = Config.Style.PaletteActive;
+			context.DrawCircle (line.Stop, 2);
+			context.End ();
 		}
 	}
 }

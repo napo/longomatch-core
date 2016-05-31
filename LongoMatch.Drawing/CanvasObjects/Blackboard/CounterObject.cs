@@ -15,6 +15,7 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
+using System.Collections.Generic;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store.Drawables;
@@ -33,27 +34,27 @@ namespace LongoMatch.Drawing.CanvasObjects.Blackboard
 			Drawable = counter;
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			Area darea;
 			
 			darea = Drawable.Area;
-			if (!UpdateDrawArea (tk, area, darea)) {
+			if (!UpdateDrawArea (context, areas, darea)) {
 				return;
 			}
 			;
-			tk.Begin ();
-			tk.FillColor = Drawable.FillColor;
-			tk.StrokeColor = Drawable.StrokeColor;
-			tk.LineWidth = Drawable.LineWidth;
-			tk.DrawCircle (Drawable.Center, Drawable.Radius);
-			tk.StrokeColor = Drawable.TextColor;
-			tk.FontAlignment = FontAlignment.Center;
-			tk.FontSize = (int)Drawable.AxisX;
-			tk.DrawText (darea.Start, darea.Width, darea.Height,
+			context.Begin ();
+			context.FillColor = Drawable.FillColor;
+			context.StrokeColor = Drawable.StrokeColor;
+			context.LineWidth = Drawable.LineWidth;
+			context.DrawCircle (Drawable.Center, Drawable.Radius);
+			context.StrokeColor = Drawable.TextColor;
+			context.FontAlignment = FontAlignment.Center;
+			context.FontSize = (int)Drawable.AxisX;
+			context.DrawText (darea.Start, darea.Width, darea.Height,
 				Drawable.Count.ToString ());
-			DrawSelectionArea (tk);
-			tk.End ();
+			DrawSelectionArea (context);
+			context.End ();
 		}
 	}
 }

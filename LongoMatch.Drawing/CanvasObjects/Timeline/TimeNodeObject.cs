@@ -23,6 +23,7 @@ using VAS.Core.Common;
 using VAS.Core.Store.Drawables;
 using VAS.Core.Store;
 using VAS.Core;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -239,50 +240,50 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			movingPos = sel.Position;
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			double linepos;
 
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
 
-			tk.Begin ();
+			context.Begin ();
 			if (needle == null) {
 				Image img = Resources.LoadImage (StyleConf.TimelineNeedleUP);
-				needle = tk.CreateSurface (img.Width, img.Height, img);
+				needle = Config.DrawingToolkit.CreateSurface (img.Width, img.Height, img);
 			}
 			
 			if (Selected) {
-				tk.FillColor = Config.Style.PaletteActive;
-				tk.StrokeColor = Config.Style.PaletteActive;
+				context.FillColor = Config.Style.PaletteActive;
+				context.StrokeColor = Config.Style.PaletteActive;
 			} else {
-				tk.FillColor = LineColor;
-				tk.StrokeColor = LineColor;
+				context.FillColor = LineColor;
+				context.StrokeColor = LineColor;
 			}
-			tk.LineWidth = StyleConf.TimelineLineSize;
+			context.LineWidth = StyleConf.TimelineLineSize;
 			
 			linepos = OffsetY + Height / 2 + StyleConf.TimelineLineSize / 2;
 			
 			if (StopX - StartX <= needle.Width / 2) {
 				double c = movingPos == SelectionPosition.Left ? StopX : StartX;
-				tk.DrawSurface (new Point (c - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
+				context.DrawSurface (new Point (c - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
 			} else {
-				tk.DrawLine (new Point (StartX, linepos),
+				context.DrawLine (new Point (StartX, linepos),
 					new Point (StopX, linepos));
-				tk.DrawSurface (new Point (StartX - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
-				tk.DrawSurface (new Point (StopX - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
+				context.DrawSurface (new Point (StartX - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
+				context.DrawSurface (new Point (StopX - needle.Width / 2, linepos - 9), StyleConf.TimelineNeedleUpWidth, StyleConf.TimelineNeedleUpHeight, needle, ScaleMode.AspectFit);
 			}
 			
 
 			if (ShowName) {
-				tk.FontSize = StyleConf.TimelineFontSize;
-				tk.FontWeight = FontWeight.Bold;
-				tk.FillColor = Config.Style.PaletteActive;
-				tk.StrokeColor = Config.Style.PaletteActive;
-				tk.DrawText (new Point (StartX, OffsetY), StopX - StartX, Height / 2, TimeNode.Name);
+				context.FontSize = StyleConf.TimelineFontSize;
+				context.FontWeight = FontWeight.Bold;
+				context.FillColor = Config.Style.PaletteActive;
+				context.StrokeColor = Config.Style.PaletteActive;
+				context.DrawText (new Point (StartX, OffsetY), StopX - StartX, Height / 2, TimeNode.Name);
 			}
-			tk.End ();
+			context.End ();
 		}
 	}
 

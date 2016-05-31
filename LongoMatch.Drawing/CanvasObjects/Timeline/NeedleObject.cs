@@ -21,6 +21,7 @@ using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Common;
 using VAS.Core.Store.Drawables;
 using VAS.Core;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -89,15 +90,15 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, VAS.Core.Common.Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			if (!UpdateDrawArea (tk, area, Area)) {
+			if (!UpdateDrawArea (context, areas, Area)) {
 				return;
 			}
 			
-			tk.Begin ();
-			tk.DrawSurface (TopLeft, StyleConf.TimelineNeedleBigWidth, StyleConf.TimelineNeedleBigHeight, needle, ScaleMode.AspectFit);
-			tk.End ();
+			context.Begin ();
+			context.DrawSurface (TopLeft, StyleConf.TimelineNeedleBigWidth, StyleConf.TimelineNeedleBigHeight, needle, ScaleMode.AspectFit);
+			context.End ();
 		}
 
 		public Selection GetSelection (Point point, double precision, bool inMotion = false)

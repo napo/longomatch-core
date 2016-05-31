@@ -22,6 +22,7 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Store;
 using VAS.Core.Store.Drawables;
+using System.Collections;
 
 namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 {
@@ -153,7 +154,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 		{
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			ISurface linkIn, linkOut;
 
@@ -167,10 +168,10 @@ namespace LongoMatch.Drawing.CanvasObjects.Dashboard
 			Point inPoint = new Point (In.X - iconWidth / 2, In.Y - iconHeight / 2);
 			Point outPoint = new Point (Out.X - iconWidth / 2, In.Y - iconHeight / 2);
 
-			tk.Begin ();
-			tk.DrawSurface (inPoint, StyleConf.LinkInWidth, StyleConf.LinkInHeight, linkIn, ScaleMode.AspectFit);
-			tk.DrawSurface (outPoint, StyleConf.LinkOutWidth, StyleConf.LinkOutHeight, linkOut, ScaleMode.AspectFit);
-			tk.End ();
+			context.Begin ();
+			context.DrawSurface (inPoint, StyleConf.LinkInWidth, StyleConf.LinkInHeight, linkIn, ScaleMode.AspectFit);
+			context.DrawSurface (outPoint, StyleConf.LinkOutWidth, StyleConf.LinkOutHeight, linkOut, ScaleMode.AspectFit);
+			context.End ();
 		}
 
 		void LoadSurfaces ()

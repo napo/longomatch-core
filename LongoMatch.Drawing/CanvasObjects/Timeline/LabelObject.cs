@@ -21,6 +21,7 @@ using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.Store;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing.CanvasObjects.Timeline
 {
@@ -94,7 +95,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			double hs, vs;
 			double y;
@@ -102,26 +103,26 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 			hs = StyleConf.TimelineLabelHSpacing;
 			vs = StyleConf.TimelineLabelVSpacing;
 			y = OffsetY - Math.Floor (Scroll);
-			tk.Begin ();
-			tk.FillColor = BackgroundColor;
-			tk.StrokeColor = BackgroundColor;
-			tk.LineWidth = 0;
-			tk.DrawRectangle (new Point (0, y), Width, Height);
+			context.Begin ();
+			context.FillColor = BackgroundColor;
+			context.StrokeColor = BackgroundColor;
+			context.LineWidth = 0;
+			context.DrawRectangle (new Point (0, y), Width, Height);
 			
 			/* Draw a rectangle with the category color */
-			tk.FillColor = Color;
-			tk.StrokeColor = Color;
-			tk.DrawRectangle (new Point (hs, y + vs), RectSize, RectSize); 
+			context.FillColor = Color;
+			context.StrokeColor = Color;
+			context.DrawRectangle (new Point (hs, y + vs), RectSize, RectSize); 
 			
 			/* Draw category name */
-			tk.FontSlant = FontSlant.Normal;
-			tk.FontWeight = DEFAULT_FONT_WEIGHT;
-			tk.FontSize = DEFAULT_FONT_SIZE;
-			tk.FillColor = Config.Style.PaletteWidgets;
-			tk.FontAlignment = FontAlignment.Left;
-			tk.StrokeColor = Config.Style.PaletteWidgets;
-			tk.DrawText (new Point (TextOffset, y), Width - TextOffset, Height, Name);
-			tk.End ();
+			context.FontSlant = FontSlant.Normal;
+			context.FontWeight = DEFAULT_FONT_WEIGHT;
+			context.FontSize = DEFAULT_FONT_SIZE;
+			context.FillColor = Config.Style.PaletteWidgets;
+			context.FontAlignment = FontAlignment.Left;
+			context.StrokeColor = Config.Style.PaletteWidgets;
+			context.DrawText (new Point (TextOffset, y), Width - TextOffset, Height, Name);
+			context.End ();
 		}
 	}
 
@@ -172,26 +173,26 @@ namespace LongoMatch.Drawing.CanvasObjects.Timeline
 		{
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			double y = OffsetY - Math.Floor (Scroll);
 
 			// Draw background
-			tk.Begin ();
-			tk.FillColor = BackgroundColor;
-			tk.StrokeColor = Config.Style.PaletteWidgets;
-			tk.LineWidth = 1;
-			tk.DrawRectangle (new Point (0, y), Width, Height);
+			context.Begin ();
+			context.FillColor = BackgroundColor;
+			context.StrokeColor = Config.Style.PaletteWidgets;
+			context.LineWidth = 1;
+			context.DrawRectangle (new Point (0, y), Width, Height);
 
 			/* Draw category name */
-			tk.FontSlant = FontSlant.Normal;
-			tk.FontWeight = FontWeight.Bold;
-			tk.FontSize = StyleConf.TimelineCameraFontSize;
-			tk.FillColor = Config.Style.PaletteWidgets;
-			tk.FontAlignment = FontAlignment.Right;
-			tk.StrokeColor = Config.Style.PaletteWidgets;
-			tk.DrawText (new Point (0, y), Width - StyleConf.TimelineLabelHSpacing, Height, Name);
-			tk.End ();
+			context.FontSlant = FontSlant.Normal;
+			context.FontWeight = FontWeight.Bold;
+			context.FontSize = StyleConf.TimelineCameraFontSize;
+			context.FillColor = Config.Style.PaletteWidgets;
+			context.FontAlignment = FontAlignment.Right;
+			context.StrokeColor = Config.Style.PaletteWidgets;
+			context.DrawText (new Point (0, y), Width - StyleConf.TimelineLabelHSpacing, Height, Name);
+			context.End ();
 		}
 	}
 }

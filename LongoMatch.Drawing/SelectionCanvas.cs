@@ -377,9 +377,13 @@ namespace LongoMatch.Drawing
 
 			userCoords = ToUserCoords (coords);
 			if (Moving && Selections.Count != 0) {
+				Area preMoveArea, postMoveArea;
+
 				sel = Selections [0];
-				sel.Drawable.Move (sel, userCoords, MoveStart);  
-				widget.ReDraw (sel.Drawable);
+				preMoveArea = (sel.Drawable as CanvasObject).DrawArea;
+				sel.Drawable.Move (sel, userCoords, MoveStart);
+				postMoveArea = (sel.Drawable as CanvasObject).DrawArea;
+				widget.ReDraw (new List<Area> { preMoveArea, postMoveArea });
 				SelectionMoved (sel);
 				Moved = true;
 			} else {

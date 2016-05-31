@@ -19,6 +19,8 @@ using System;
 using VAS.Core.Interfaces.Drawing;
 using LongoMatch.Core.Common;
 using VAS.Core.Common;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace LongoMatch.Drawing
 {
@@ -46,9 +48,9 @@ namespace LongoMatch.Drawing
 			set;
 		}
 
-		public override void Draw (IContext context, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
-			if (tk != null) {
+			if (context != null) {
 				Scale ();
 				Begin (context);
 				DrawGrid (new Area (new Point (0, 0), CANVAS_WIDTH, CANVAS_HEIGHT));
@@ -86,55 +88,51 @@ namespace LongoMatch.Drawing
 			Point f5c4 = new Point (300, 400);
 			Point f5c5 = new Point (400, 400);
 			Point f5c6 = new Point (500, 400);
-			tk.FillColor = new Color (255, 0, 0, 255);
-			tk.DrawRectangle (f5c1, 500, 100);
-			tk.FillColor = new Color (0, 0, 255, 255);
-			tk.DrawImage (f5c1, 100, 100, TestImage, ScaleMode.Fill, false);
-			tk.DrawImage (f5c2, 100, 100, TestImage, ScaleMode.AspectFit, false);
-			tk.DrawImage (f5c3, 100, 100, TestImage, ScaleMode.Fill, true);
-			tk.DrawImage (f5c4, 100, 100, TestImage, ScaleMode.AspectFit, true);
-			tk.FillColor = new Color (0, 0, 255, 128);
-			tk.DrawImage (f5c5, 100, 100, TestImage, ScaleMode.AspectFit, true);
-			tk.FillColor = new Color (0, 0, 255, 255);
-			tk.Begin ();
+			context.FillColor = new Color (255, 0, 0, 255);
+			context.DrawRectangle (f5c1, 500, 100);
+			context.FillColor = new Color (0, 0, 255, 255);
+			context.DrawImage (f5c1, 100, 100, TestImage, ScaleMode.Fill, false);
+			context.DrawImage (f5c2, 100, 100, TestImage, ScaleMode.AspectFit, false);
+			context.DrawImage (f5c3, 100, 100, TestImage, ScaleMode.Fill, true);
+			context.DrawImage (f5c4, 100, 100, TestImage, ScaleMode.AspectFit, true);
+			context.FillColor = new Color (0, 0, 255, 128);
+			context.DrawImage (f5c5, 100, 100, TestImage, ScaleMode.AspectFit, true);
+			context.FillColor = new Color (0, 0, 255, 255);
+			context.Begin ();
 
 			double scaleX, scaleY;
 			Point offset;
 			TestImage.ScaleFactor (100, 100, ScaleMode.AspectFit, out scaleX, out scaleY, out offset);
-			tk.TranslateAndScale (f5c6 + offset, new Point (scaleX, scaleY));
-			tk.DrawImage (TestImage);
+			context.TranslateAndScale (f5c6 + offset, new Point (scaleX, scaleY));
+			context.DrawImage (TestImage);
 
-			tk.End ();
+			context.End ();
 
 		}
 
 		void DrawSurface ()
 		{
-			tk.Begin ();
+			context.Begin ();
 
-			tk.StrokeColor = tk.FillColor = Color.Blue1;
-			tk.DrawRectangle (new Point (400, 200), 300, 200);
+			context.StrokeColor = context.FillColor = Color.Blue1;
+			context.DrawRectangle (new Point (400, 200), 300, 200);
 
-			IContext oldContext = tk.Context;
-			ISurface surface = tk.CreateSurface (200, 200, TestImage);
+			ISurface surface = Config.DrawingToolkit.CreateSurface (200, 200, TestImage);
 			using (IContext surfaceContext = surface.Context) {
-				tk.Context = surfaceContext;
-				tk.StrokeColor = tk.FillColor = Color.Black;
-				tk.FontSize = 16;
-				tk.DrawText (new Point (10, 90), 180, 20, "This is a surface");
-				tk.FillColor = new Color (0, 0, 0, 0);
-				tk.StrokeColor = Color.Blue;
-				tk.DrawRectangle (new Point (0, 0), 198, 198);
-				tk.Context = oldContext;
-				tk.End ();
-				tk.DrawSurface (surface, new Point (500, 200));
+				surfaceContext.StrokeColor = context.FillColor = Color.Black;
+				surfaceContext.FontSize = 16;
+				surfaceContext.DrawText (new Point (10, 90), 180, 20, "This is a surface");
+				surfaceContext.FillColor = new Color (0, 0, 0, 0);
+				surfaceContext.StrokeColor = Color.Blue;
+				surfaceContext.DrawRectangle (new Point (0, 0), 198, 198);
+				context.End ();
+				context.DrawSurface (surface, new Point (500, 200));
 			}
 
-
-			tk.Begin ();
-			tk.TranslateAndScale (new Point (400, 200), new Point (0.5, 0.5));
-			tk.DrawSurface (surface);
-			tk.End ();
+			context.Begin ();
+			context.TranslateAndScale (new Point (400, 200), new Point (0.5, 0.5));
+			context.DrawSurface (surface);
+			context.End ();
 			surface.Dispose ();
 		}
 
@@ -155,94 +153,94 @@ namespace LongoMatch.Drawing
 			Point f3c1 = new Point (0, 200);
 			Point f4c1 = new Point (0, 300);
 
-			tk.StrokeColor = Color.Black;
-			tk.FillColor = Color.Blue1;
-			tk.DrawRectangle (f1c1, 100, 100);
-			tk.FillColor = Color.Green;
-			tk.DrawRectangle (f1c2, 100, 100);
-			tk.FillColor = Color.Red;
-			tk.DrawRectangle (f1c3, 100, 100);
-			tk.FillColor = Color.Yellow;
-			tk.DrawRectangle (f1c4, 100, 100);
-			tk.FillColor = Color.White;
-			tk.DrawRectangle (f1c5, 100, 100);
-			tk.DrawRectangle (f1c6, 100, 100);
-			tk.FillColor = Color.Yellow;
-			tk.DrawRectangle (f2c1, 400, 100);
-			tk.FillColor = Color.Green;
-			tk.DrawRectangle (f3c1, 400, 100);
-			tk.StrokeColor = Color.Black;
+			context.StrokeColor = Color.Black;
+			context.FillColor = Color.Blue1;
+			context.DrawRectangle (f1c1, 100, 100);
+			context.FillColor = Color.Green;
+			context.DrawRectangle (f1c2, 100, 100);
+			context.FillColor = Color.Red;
+			context.DrawRectangle (f1c3, 100, 100);
+			context.FillColor = Color.Yellow;
+			context.DrawRectangle (f1c4, 100, 100);
+			context.FillColor = Color.White;
+			context.DrawRectangle (f1c5, 100, 100);
+			context.DrawRectangle (f1c6, 100, 100);
+			context.FillColor = Color.Yellow;
+			context.DrawRectangle (f2c1, 400, 100);
+			context.FillColor = Color.Green;
+			context.DrawRectangle (f3c1, 400, 100);
+			context.StrokeColor = Color.Black;
 
-			tk.StrokeColor = Color.Black;
-			tk.FontSize = 12;
-			tk.FontSlant = FontSlant.Normal;
-			tk.FontWeight = FontWeight.Normal;
-			tk.FontAlignment = FontAlignment.Center;
+			context.StrokeColor = Color.Black;
+			context.FontSize = 12;
+			context.FontSlant = FontSlant.Normal;
+			context.FontWeight = FontWeight.Normal;
+			context.FontAlignment = FontAlignment.Center;
 
-			tk.FontAlignment = FontAlignment.Left;
-			tk.DrawText (f1c1, 100, 100, shortText, false, false);
-			tk.FontAlignment = FontAlignment.Center;
-			tk.DrawText (f1c2, 100, 100, shortText, false, false);
-			tk.FontAlignment = FontAlignment.Right;
-			tk.DrawText (f1c3, 100, 100, shortText, false, false);
-			tk.FontAlignment = FontAlignment.Center;
-			tk.DrawText (f1c5, 100, 100, longText, false, false);
-			tk.DrawText (f1c6, 100, 100, longText, false, true);
-			tk.FontAlignment = FontAlignment.Center;
-			tk.StrokeColor = Color.Black;
-			tk.FontSize = 10;
-			tk.FontSlant = FontSlant.Italic;
-			tk.FontWeight = FontWeight.Bold;
-			tk.DrawText (f1c4, 100, 100, shortTextMulti, false, false);
-			tk.FontAlignment = FontAlignment.Left;
-			tk.FontSlant = FontSlant.Italic;
-			tk.FillColor = Color.White;
-			tk.FontSize = 14;
-			tk.DrawText (f2c1, 400, 100, longText, false, true);
-			tk.FontSlant = FontSlant.Normal;
-			tk.FillColor = Color.Blue;
-			tk.DrawText (f3c1, 400, 100, longTextMulti, false, true);
+			context.FontAlignment = FontAlignment.Left;
+			context.DrawText (f1c1, 100, 100, shortText, false, false);
+			context.FontAlignment = FontAlignment.Center;
+			context.DrawText (f1c2, 100, 100, shortText, false, false);
+			context.FontAlignment = FontAlignment.Right;
+			context.DrawText (f1c3, 100, 100, shortText, false, false);
+			context.FontAlignment = FontAlignment.Center;
+			context.DrawText (f1c5, 100, 100, longText, false, false);
+			context.DrawText (f1c6, 100, 100, longText, false, true);
+			context.FontAlignment = FontAlignment.Center;
+			context.StrokeColor = Color.Black;
+			context.FontSize = 10;
+			context.FontSlant = FontSlant.Italic;
+			context.FontWeight = FontWeight.Bold;
+			context.DrawText (f1c4, 100, 100, shortTextMulti, false, false);
+			context.FontAlignment = FontAlignment.Left;
+			context.FontSlant = FontSlant.Italic;
+			context.FillColor = Color.White;
+			context.FontSize = 14;
+			context.DrawText (f2c1, 400, 100, longText, false, true);
+			context.FontSlant = FontSlant.Normal;
+			context.FillColor = Color.Blue;
+			context.DrawText (f3c1, 400, 100, longTextMulti, false, true);
 
 
 
 			int width, height;
-			tk.MeasureText (shortText, out width, out height, "Arial", 14, FontWeight.Bold);
-			tk.StrokeColor = tk.FillColor = Color.White;
+			Config.DrawingToolkit.MeasureText (shortText, out width, out height, "Arial", 14, FontWeight.Bold);
+			context.StrokeColor = context.FillColor = Color.White;
 			f4c1.X += (400 - width) / 2;
-			tk.DrawRectangle (f4c1, width, height);
+			context.DrawRectangle (f4c1, width, height);
 
-			tk.StrokeColor = tk.FillColor = Color.Blue;
-			tk.FontFamily = "Arial";
-			tk.FontSize = 14;
-			tk.FontWeight = FontWeight.Bold;
+			context.StrokeColor = context.FillColor = Color.Blue;
+			context.FontFamily = "Arial";
+			context.FontSize = 14;
+			context.FontWeight = FontWeight.Bold;
 			f4c1.X += 1;
 			f4c1.Y += 1;
-			tk.DrawText (f4c1, width, height, shortText);
+			context.DrawText (f4c1, width, height, shortText);
 
 		}
 
 		void DrawShapes ()
 		{
 			Point newOrigin = new Point (0, 500);
-			tk.Begin ();
-			tk.TranslateAndScale (newOrigin, new Point (1, 1));
+			context.Begin ();
+			context.TranslateAndScale (newOrigin, new Point (1, 1));
 
-			tk.StrokeColor = new Color (0, 0, 0, 255);
-			tk.FillColor = new Color (255, 200, 255, 255);
+			context.StrokeColor = new Color (0, 0, 0, 255);
+			context.FillColor = new Color (255, 200, 255, 255);
 
-			tk.DrawLine (new Point (0, 0), new Point (760, 760));
-			tk.DrawLine (new Point (760, 380), new Point (760, 760));
-			tk.DrawLine (new Point (380, 760), new Point (760, 760));
-			tk.DrawLine (new Point (380, 0), new Point (760, 380));
-			tk.DrawLine (new Point (0, 380), new Point (380, 760));
-			tk.FillColor = new Color (255, 255, 255, 255);
-			tk.DrawRectangle (new Point (0, 0), 500, 500);
-			tk.FillColor = new Color (0, 255, 0, 255);    
-			tk.DrawRoundedRectangle (new Point (0, 0), 500, 500, 100);
+			context.DrawLine (new Point (0, 0), new Point (760, 760));
+			context.DrawLine (new Point (760, 380), new Point (760, 760));
+			context.DrawLine (new Point (380, 760), new Point (760, 760));
+			context.DrawLine (new Point (380, 0), new Point (760, 380));
+			context.DrawLine (new Point (0, 380), new Point (380, 760));
+			context.FillColor = new Color (255, 255, 255, 255);
+			context.DrawRectangle (new Point (0, 0), 500, 500);
+			context.FillColor = new Color (0, 255, 0, 255);    
+			context.DrawRoundedRectangle (new Point (0, 0), 500, 500, 100);
 
 
-			tk.FillColor = new Color (255, 0, 0, 255);
-			tk.StrokeColor = Color.Black;    
+			context.FillColor = new Color (255, 0, 0, 255);
+			context.StrokeColor = Color.Black;    
 			Point[] points = {
 				new Point (0, 0),
 				new Point (100, 0),
@@ -251,54 +249,54 @@ namespace LongoMatch.Drawing
 				new Point (200, 300),
 				new Point (54, 186),
 			};
-			tk.DrawArea (points);
-			tk.FillColor = new Color (0, 0, 255, 255);
-			tk.DrawCircle (new Point (400, 400), 50);
-			tk.DrawEllipse (new Point (200, 200), 50, 100);
-			tk.FillColor = new Color (255, 0, 255, 255);
-			tk.DrawArrow (new Point (0, 0), 
+			context.DrawArea (points);
+			context.FillColor = new Color (0, 0, 255, 255);
+			context.DrawCircle (new Point (400, 400), 50);
+			context.DrawEllipse (new Point (200, 200), 50, 100);
+			context.FillColor = new Color (255, 0, 255, 255);
+			context.DrawArrow (new Point (0, 0), 
 				new Point (200, 200), 100, 0.3, true);
 
-			tk.FillColor = new Color (0, 128, 128, 255);
+			context.FillColor = new Color (0, 128, 128, 255);
 
-			tk.ClearOperation = true;
-			tk.DrawRectangle (new Point (400, 0), 100, 100);
-			tk.ClearOperation = false;
-			tk.DrawRectangle (new Point (450, 50), 50, 50);
+			context.ClearOperation = true;
+			context.DrawRectangle (new Point (400, 0), 100, 100);
+			context.ClearOperation = false;
+			context.DrawRectangle (new Point (450, 50), 50, 50);
 
-			tk.FillColor = Color.Blue1;    
-			tk.StrokeColor = Color.White;    
-			tk.DrawTriangle (new Point (300, 0), 100, 100, SelectionPosition.Top);
+			context.FillColor = Color.Blue1;    
+			context.StrokeColor = Color.White;    
+			context.DrawTriangle (new Point (300, 0), 100, 100, SelectionPosition.Top);
 
-			tk.StrokeColor = tk.FillColor = Color.Red;
+			context.StrokeColor = context.FillColor = Color.Red;
 			// < 2 won't appear in android O_O
-			tk.LineWidth = 2;
-			tk.DrawPoint (new Point (250, 50));
+			context.LineWidth = 2;
+			context.DrawPoint (new Point (250, 50));
 		
-			tk.StrokeColor = tk.FillColor = Color.Black;
-			Area transformed = tk.UserToDevice (new Area (new Point (0, 0), 500, 500));
-			tk.DrawText (new Point (0, 150), 500, 350, "This rectangle is drawn at (0,0) but the real coords are " + transformed.TopLeft);
+			context.StrokeColor = context.FillColor = Color.Black;
+			Area transformed = context.UserToDevice (new Area (new Point (0, 0), 500, 500));
+			context.DrawText (new Point (0, 150), 500, 350, "This rectangle is drawn at (0,0) but the real coords are " + transformed.TopLeft);
 
-			tk.End ();
+			context.End ();
 		}
 
 		void DrawClipped ()
 		{
-			tk.Begin ();
+			context.Begin ();
 			Area clipArea = new Area (new Point (600, 0), 168, 200);
-			tk.Clip (clipArea);
-			tk.Clear (Color.Red1);
+			context.Clip (clipArea);
+			context.Clear (Color.Red1);
 
-			tk.FillColor = Color.Green1;
+			context.FillColor = Color.Green1;
 			Point[] points = {
 				new Point (550, 100),
 				new Point (700, -100),
 				new Point (800, 100),
 				new Point (700, 300),
 			};
-			tk.DrawArea (points);
+			context.DrawArea (points);
 
-			tk.End ();
+			context.End ();
 
 		}
 
@@ -306,31 +304,31 @@ namespace LongoMatch.Drawing
 		{
 			Area toSave = new Area (new Point (0, 0), 200, 200);
 			var otherCanvas = new DummyCanvas (widget);
-			tk.Save (otherCanvas, toSave, "testCanvas.png");
+			Config.DrawingToolkit.Save (otherCanvas, toSave, "testCanvas.png");
 		}
 
 		void Copy ()
 		{
 			Area toSave = new Area (new Point (0, 0), 200, 200);
 			var otherCanvas = new DummyCanvas (widget);
-			Image copied = tk.Copy (otherCanvas, toSave);
-			tk.DrawImage (new Point (600, 400), 200, 200, copied, ScaleMode.AspectFill);
+			Image copied = Config.DrawingToolkit.Copy (otherCanvas, toSave);
+			context.DrawImage (new Point (600, 400), 200, 200, copied, ScaleMode.AspectFill);
 
 		}
 
 		void DrawGrid (Area area)
 		{
-			tk.LineWidth = 1;
-			tk.StrokeColor = Color.Green;
-			tk.FillColor = Color.Grey1;
-			tk.Clear (Color.Grey1);
+			context.LineWidth = 1;
+			context.StrokeColor = Color.Green;
+			context.FillColor = Color.Grey1;
+			context.Clear (Color.Grey1);
 
 			for (double i = area.Left; i < area.Right; i += 10) {
-				tk.DrawLine (new Point (i, area.Top), new Point (i, area.Bottom));
+				context.DrawLine (new Point (i, area.Top), new Point (i, area.Bottom));
 			}
 
 			for (double i = area.Top; i < area.Bottom; i += 10) {
-				tk.DrawLine (new Point (area.Left, i), new Point (area.Right, i));
+				context.DrawLine (new Point (area.Left, i), new Point (area.Right, i));
 			}
 		}
 
@@ -342,15 +340,9 @@ namespace LongoMatch.Drawing
 
 			#region ICanvas implementation
 
-			public override void Draw (IContext context, Area area)
+			public override void Draw (IContext context, IEnumerable<Area> areas)
 			{
-				IDrawingToolkit dt = Config.DrawingToolkit;
-				IContext oldcontext = dt.Context;
-				dt.Context = context;
-				dt.DrawCircle (new Point (0, 0), 50);
-
-				dt.Context = oldcontext;
-
+				context.DrawCircle (new Point (0, 0), 50);
 			}
 
 			#endregion

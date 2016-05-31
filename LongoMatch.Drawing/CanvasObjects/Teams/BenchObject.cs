@@ -83,28 +83,28 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
-		public override void Draw (IDrawingToolkit tk, Area area)
+		public override void Draw (IContext context, IEnumerable<Area> areas)
 		{
 			if (BenchPlayers == null || Position == null) {
 				return;
 			}
-			tk.Begin ();
-			tk.TranslateAndScale (Position, new Point (1, 1)); 
-			tk.LineStyle = LineStyle.Dashed;
-			tk.LineWidth = Config.Style.BenchLineWidth;
-			tk.StrokeColor = Config.Style.PaletteActive;
-			tk.FillColor = null;
-			tk.DrawRectangle (new Point (0, 0), Width, Height);
-			tk.LineStyle = LineStyle.Normal;
+			context.Begin ();
+			context.TranslateAndScale (Position, new Point (1, 1)); 
+			context.LineStyle = LineStyle.Dashed;
+			context.LineWidth = Config.Style.BenchLineWidth;
+			context.StrokeColor = Config.Style.PaletteActive;
+			context.FillColor = null;
+			context.DrawRectangle (new Point (0, 0), Width, Height);
+			context.LineStyle = LineStyle.Normal;
 
 			foreach (PlayerObject po in BenchPlayers) {
 				po.Playing = false;
 				po.SubstitutionMode = SubstitutionMode;
 				po.Size = PlayersSize;
-				po.Draw (tk, area);
+				po.Draw (context, areas);
 			}
 			
-			tk.End ();
+			context.End ();
 		}
 
 		public Selection GetSelection (Point point, double precision, bool inMotion = false)
