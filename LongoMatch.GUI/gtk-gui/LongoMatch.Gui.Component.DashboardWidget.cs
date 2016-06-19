@@ -36,7 +36,7 @@ namespace LongoMatch.Gui.Component
 		
 		private global::Gtk.VBox rightbox;
 		
-		private global::Gtk.Frame propertiesframe;
+		private global::Gtk.Notebook notebook1;
 		
 		private global::Gtk.Alignment propertiesalignment;
 		
@@ -123,6 +123,14 @@ namespace LongoMatch.Gui.Component
 		private global::LongoMatch.Gui.Component.LinkProperties linkproperties;
 		
 		private global::Gtk.Label label5;
+		
+		private global::Gtk.Label label13;
+		
+		private global::Gtk.ScrolledWindow GtkScrolledWindow;
+		
+		private global::LongoMatch.Gui.Component.EventTypesTreeview eventtypestreeview1;
+		
+		private global::Gtk.Label label14;
 
 		protected virtual void Build ()
 		{
@@ -236,10 +244,11 @@ namespace LongoMatch.Gui.Component
 			this.rightbox.Name = "rightbox";
 			this.rightbox.Spacing = 6;
 			// Container child rightbox.Gtk.Box+BoxChild
-			this.propertiesframe = new global::Gtk.Frame ();
-			this.propertiesframe.Name = "propertiesframe";
-			this.propertiesframe.ShadowType = ((global::Gtk.ShadowType)(1));
-			// Container child propertiesframe.Gtk.Container+ContainerChild
+			this.notebook1 = new global::Gtk.Notebook ();
+			this.notebook1.CanFocus = true;
+			this.notebook1.Name = "notebook1";
+			this.notebook1.CurrentPage = 1;
+			// Container child notebook1.Gtk.Notebook+NotebookChild
 			this.propertiesalignment = new global::Gtk.Alignment (0F, 0F, 1F, 1F);
 			this.propertiesalignment.Name = "propertiesalignment";
 			this.propertiesalignment.BorderWidth = ((uint)(6));
@@ -587,15 +596,38 @@ namespace LongoMatch.Gui.Component
 			global::Gtk.Box.BoxChild w57 = ((global::Gtk.Box.BoxChild)(this.vbox10 [this.propertiesscrolledwindow]));
 			w57.Position = 2;
 			this.propertiesalignment.Add (this.vbox10);
-			this.propertiesframe.Add (this.propertiesalignment);
-			this.rightbox.Add (this.propertiesframe);
-			global::Gtk.Box.BoxChild w60 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.propertiesframe]));
-			w60.Position = 0;
-			this.hbox2.Add (this.rightbox);
-			global::Gtk.Box.BoxChild w61 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
+			this.notebook1.Add (this.propertiesalignment);
+			// Notebook tab
+			this.label13 = new global::Gtk.Label ();
+			this.label13.Name = "label13";
+			this.label13.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Properties");
+			this.notebook1.SetTabLabel (this.propertiesalignment, this.label13);
+			this.label13.ShowAll ();
+			// Container child notebook1.Gtk.Notebook+NotebookChild
+			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
+			this.GtkScrolledWindow.Name = "GtkScrolledWindow";
+			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
+			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
+			this.eventtypestreeview1 = new global::LongoMatch.Gui.Component.EventTypesTreeview ();
+			this.eventtypestreeview1.CanFocus = true;
+			this.eventtypestreeview1.Name = "eventtypestreeview1";
+			this.GtkScrolledWindow.Add (this.eventtypestreeview1);
+			this.notebook1.Add (this.GtkScrolledWindow);
+			global::Gtk.Notebook.NotebookChild w61 = ((global::Gtk.Notebook.NotebookChild)(this.notebook1 [this.GtkScrolledWindow]));
 			w61.Position = 1;
-			w61.Expand = false;
-			w61.Fill = false;
+			// Notebook tab
+			this.label14 = new global::Gtk.Label ();
+			this.label14.Name = "label14";
+			this.label14.LabelProp = global::LongoMatch.Core.Catalog.GetString ("Preview");
+			this.notebook1.SetTabLabel (this.GtkScrolledWindow, this.label14);
+			this.label14.ShowAll ();
+			this.rightbox.Add (this.notebook1);
+			global::Gtk.Box.BoxChild w62 = ((global::Gtk.Box.BoxChild)(this.rightbox [this.notebook1]));
+			w62.Position = 0;
+			this.hbox2.Add (this.rightbox);
+			global::Gtk.Box.BoxChild w63 = ((global::Gtk.Box.BoxChild)(this.hbox2 [this.rightbox]));
+			w63.Position = 1;
+			w63.Expand = false;
 			this.Add (this.hbox2);
 			if ((this.Child != null)) {
 				this.Child.ShowAll ();

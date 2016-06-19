@@ -169,6 +169,7 @@ namespace LongoMatch.Gui.Component
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 				tagproperties.Dashboard = value;
 				popupbutton.Active = value.DisablePopupWindow;
+				eventtypestreeview1.Dashboard = value;
 			}
 		}
 
