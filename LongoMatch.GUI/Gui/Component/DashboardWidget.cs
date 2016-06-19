@@ -91,7 +91,7 @@ namespace LongoMatch.Gui.Component
 			applybutton.Clicked += HandleApplyClicked;
 
 			FillToolbar ();
-			FitMode = FitMode.Original;
+			FitMode = FitMode.Fit;
 			Edited = false;
 			Mode = DashboardMode.Code;
 			// Initialize to the empty notebook page.
