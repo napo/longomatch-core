@@ -17,6 +17,8 @@
 //
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
@@ -39,6 +41,8 @@ using Device = VAS.Core.Common.Device;
 using Helpers = VAS.UI.Helpers;
 using LMCommon = LongoMatch.Core.Common;
 using Misc = VAS.UI.Helpers.Misc;
+using System.Runtime.CompilerServices;
+using GLib;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -56,7 +60,9 @@ namespace LongoMatch.Gui.Panel
 		CaptureSettings captureSettings;
 		EncodingSettings encSettings;
 		List<Device> videoDevices;
-		ListStore videoStandardList, encProfileList, qualList, dashboardsList;
+		ListStore videoStandardList, encProfileList, qualList, dashboardsList, camerasList;
+		List<ICameraDiscoverer> discoverers;
+		ObservableCollection<Device> cameras;
 		IMultimediaToolkit mtoolkit;
 		IGUIToolkit gtoolkit;
 		Gdk.Color red;
@@ -82,6 +88,7 @@ namespace LongoMatch.Gui.Panel
 			ConnectSignals ();
 			FillDahsboards ();
 			FillFormats ();
+			FillCameras ();
 			LoadTeams (project);
 			if (project == null) {
 				notebook1.Page = firstPage = 0;
@@ -225,12 +232,14 @@ namespace LongoMatch.Gui.Panel
 			awaycolor2button.Clicked += HandleColorClicked;
 			hometacticsbutton.Clicked += HandleTacticsChanged;
 			awaytacticsbutton.Clicked += HandleTacticsChanged;
+			discoverbutton.Clicked += HandleDiscoverClicked;
 			panelheader1.ApplyClicked += HandleNextClicked;
 			panelheader1.BackClicked += HandleBackClicked;
 			urientry.Changed += HandleEntryChanged;
 			capturemediafilechooser.ChangedEvent += HandleEntryChanged;
 			tagscombobox.Changed += HandleSportsTemplateChanged;
 			devicecombobox.Changed += HandleDeviceChanged;
+			camerascombobox.Changed += HandleCameraChanged;
 			notebook1.SwitchPage += HandleSwitchPage;
 			App.Current.EventsBroker.Subscribe<QuitApplicationEvent> (HandleQuit);
 		}
@@ -342,6 +351,17 @@ namespace LongoMatch.Gui.Panel
 				devicecombobox.AppendText (deviceName);
 				devicecombobox.Active = 0;
 			}
+		}
+
+		public void FillCameras ()
+		{
+			discoverers = App.Current.MultimediaToolkit.CameraDiscoverers;
+			discoverbutton.Visible = discoverers.Any ();
+			cameras = new ObservableCollection<Device> ();
+			cameras.CollectionChanged += HandleCamerasCollectionChanged;
+			camerasList = new ListStore (typeof(string), typeof(Device));
+			camerascombobox.Model = camerasList;
+			discoverbutton.Click ();
 		}
 
 		void SetButtonColor (DrawingArea area, Color color)
@@ -721,11 +741,41 @@ namespace LongoMatch.Gui.Panel
 			deviceformatcombobox.Active = 0;
 		}
 
+		void HandleCameraChanged (object sender, EventArgs e)
+		{
+			TreeIter iter;
+			camerascombobox.GetActiveIter (out iter);
+			Device device = camerasList.GetValue (iter, 1) as Device;
+			if (device != null) {
+				urientry.Text = device.ID;
+			} else {
+				urientry.Text = "";
+			}
+		}
+
 		void HandleSwitchPage (object o, SwitchPageArgs args)
 		{
 			panelheader1.ApplyVisible = notebook1.Page != PROJECT_TYPE;
 		}
 
+		void HandleDiscoverClicked (object sender, EventArgs e)
+		{
+			cameras.Clear ();
+			camerasList.Clear ();
+
+			foreach (ICameraDiscoverer discoverer in discoverers) {
+				discoverer.DiscoverCameras (new Time { TotalSeconds = 5 }, cameras);
+			}
+		}
+
+		void HandleCamerasCollectionChanged (object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.Action == NotifyCollectionChangedAction.Add) {
+				foreach (Device device in e.NewItems) {
+					App.Current.GUIToolkit.Invoke ((s, a) => camerasList.AppendValues (device.ID, device));
+				}
+			}
+		}
 	}
 }
 

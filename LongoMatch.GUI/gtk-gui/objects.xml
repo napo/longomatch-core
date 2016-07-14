@@ -1,21 +1,9 @@
 <objects attr-sync="on">
-  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="CategoryProperties Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="CategoryProperties Signals">
-        <signal name="EditedEvent" />
-      </itemgroup>
-    </signals>
-  </object>
   <object type="LongoMatch.Gui.Popup.TransparentDrawingArea" palette-category="General" allow-children="false" base-type="Gtk.Window">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.DashboardWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.DashboardWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="DashboardWidget Properties">
         <property name="Edited" />
@@ -27,19 +15,19 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.NotesWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.PlayersTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.PlayListTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlaysTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.PlaysTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals>
       <itemgroup label="PlaysTreeView Signals">
@@ -51,11 +39,11 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.PlayListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.ProjectListWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.ProjectListWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals>
       <itemgroup label="ProjectListWidget Signals">
@@ -64,7 +52,19 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+  <object type="LongoMatch.Gui.Component.CategoryProperties" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups>
+      <itemgroup label="CategoryProperties Properties">
+        <property name="Edited" />
+      </itemgroup>
+    </itemgroups>
+    <signals>
+      <itemgroup label="CategoryProperties Signals">
+        <signal name="EditedEvent" />
+      </itemgroup>
+    </signals>
+  </object>
+  <object type="LongoMatch.Gui.Component.PlaysListTreeWidget" palette-category="LongoMatch" allow-children="false" base-type="Gtk.Bin">
     <itemgroups />
     <signals />
   </object>
@@ -89,11 +89,11 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.PlayersFilterTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.PlayersFilterTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.CategoriesFilterTreeView" palette-category="General" allow-children="false" base-type="Gtk.TreeView">
+  <object type="LongoMatch.Gui.Component.CategoriesFilterTreeView" palette-category="LongoMatch" allow-children="false" base-type="Gtk.TreeView">
     <itemgroups />
     <signals />
   </object>
@@ -201,25 +201,25 @@
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.TeamsComboBox" palette-category="General" allow-children="false" base-type="Gtk.ComboBox">
+  <object type="LongoMatch.Gui.Component.TeamsComboBox" palette-category="LongoMatch" allow-children="false" base-type="Gtk.ComboBox">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.HomeTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
+  <object type="LongoMatch.Gui.Component.HomeTeamsComboBox" palette-category="LongoMatch" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
     <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.AwayTeamsComboBox" palette-category="General" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
+  <object type="LongoMatch.Gui.Component.AwayTeamsComboBox" palette-category="LongoMatch" allow-children="false" base-type="LongoMatch.Gui.Component.TeamsComboBox">
     <itemgroups />
     <signals />
   </object>
   <object type="LongoMatch.Gui.Component.MediaFileChooser" palette-category="General" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
       <itemgroup label="MediaFileChooser Properties">
-        <property name="CurrentPath" />
-        <property name="FilterName" />
         <property name="ProposedFileName" />
         <property name="ProposedDirectoryName" />
+        <property name="CurrentPath" />
+        <property name="FilterName" />
       </itemgroup>
     </itemgroups>
     <signals>
@@ -310,33 +310,13 @@
       </itemgroup>
     </signals>
   </object>
-  <object type="LongoMatch.Gui.Component.SynchronizationWidget" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="SynchronizationWidget Properties">
-        <property name="FixedPeriods" />
-      </itemgroup>
-    </itemgroups>
+  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="VAS.UI.Component.Timeline">
+    <itemgroups />
     <signals />
   </object>
-  <object type="LongoMatch.Gui.Component.LinkProperties" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="LinkProperties Properties">
-        <property name="Edited" />
-      </itemgroup>
-    </itemgroups>
+  <object type="VAS.UI.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
+    <itemgroups />
     <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.ToggleTopBar" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups>
-      <itemgroup label="ToggleTopBar Properties">
-        <property name="CurrentPage" />
-      </itemgroup>
-    </itemgroups>
-    <signals>
-      <itemgroup label="ToggleTopBar Signals">
-        <signal name="PageSwitchedEvent" />
-      </itemgroup>
-    </signals>
   </object>
   <object type="VAS.UI.CapturerBin" palette-category="VAS" allow-children="false" base-type="Gtk.Bin">
     <itemgroups>
@@ -377,14 +357,6 @@
         <property name="TogglePlayOnClick" />
       </itemgroup>
     </itemgroups>
-    <signals />
-  </object>
-  <object type="LongoMatch.Gui.Component.Timeline" palette-category="General" allow-children="false" base-type="VAS.UI.Component.Timeline">
-    <itemgroups />
-    <signals />
-  </object>
-  <object type="VAS.UI.Component.Timeline" palette-category="General" allow-children="false" base-type="Gtk.Bin">
-    <itemgroups />
     <signals />
   </object>
 </objects>
