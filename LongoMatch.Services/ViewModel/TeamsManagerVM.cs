@@ -17,21 +17,15 @@
 //
 using System;
 using LongoMatch.Core.Store.Templates;
-using VAS.Core.Common;
 using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class DashboardVM: TemplateViewModel<DashboardLongoMatch>
+	public class TeamsManagerVM:  TemplatesManagerViewModel<SportsTeam, TeamVM>
 	{
-
-		public override Image Icon {
-			get {
-				return Model.Image;
-			}
-			set {
-				Model.Image = Icon;
-			}
+		public TeamsManagerVM ()
+		{
 		}
 	}
 }
+
