@@ -22,15 +22,16 @@ using VAS.Services.ViewModel;
 
 namespace LongoMatch.Services.ViewModel
 {
-	public class DashboardVM: TemplateViewModel<DashboardLongoMatch>
+
+	public class TeamVM: TemplateViewModel<SportsTeam>
 	{
 
 		public override Image Icon {
 			get {
-				return Model.Image;
+				return Model.Shield;
 			}
 			set {
-				Model.Image = Icon;
+				Model.Shield = Icon;
 			}
 		}
 	}
