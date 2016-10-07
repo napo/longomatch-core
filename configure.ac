@@ -140,8 +140,6 @@ build/m4/Makefile
 
 images/Makefile
 
-oxyplot/Makefile
-
 .nuget/Makefile
 
 AssemblyInfo/AssemblyInfo.cs
