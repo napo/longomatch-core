@@ -5,19 +5,19 @@ namespace LongoMatch.Plugins.Stats
 	public partial class Plotter
 	{
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::Gtk.HBox hbox4;
-		
+
 		private global::Gtk.RadioButton historadiobutton;
-		
+
 		private global::Gtk.RadioButton pieradiobutton;
-		
+
 		private global::Gtk.HBox hbox3;
-		
+
 		private global::Gtk.Image imageall;
-		
+
 		private global::Gtk.Image imagehome;
-		
+
 		private global::Gtk.Image imageaway;
 
 		protected virtual void Build ()
@@ -38,7 +38,6 @@ namespace LongoMatch.Plugins.Stats
 			this.historadiobutton = new global::Gtk.RadioButton (global::Mono.Unix.Catalog.GetString ("Histogram"));
 			this.historadiobutton.CanFocus = true;
 			this.historadiobutton.Name = "historadiobutton";
-			this.historadiobutton.Active = true;
 			this.historadiobutton.DrawIndicator = true;
 			this.historadiobutton.UseUnderline = true;
 			this.historadiobutton.Group = new global::GLib.SList (global::System.IntPtr.Zero);

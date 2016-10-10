@@ -386,7 +386,6 @@ namespace LongoMatch.Gui
 			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Rectangle), typeof (RectangleObject), "LongoMatch.Drawing");
 			CanvasFromDrawableObjectRegistry.AddMapping (typeof (Text), typeof (TextObject), "LongoMatch.Drawing");
 		}
-
 	}
 }
 

@@ -36,6 +36,9 @@ using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
 using Helpers = VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
+using VAS.UI.Helpers.Gtk2;
+using System.Diagnostics.Contracts;
+using System.ComponentModel;
 
 namespace LongoMatch.Gui.Panel
 {
@@ -76,17 +79,9 @@ namespace LongoMatch.Gui.Panel
 			notebook1.ShowBorder = false;
 			projectlistwidget1.SelectionMode = SelectionMode.Multiple;
 			projectlistwidget1.ProjectsSelected += HandleProjectsSelected;
-			projectlistwidget1.ProjectSelected += HandleProjectSelected;
 
-			seasonentry.Changed += HandleChanged;
-			competitionentry.Changed += HandleChanged;
-			savebutton.Clicked += HandleSaveClicked;
-			exportbutton.Clicked += HandleExportClicked;
 			resyncbutton.Clicked += HandleResyncClicked;
-			deletebutton.Clicked += HandleDeleteClicked;
-			openbutton.Clicked += HandleOpenClicked;
 			datepicker.ValueChanged += HandleDateChanged;
-			desctextview.Buffer.Changed += HandleChanged;
 
 			notebook1.Page = 0;
 			panelheader1.Title = Title;
@@ -123,6 +118,16 @@ namespace LongoMatch.Gui.Panel
 			set {
 				viewModel = value;
 				projectlistwidget1.Fill (viewModel.Model.ToList ());
+				viewModel.PropertyChanged += HandleViewModelChanged;
+				viewModel.LoadedProject.PropertyChanged += HandleLoadedProjectChanged;
+				savebutton.Bind (viewModel.SaveCommand, true);
+				deletebutton.Bind (viewModel.DeleteCommand, null);
+				exportbutton.Bind (viewModel.ExportCommand, null);
+				openbutton.Bind (viewModel.OpenCommand, null);
+				resyncbutton.Bind (viewModel.ResyncCommand, null);
+				seasonentry.Bind (viewModel, "Season");
+				competitionentry.Bind (viewModel, "Competition");
+				desctextview.Bind (viewModel, "Description");
 			}
 			get {
 				return viewModel;
@@ -158,32 +163,6 @@ namespace LongoMatch.Gui.Panel
 			videoseventbox.ModifyBg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteBackgroundDark));
 			videoslabel.ModifyFg (StateType.Normal, Misc.ToGdkColor (App.Current.Style.PaletteText));
 			videoslabel.ModifyFont (desc);
-		}
-
-		void SaveLoadedProject (bool force)
-		{
-			if (loadedProject != null) {
-				bool save = edited;
-
-				if (edited && !force) {
-					string msg = Catalog.GetString ("Do you want to save the current project?");
-					if (!App.Current.Dialogs.QuestionMessage (msg, null, this).Result) {
-						save = false;
-					}
-				}
-				if (save) {
-					try {
-						IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Saving project..."), null);
-						busy.ShowSync (() => DB.Store<ProjectLongoMatch> (loadedProject));
-						projectlistwidget1.UpdateProject (loadedProject);
-						edited = false;
-					} catch (Exception ex) {
-						Log.Exception (ex);
-						App.Current.Dialogs.ErrorMessage (Catalog.GetString ("Error saving project:") + "\n" + ex.Message);
-						return;
-					}
-				}
-			}
 		}
 
 		void LoadProject (ProjectLongoMatch project)
@@ -250,56 +229,20 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void HandleChanged (object sender, EventArgs e)
+		void HandleViewModelChanged (object sender, PropertyChangedEventArgs e)
 		{
-			if (loadedProject == null)
-				return;
-
-			if (sender == competitionentry) {
-				loadedProject.Description.Competition = (sender as Entry).Text;
-			} else if (sender == seasonentry) {
-				loadedProject.Description.Season = (sender as Entry).Text;
-			} else if (sender == desctextview.Buffer) {
-				loadedProject.Description.Description =
-					desctextview.Buffer.GetText (desctextview.Buffer.StartIter,
-					desctextview.Buffer.EndIter, true);
-			}
-			edited = true;
 		}
 
-		void HandleProjectSelected (ProjectLongoMatch project)
+		void HandleLoadedProjectChanged (object sender, PropertyChangedEventArgs e)
 		{
-			SaveLoadedProject (false);
-			if (project != null) {
-				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-					new OpenProjectIDEvent {
-						ProjectID = project.ID,
-						Project = project
-					}
-				);
+			if (e.PropertyName == "Model") {
+				LoadProject (viewModel.LoadedProject.Model);
 			}
 		}
 
 		void HandleProjectsSelected (List<ProjectLongoMatch> projects)
 		{
-			SaveLoadedProject (false);
-			rbox.Visible = true;
-			savebutton.Sensitive = projects.Count == 1;
-			exportbutton.Sensitive = projects.Count == 1;
-			openbutton.Sensitive = projects.Count == 1;
-			deletebutton.Sensitive = projects.Count != 0;
-			projectbox.Sensitive = projects.Count == 1;
-			resyncbutton.Sensitive = projects.Count == 1;
-
-			selectedProjects = projects;
-			if (projects.Count == 1) {
-				try {
-					LoadProject (projects [0]);
-				} catch (Exception ex) {
-					Log.Exception (ex);
-					App.Current.Dialogs.ErrorMessage (ex.Message, this);
-				}
-			}
+			ViewModel.Selection.Replace (projects.Cast<SportsProjectVM> ());
 		}
 
 		void HandleResyncClicked (object sender, EventArgs e)
@@ -318,26 +261,6 @@ namespace LongoMatch.Gui.Panel
 			}
 		}
 
-		void HandleSaveClicked (object sender, EventArgs e)
-		{
-			SaveLoadedProject (true);
-		}
-
-		void HandleExportClicked (object sender, EventArgs e)
-		{
-			if (loadedProject != null) {
-				string filename = App.Current.Dialogs.SaveFile (
-									  Catalog.GetString ("Export project"),
-									  Utils.SanitizePath (loadedProject.Description.Title + Constants.PROJECT_EXT),
-									  App.Current.HomeDir, Constants.PROJECT_NAME,
-									  new string [] { Constants.PROJECT_EXT });
-				if (filename != null) {
-					filename = System.IO.Path.ChangeExtension (filename, Constants.PROJECT_EXT);
-					Serializer.Instance.Save (loadedProject, filename);
-				}
-			}
-		}
-
 		void HandleDateChanged (object sender, EventArgs e)
 		{
 			if (loadedProject == null)
@@ -347,51 +270,5 @@ namespace LongoMatch.Gui.Panel
 			edited = true;
 		}
 
-		void HandleDeleteClicked (object sender, EventArgs e)
-		{
-			List<ProjectLongoMatch> deletedProjects;
-
-			if (selectedProjects == null)
-				return;
-
-			deletedProjects = new List<ProjectLongoMatch> ();
-			foreach (ProjectLongoMatch selectedProject in selectedProjects) {
-				string msg = Catalog.GetString ("Do you really want to delete:") + "\n" +
-							 selectedProject.Description.Title;
-				if (Helpers.MessagesHelpers.QuestionMessage (this, msg)) {
-					// Unload first
-					if (loadedProject != null && loadedProject.ID == selectedProject.ID) {
-						loadedProject = null;
-					}
-					IBusyDialog busy = App.Current.Dialogs.BusyDialog (Catalog.GetString ("Deleting project..."), null);
-					busy.ShowSync (() => {
-						try {
-							DB.Delete<ProjectLongoMatch> (selectedProject);
-						} catch (StorageException ex) {
-							App.Current.Dialogs.ErrorMessage (ex.Message);
-						}
-					});
-					deletedProjects.Add (selectedProject);
-				}
-			}
-			projectlistwidget1.RemoveProjects (deletedProjects);
-
-			// In the case where there are no projects left we need to clear the project desc widget
-			if (DB.Count<ProjectLongoMatch> () == 0) {
-				rbox.Visible = false;
-			}
-		}
-
-		void HandleOpenClicked (object sender, EventArgs e)
-		{
-			if (loadedProject != null) {
-				App.Current.EventsBroker.Publish<OpenProjectIDEvent> (
-					new OpenProjectIDEvent {
-						ProjectID = loadedProject.ID,
-						Project = loadedProject
-					}
-				);
-			}
-		}
 	}
 }

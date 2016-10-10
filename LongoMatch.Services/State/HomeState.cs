@@ -21,6 +21,7 @@ using VAS.Services.State;
 
 namespace LongoMatch.Services.States
 {
+
 	public class HomeState : ScreenState<IViewModel>
 	{
 		public const string NAME = "Home";

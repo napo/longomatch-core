@@ -21,25 +21,28 @@ using System.Linq;
 using Gtk;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
-using LongoMatch.Drawing.CanvasObjects.Timeline;
 using LongoMatch.Drawing.Widgets;
 using LongoMatch.Gui.Menus;
+using LongoMatch.Services.ViewModel;
 using Pango;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Events;
+using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Drawing.Cairo;
 using VAS.Drawing.CanvasObjects.Timeline;
 using VAS.Drawing.Widgets;
-using VAS.UI.Menus;
 using Helpers = VAS.UI.Helpers;
-using LMCommon = LongoMatch.Core.Common;
+using VAS.Core.MVVMC;
+using VAS.Core.Interfaces.GUI;
+using VAS.Core.Hotkeys;
 
 namespace LongoMatch.Gui.Component
 {
 	[System.ComponentModel.ToolboxItem (true)]
-	public partial class SynchronizationWidget : Gtk.Bin
+	[ViewAttribute (ResyncProjectState.Name)]
+	public partial class SynchronizationWidget : Gtk.Bin, IPanel<SportsProjectVM>
 	{
 		const uint TIMEOUT_MS = 100;
 		uint timeoutID;
@@ -51,6 +54,7 @@ namespace LongoMatch.Gui.Component
 		PeriodsMenu menu;
 		ObservableCollection<Period> periods;
 		double maxSecondsPerPixels;
+		SportsProjectVM viewModel;
 
 		enum DidacticMessage
 		{
@@ -103,45 +107,6 @@ namespace LongoMatch.Gui.Component
 			menu = new PeriodsMenu ();
 		}
 
-		void ConnectSignals ()
-		{
-			zoomscale.ValueChanged += HandleZoomChanged;
-			main_cam_audio_button.Toggled += HandleAudioToggled;
-			sec_cam_audio_button.Toggled += HandleAudioToggled;
-
-			main_cam_playerbin.Player.TimeChangedEvent += HandleTick;
-			main_cam_playerbin.Player.PlaybackStateChangedEvent += HandleStateChanged;
-
-			// Listen for seek events from the timerule
-			timerule.SeekEvent += HandleTimeruleSeek;
-			timerule.Player = main_cam_playerbin.Player;
-			App.Current.EventsBroker.Subscribe<SeekEvent> (Seek);
-			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
-			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
-			// Handle dragging of periods
-			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
-			camerasTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
-
-			// Synchronize scrollbars with timerule and labels
-			scrolledwindow2.Vadjustment.ValueChanged += HandleScrollEvent;
-			scrolledwindow2.Hadjustment.ValueChanged += HandleScrollEvent;
-
-			/* FIXME: Links Label size to the container */
-			labelsarea.SizeRequested += (o, args) => {
-				labels_vbox.WidthRequest = args.Requisition.Width;
-			};
-
-			// Adjust our zoom factors when the window is resized
-			scrolledwindow2.SizeAllocated += (o, args) => {
-				UpdateMaxSecondsPerPixel ();
-			};
-			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
-			scrolledwindow2.HScrollbar.SizeAllocated += (object o, SizeAllocatedArgs args) => {
-				int spacing = (int)scrolledwindow2.StyleGetProperty ("scrollbar-spacing");
-				zoomhbox.HeightRequest = args.Allocation.Height + spacing;
-			};
-		}
-
 		protected override void OnDestroyed ()
 		{
 			if (timeoutID != 0) {
@@ -161,6 +126,49 @@ namespace LongoMatch.Gui.Component
 			camerasTimeline.Dispose ();
 
 			base.OnDestroyed ();
+		}
+
+		/// <summary>
+		/// When set to <c>true</c>, periods can't be added or removed, for example
+		/// in a fake live projects, where periods are defined during the capture.
+		/// </summary>
+		public bool FixedPeriods {
+			get;
+			set;
+		}
+
+		public SportsProjectVM ViewModel {
+			get {
+				return viewModel;
+			}
+			set {
+				viewModel = value;
+				LoadProject (viewModel.Model);
+			}
+		}
+
+		public string Title {
+			get {
+				return Catalog.GetString ("Project synchronization");
+			}
+		}
+
+		public void SetViewModel (object viewModel)
+		{
+			ViewModel = viewModel as SportsProjectVM;
+		}
+
+		public void OnLoad ()
+		{
+		}
+
+		public void OnUnload ()
+		{
+		}
+
+		public KeyContext GetKeyContext ()
+		{
+			return null;
 		}
 
 		public void Pause ()
@@ -203,81 +211,71 @@ namespace LongoMatch.Gui.Component
 			project.ResyncEvents (periods);
 		}
 
-		/// <summary>
-		/// When set to <c>true</c>, periods can't be added or removed, for example
-		/// in a fake live projects, where periods are defined during the capture.
-		/// </summary>
-		public bool FixedPeriods {
-			get;
-			set;
-		}
+		void LoadProject (ProjectLongoMatch project)
+		{
+			Time start, pDuration;
+			ObservableCollection<string> gamePeriods;
+			MediaFile file;
 
-		public ProjectLongoMatch Project {
-			set {
-				Time start, pDuration;
-				ObservableCollection <string> gamePeriods;
-				MediaFile file;
+			this.project = project;
+			gamePeriods = project.Dashboard.GamePeriods;
 
-				this.project = value;
-				gamePeriods = value.Dashboard.GamePeriods;
-
-				MediaFileSet fileSet = project.Description.FileSet;
-				start = new Time (0);
-				// FIXME: What should we do if the fileset is empty ?
-				file = fileSet.FirstOrDefault ();
-				duration = file.Duration;
-				pDuration = new Time (duration.MSeconds / gamePeriods.Count);
-				if (project.Periods == null || project.Periods.Count == 0) {
-					/* If no periods are provided create the default ones
-					 * defined in the dashboard */
-					periods = new ObservableCollection<Period> ();
-					gamePeriods = value.Dashboard.GamePeriods;
-					foreach (string s in gamePeriods) {
-						Period period = new Period { Name = s };
-						period.Start (start);
-						period.Stop (start + pDuration);
-						periods.Add (period);
-						start += pDuration;
-					}
-					value.Periods = periods;
-				} else {
-					/* Create a copy of the project periods and keep the
-					 * project ones to resynchronize the events in SaveChanges() */
-					periods = project.Periods.Clone ();
+			MediaFileSet fileSet = project.Description.FileSet;
+			start = new Time (0);
+			// FIXME: What should we do if the fileset is empty ?
+			file = fileSet.FirstOrDefault ();
+			duration = file.Duration;
+			pDuration = new Time (duration.MSeconds / gamePeriods.Count);
+			if (project.Periods == null || project.Periods.Count == 0) {
+				/* If no periods are provided create the default ones
+				 * defined in the dashboard */
+				periods = new ObservableCollection<Period> ();
+				gamePeriods = project.Dashboard.GamePeriods;
+				foreach (string s in gamePeriods) {
+					Period period = new Period { Name = s };
+					period.Start (start);
+					period.Stop (start + pDuration);
+					periods.Add (period);
+					start += pDuration;
 				}
+				project.Periods = periods;
+			} else {
+				/* Create a copy of the project periods and keep the
+				 * project ones to resynchronize the events in SaveChanges() */
+				periods = project.Periods.Clone ();
+			}
 
-				camerasLabels.Load (fileSet);
-				camerasTimeline.Load (periods, fileSet, duration);
+			camerasLabels.Load (fileSet);
+			camerasTimeline.Load (periods, fileSet, duration);
 
-				UpdateMaxSecondsPerPixel ();
-				UpdateTimeLineSize (fileSet);
+			UpdateMaxSecondsPerPixel ();
+			UpdateTimeLineSize (fileSet);
 
-				timerule.Duration = duration;
+			timerule.Duration = duration;
 
-				// Open media file
-				main_cam_label.Text = fileSet.First ().Name;
-				main_cam_playerbin.Player.Open (fileSet);
+			// Open media file
+			main_cam_label.Text = fileSet.First ().Name;
+			main_cam_playerbin.Player.Open (fileSet);
 
-				if (fileSet.Count > 1) {
-					// Start with initial didactic message
-					ShowDidactic (DidacticMessage.Initial);
-					// Connect secondary camera event handlers
-					camerasTimeline.CameraDragged += HandleCameraDragged;
-					camerasTimeline.SelectedCameraChanged += HandleSelectedCameraChanged;
-				} else {
-					// Disconnect secondary camera event handlers
-					camerasTimeline.CameraDragged -= HandleCameraDragged;
-					camerasTimeline.SelectedCameraChanged -= HandleSelectedCameraChanged;
-					// Just in case it was previously visible, a mediafile might still be loaded if 
-					// the user is going back and forth adding/removing files to the set.
-					HideSecondaryPlayer ();
-					HideDidactic ();
-				}
+			if (fileSet.Count > 1) {
+				// Start with initial didactic message
+				ShowDidactic (DidacticMessage.Initial);
+				// Connect secondary camera event handlers
+				camerasTimeline.CameraDragged += HandleCameraDragged;
+				camerasTimeline.SelectedCameraChanged += HandleSelectedCameraChanged;
+			} else {
+				// Disconnect secondary camera event handlers
+				camerasTimeline.CameraDragged -= HandleCameraDragged;
+				camerasTimeline.SelectedCameraChanged -= HandleSelectedCameraChanged;
+				// Just in case it was previously visible, a mediafile might still be loaded if 
+				// the user is going back and forth adding/removing files to the set.
+				HideSecondaryPlayer ();
+				HideDidactic ();
+			}
 
-				// Start updating UI
-				if (timeoutID == 0) {
-					timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
-				}
+			// Start updating UI
+			if (timeoutID == 0) {
+				timeoutID = GLib.Timeout.Add (TIMEOUT_MS, UpdateTime);
 			}
 		}
 
@@ -314,6 +312,48 @@ namespace LongoMatch.Gui.Component
 				camerasTimeline.CurrentTime = currentTime;
 			}
 			return true;
+		}
+
+
+		void ConnectSignals ()
+		{
+			zoomscale.ValueChanged += HandleZoomChanged;
+			main_cam_audio_button.Toggled += HandleAudioToggled;
+			sec_cam_audio_button.Toggled += HandleAudioToggled;
+
+			main_cam_playerbin.Player.TimeChangedEvent += HandleTick;
+			main_cam_playerbin.Player.PlaybackStateChangedEvent += HandleStateChanged;
+
+			// Listen for seek events from the timerule
+			timerule.SeekEvent += HandleTimeruleSeek;
+			timerule.Player = main_cam_playerbin.Player;
+			App.Current.EventsBroker.Subscribe<SeekEvent> (Seek);
+			App.Current.EventsBroker.Subscribe<TogglePlayEvent> (HandleTogglePlayEvent);
+			App.Current.EventsBroker.Subscribe<KeyPressedEvent> (HandleKeyPressed);
+			// Handle dragging of periods
+			camerasTimeline.TimeNodeChanged += HandleTimeNodeChanged;
+			camerasTimeline.ShowTimerMenuEvent += HandleShowTimerMenuEvent;
+
+			// Synchronize scrollbars with timerule and labels
+			scrolledwindow2.Vadjustment.ValueChanged += HandleScrollEvent;
+			scrolledwindow2.Hadjustment.ValueChanged += HandleScrollEvent;
+
+			/* FIXME: Links Label size to the container */
+			labelsarea.SizeRequested += (o, args) => {
+				labels_vbox.WidthRequest = args.Requisition.Width;
+			};
+
+			// Adjust our zoom factors when the window is resized
+			scrolledwindow2.SizeAllocated += (o, args) => {
+				UpdateMaxSecondsPerPixel ();
+			};
+			// Synchronize the zoom widget height with scrolledwindow's scrollbar's.
+			scrolledwindow2.HScrollbar.SizeAllocated += (object o, SizeAllocatedArgs args) => {
+				int spacing = (int)scrolledwindow2.StyleGetProperty ("scrollbar-spacing");
+				zoomhbox.HeightRequest = args.Allocation.Height + spacing;
+			};
+
+			panelheader1.BackClicked += async (sender, e) => await App.Current.StateController.MoveBack ();
 		}
 
 		/// <summary>
@@ -489,7 +529,7 @@ namespace LongoMatch.Gui.Component
 				return false;
 			}
 			if (camera.TimeNode.Start <= timerule.CurrentTime &&
-			    timerule.CurrentTime <= camera.TimeNode.Stop) {
+				timerule.CurrentTime <= camera.TimeNode.Stop) {
 				return true;
 			} else {
 				return false;
@@ -527,7 +567,7 @@ namespace LongoMatch.Gui.Component
 			if (camera != null) {
 				// Check if we need to reopen the player
 				if (!sec_cam_playerbin.Player.Opened ||
-				    sec_cam_playerbin.Player.FileSet.FirstOrDefault () != camera.MediaFile) {
+					sec_cam_playerbin.Player.FileSet.FirstOrDefault () != camera.MediaFile) {
 					MediaFileSet fileSet = new MediaFileSet ();
 					fileSet.Add (camera.MediaFile);
 
