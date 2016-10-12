@@ -23,6 +23,7 @@ using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Multimedia;
 using VAS.Core.Store;
 
 namespace LongoMatch.Core.Events

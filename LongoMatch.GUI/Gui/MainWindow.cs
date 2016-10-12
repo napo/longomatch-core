@@ -35,6 +35,7 @@ using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Plugins;
+using VAS.Core.Multimedia;
 using VAS.Core.Store;
 using Constants = LongoMatch.Core.Common.Constants;
 using Misc = VAS.UI.Helpers.Misc;

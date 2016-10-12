@@ -21,6 +21,7 @@ using System;
 using Gtk;
 using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Multimedia;
 using VAS.Core.Store.Playlists;
 using Misc = VAS.UI.Helpers.Misc;
 

@@ -24,6 +24,7 @@ using LongoMatch.Core.Common;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using VAS.Core.Common;
+using VAS.Core.Multimedia;
 using VAS.Core.Store;
 
 namespace LongoMatch.Core.Handlers

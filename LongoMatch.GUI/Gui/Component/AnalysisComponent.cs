@@ -26,6 +26,7 @@ using VAS.Core.Filters;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces;
 using VAS.Core.Interfaces.GUI;
+using VAS.Core.Multimedia;
 using VAS.Core.Store;
 using VAS.Services.ViewModel;
 using VAS.UI.Helpers;

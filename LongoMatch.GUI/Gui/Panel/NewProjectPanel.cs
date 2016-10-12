@@ -32,13 +32,14 @@ using VAS.Core.Events;
 using VAS.Core.Hotkeys;
 using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
+using VAS.Core.Multimedia;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Drawing.Cairo;
 using Color = VAS.Core.Common.Color;
 using Constants = LongoMatch.Core.Common.Constants;
-using Device = VAS.Core.Common.Device;
+using Device = VAS.Core.Multimedia.Device;
 using Helpers = VAS.UI.Helpers;
 using Misc = VAS.UI.Helpers.Misc;
 

@@ -17,8 +17,8 @@
 //
 using System;
 using Gtk;
+using VAS.Core.Multimedia;
 using Misc = VAS.UI.Helpers.Misc;
-using VAS.Core.Common;
 
 namespace LongoMatch.Gui.Component
 {
