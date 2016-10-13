@@ -748,7 +748,7 @@ namespace LongoMatch.Gui.Panel
 			Device device = videoDevices [devicecombobox.Active];
 			ListStore store = new ListStore (typeof (string));
 			deviceformatcombobox.Model = store;
-			foreach (DeviceVideoFormat format in device.Formats) {
+			foreach (VideoSourceFormat format in device.Formats) {
 				deviceformatcombobox.AppendText (format.ToString ());
 			}
 			deviceformatcombobox.Active = 0;

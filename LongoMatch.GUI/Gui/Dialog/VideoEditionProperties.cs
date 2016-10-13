@@ -49,7 +49,7 @@ namespace LongoMatch.Gui.Dialog
 			audiocheckbutton.Active = App.Current.Config.EnableAudio;
 			mediafilechooser1.FileChooserMode = FileChooserMode.File;
 			mediafilechooser1.FilterName = "Multimedia Files";
-			mediafilechooser1.FilterExtensions = new string[] {"*.mkv", "*.mp4", "*.ogg",
+			mediafilechooser1.FilterExtensions = new string [] {"*.mkv", "*.mp4", "*.ogg",
 				"*.avi", "*.mpg", "*.vob"
 			};
 			mediafilechooser2.FileChooserMode = FileChooserMode.Directory;
@@ -103,29 +103,29 @@ namespace LongoMatch.Gui.Dialog
 		protected virtual void OnButtonOkClicked (object sender, System.EventArgs e)
 		{
 			TreeIter iter;
-			
+
 			/* Get size info */
 			sizecombobox.GetActiveIter (out iter);
 			encSettings.VideoStandard = (VideoStandard)stdStore.GetValue (iter, 1);
-			
+
 			/* Get encoding profile info */
 			formatcombobox.GetActiveIter (out iter);
 			encSettings.EncodingProfile = (EncodingProfile)encStore.GetValue (iter, 1);
-			
+
 			/* Get quality info */
 			qualitycombobox.GetActiveIter (out iter);
 			encSettings.EncodingQuality = (EncodingQuality)qualStore.GetValue (iter, 1);
-			
+
 			encSettings.OutputFile = mediafilechooser1.CurrentPath;
-			
+
 			encSettings.Framerate_n = App.Current.Config.FPS_N;
 			encSettings.Framerate_d = App.Current.Config.FPS_D;
-			
-			encSettings.TitleSize = 20; 
-			
+
+			encSettings.TitleSize = 20;
+
 			encSettings.EnableAudio = audiocheckbutton.Active;
 			encSettings.EnableTitle = descriptioncheckbutton.Active;
-			
+
 			if (!SplitFiles && String.IsNullOrEmpty (EncodingSettings.OutputFile)) {
 				App.Current.Dialogs.WarningMessage (Catalog.GetString ("Please, select a video file."));
 			} else if (SplitFiles && String.IsNullOrEmpty (OutputDir)) {

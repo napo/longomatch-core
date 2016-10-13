@@ -5,189 +5,189 @@ namespace LongoMatch.Gui.Panel
 	public partial class NewProjectPanel
 	{
 		private global::Gtk.VBox vbox3;
-		
+
 		private global::Gtk.EventBox headereventbox;
-		
+
 		private global::LongoMatch.Gui.Panel.PanelHeader panelheader1;
-		
+
 		private global::Gtk.Notebook notebook1;
-		
+
 		private global::Gtk.Alignment alignment2;
-		
+
 		private global::Gtk.HBox hbox11;
-		
+
 		private global::Gtk.VBox vbox12;
-		
+
 		private global::Gtk.Alignment alignment4;
-		
+
 		private global::Gtk.Button filebutton;
-		
+
 		private global::Gtk.Image fileimage;
-		
+
 		private global::Gtk.Label label2;
-		
+
 		private global::Gtk.VBox vbox13;
-		
+
 		private global::Gtk.Alignment alignment3;
-		
+
 		private global::Gtk.Button capturebutton;
-		
+
 		private global::Gtk.Image captureimage;
-		
+
 		private global::Gtk.Label label4;
-		
+
 		private global::Gtk.VBox vbox14;
-		
+
 		private global::Gtk.Alignment alignment5;
-		
+
 		private global::Gtk.Button fakebutton;
-		
+
 		private global::Gtk.Image fakeimage;
-		
+
 		private global::Gtk.Label label5;
-		
+
 		private global::Gtk.VBox vbox15;
-		
+
 		private global::Gtk.Alignment alignment6;
-		
+
 		private global::Gtk.Button ipbutton;
-		
+
 		private global::Gtk.Image ipimage;
-		
+
 		private global::Gtk.Label label6;
-		
+
 		private global::Gtk.Label label1;
-		
+
 		private global::Gtk.VBox vbox5;
-		
+
 		private global::Gtk.Alignment alignment1;
-		
+
 		private global::Gtk.HBox topbox;
-		
+
 		private global::Gtk.Table lefttable;
-		
+
 		private global::Gtk.Entry competitionentry;
-		
+
 		private global::Gtk.Label Competitionlabel;
-		
+
 		private global::Gtk.Label datelabel2;
-		
+
 		private global::LongoMatch.Gui.Component.DatePicker datepicker1;
-		
+
 		private global::Gtk.Label desclabel;
-		
+
 		private global::Gtk.ScrolledWindow GtkScrolledWindow;
-		
+
 		private global::Gtk.TextView desctextview;
-		
+
 		private global::Gtk.Entry seasonentry;
-		
+
 		private global::Gtk.Label seasonlabel;
-		
+
 		private global::Gtk.VBox centerbox;
-		
+
 		private global::Gtk.HBox hbox15;
-		
+
 		private global::LongoMatch.Gui.Component.HomeTeamsComboBox hometeamscombobox;
-		
+
 		private global::Gtk.Image vsimage;
-		
+
 		private global::LongoMatch.Gui.Component.AwayTeamsComboBox awayteamscombobox;
-		
+
 		private global::LongoMatch.Gui.Component.MediaFileSetSelection mediafilesetselection1;
-		
+
 		private global::Gtk.VBox capturebox;
-		
+
 		private global::Gtk.Table outputfiletable;
-		
+
 		private global::LongoMatch.Gui.Component.MediaFileChooser capturemediafilechooser;
-		
+
 		private global::Gtk.Label outputfilelabel;
-		
+
 		private global::Gtk.Table urltable;
-		
+
 		private global::Gtk.Entry urientry;
-		
+
 		private global::Gtk.Label urilabel;
-		
+
 		private global::Gtk.Table devicetable;
-		
+
 		private global::Gtk.Label device;
-		
+
 		private global::Gtk.ComboBox devicecombobox;
-		
+
 		private global::Gtk.ComboBox deviceformatcombobox;
-		
+
 		private global::Gtk.Label deviceformatlabel;
-		
+
 		private global::Gtk.Table encpropstable;
-		
+
 		private global::Gtk.ComboBox encodingcombobox;
-		
+
 		private global::Gtk.ComboBox imagecombobox;
-		
+
 		private global::Gtk.Label outputsizelabel;
-		
+
 		private global::Gtk.ComboBox qualitycombobox;
-		
+
 		private global::Gtk.Label qualityformatlabel;
-		
+
 		private global::Gtk.Label videoformatlabel;
-		
+
 		private global::Gtk.Table righttable;
-		
+
 		private global::Gtk.Label analysislabel;
-		
+
 		private global::Gtk.ComboBox tagscombobox;
-		
+
 		private global::Gtk.VBox vbox6;
-		
+
 		private global::Gtk.HSeparator hseparator1;
-		
+
 		private global::Gtk.HBox hbox14;
-		
+
 		private global::Gtk.Alignment homealignment;
-		
+
 		private global::Gtk.HBox hbox16;
-		
+
 		private global::Gtk.Label label11;
-		
+
 		private global::Gtk.Entry hometacticsentry;
-		
+
 		private global::Gtk.Button hometacticsbutton;
-		
+
 		private global::Gtk.ToggleButton homecolor1button;
-		
+
 		private global::Gtk.DrawingArea homecolor1;
-		
+
 		private global::Gtk.ToggleButton homecolor2button;
-		
+
 		private global::Gtk.DrawingArea homecolor2;
-		
+
 		private global::Gtk.Alignment awayalignment;
-		
+
 		private global::Gtk.HBox hbox17;
-		
+
 		private global::Gtk.Label label12;
-		
+
 		private global::Gtk.Entry awaytacticsentry;
-		
+
 		private global::Gtk.Button awaytacticsbutton;
-		
+
 		private global::Gtk.ToggleButton awaycolor1button;
-		
+
 		private global::Gtk.DrawingArea awaycolor1;
-		
+
 		private global::Gtk.ToggleButton awaycolor2button;
-		
+
 		private global::Gtk.DrawingArea awaycolor2;
-		
+
 		private global::Gtk.DrawingArea drawingarea;
-		
+
 		private global::Gtk.Label label13;
-		
+
 		private global::LongoMatch.Gui.Component.SynchronizationWidget projectperiods1;
-		
+
 		private global::Gtk.Label label14;
 
 		protected virtual void Build ()

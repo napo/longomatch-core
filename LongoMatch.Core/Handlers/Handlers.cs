@@ -32,10 +32,10 @@ namespace LongoMatch.Core.Handlers
 	/* The players tagged in an event have changed */
 	public delegate void TeamsTagsChangedHandler ();
 
-	public delegate void OpenProjectIDHandler (Guid project_id,ProjectLongoMatch project);
+	public delegate void OpenProjectIDHandler (Guid project_id, ProjectLongoMatch project);
 	public delegate void OpenProjectHandler ();
 	public delegate void NewProjectHandler (ProjectLongoMatch project);
-	public delegate void OpenNewProjectHandler (ProjectLongoMatch project,ProjectType projectType,CaptureSettings captureSettings);
+	public delegate void OpenNewProjectHandler (ProjectLongoMatch project, ProjectType projectType, CaptureSettings captureSettings);
 	public delegate void ImportProjectHandler ();
 	public delegate void ExportProjectHandler (ProjectLongoMatch project);
 	public delegate void CreateThumbnailsHandler (ProjectLongoMatch project);
@@ -47,8 +47,8 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PlayerPropertiesHandler (PlayerLongoMatch player);
 	public delegate void PlayersPropertiesHandler (List<PlayerLongoMatch> players);
 	/* Players selection */
-	public delegate void PlayersSubstitutionHandler (SportsTeam team,PlayerLongoMatch p1,PlayerLongoMatch p2,
-		SubstitutionReason reason,Time time);
+	public delegate void PlayersSubstitutionHandler (SportsTeam team, PlayerLongoMatch p1, PlayerLongoMatch p2,
+		SubstitutionReason reason, Time time);
 	public delegate void PlayersSelectionChangedHandler (List<PlayerLongoMatch> players);
 	public delegate void TeamSelectionChangedHandler (ObservableCollection<SportsTeam> teams);
 	/* A list of projects have been selected */
@@ -57,7 +57,7 @@ namespace LongoMatch.Core.Handlers
 	public delegate void PlaylistVisibiltyHandler (bool visible);
 	public delegate void AnalysisWidgetsVisibilityHandler (bool visible);
 	public delegate void AnalysisModeChangedHandler (VideoAnalysisMode mode);
-	public delegate void ShowTimelineMenuHandler (IEnumerable<TimelineEvent> plays,EventType cat,Time time);
+	public delegate void ShowTimelineMenuHandler (IEnumerable<TimelineEvent> plays, EventType cat, Time time);
 	public delegate void ShowTaggerMenuHandler (IEnumerable<TimelineEvent> plays);
 	public delegate void TagSubcategoriesChangedHandler (bool tagsubcategories);
 }
