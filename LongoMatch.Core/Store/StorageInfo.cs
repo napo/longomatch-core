@@ -49,6 +49,17 @@ namespace LongoMatch.Core.Store
 		/// Version of the storage.
 		/// </summary>
 		public Version Version { get; set; }
+
+		/// <summary>
+		/// Date of the last modification.
+		/// </summary>
+		public DateTime LastModified { get; set; }
+
+		public override string ToString ()
+		{
+			return string.Format ("[StorageInfo: Name={0}, LastBackup={1}, LastCleanup={2}, Version={3}, LastModified={4}]",
+								  Name, LastBackup, LastCleanup, Version, LastModified);
+		}
 	}
 }
 

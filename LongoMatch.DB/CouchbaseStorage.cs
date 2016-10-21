@@ -40,6 +40,7 @@ namespace LongoMatch.DB
 		Dictionary<Type, object> views;
 		string storageName;
 		object mutex;
+		bool documentUpdated;
 
 		public CouchbaseStorage (Database db)
 		{
@@ -69,7 +70,7 @@ namespace LongoMatch.DB
 			db.MaxRevTreeDepth = 1;
 			mutex = new object ();
 			FetchInfo ();
-			Compact ();
+			BackupAndCompactIfNeeded ();
 			InitializeViews ();
 			VFS.SetCurrent (new FileSystem ());
 		}
@@ -105,6 +106,7 @@ namespace LongoMatch.DB
 
 		public bool Backup ()
 		{
+			Log.Information ("Creating database backup.");
 			try {
 				string outputFilename = Path.Combine (Config.DBDir, storageName + ".tar.gz");
 				using (FileStream fs = new FileStream (outputFilename, FileMode.Create, FileAccess.Write, FileShare.None)) {
@@ -120,6 +122,7 @@ namespace LongoMatch.DB
 					}
 				}
 				LastBackup = DateTime.UtcNow;
+				Store (Info);
 			} catch (Exception ex) {
 				Log.Exception (ex);
 				return false;
@@ -191,6 +194,7 @@ namespace LongoMatch.DB
 		{
 			lock (mutex) {
 				bool success = db.RunInTransaction (() => {
+					documentUpdated = false;
 					try {
 						StorableNode node;
 						ObjectChangedParser parser = new ObjectChangedParser ();
@@ -200,6 +204,10 @@ namespace LongoMatch.DB
 							Update (node);
 						} else {
 							DocumentsSerializer.SaveObject (t, db, saveChildren: true);
+						}
+						if (t.ID != Info.ID && (forceUpdate || documentUpdated)) {
+							Info.LastModified = DateTime.UtcNow;
+							DocumentsSerializer.SaveObject (Info, db);
 						}
 						foreach (IStorable storable in node.OrphanChildren) {
 							db.GetDocument (DocumentsSerializer.StringFromID (storable.ID, t.ID)).Delete ();
@@ -251,7 +259,10 @@ namespace LongoMatch.DB
 						return false;
 					}
 				});
-				if (!success) {
+				if (success) {
+					Info.LastModified = DateTime.UtcNow;
+					DocumentsSerializer.SaveObject (Info, db, null, false);
+				} else {
 					throw new StorageException (Catalog.GetString ("Error deleting object from the storage"));
 				}
 			}
@@ -281,6 +292,7 @@ namespace LongoMatch.DB
 				context.RootID = node.Storable.ID;
 			}
 			if (node.IsChanged) {
+				documentUpdated = true;
 				DocumentsSerializer.SaveObject (node.Storable, db, context, false);
 			}
 
@@ -311,45 +323,59 @@ namespace LongoMatch.DB
 					LastBackup = DateTime.UtcNow,
 					LastCleanup = DateTime.UtcNow,
 					Version = new Version (Constants.DB_VERSION, 0),
+					LastModified = DateTime.UtcNow,
 				};
 				Store (Info);
 			}
+			Log.Debug ("Database loaded " + Info);
 		}
 
 		void Compact ()
 		{
-			if ((DateTime.UtcNow - Info.LastCleanup).Days > 2) {
-				db.Compact ();
-				Info.LastCleanup = DateTime.UtcNow;
-				Store (Info);
-			}
+			Log.Information ("Compacting database.");
+			db.Compact ();
+			Info.LastCleanup = DateTime.UtcNow;
+			Store (Info);
 		}
 
 		void InitializeViews ()
 		{
-			views = new Dictionary <Type, object> ();
-			AddView (typeof(Dashboard), new DashboardsView (this));
-			AddView (typeof(Team), new TeamsView (this));
-			AddView (typeof(Project), new ProjectsView (this));
-			AddView (typeof(Player), new PlayersView (this));
-			AddView (typeof(TimelineEvent), new TimelineEventsView (this));
-			AddView (typeof(EventType), new EventTypeView (this));
+			views = new Dictionary<Type, object> ();
+			AddView (typeof (Dashboard), new DashboardsView (this));
+			AddView (typeof (Team), new TeamsView (this));
+			AddView (typeof (Project), new ProjectsView (this));
+			AddView (typeof (Player), new PlayersView (this));
+			AddView (typeof (TimelineEvent), new TimelineEventsView (this));
+			AddView (typeof (EventType), new EventTypeView (this));
 		}
 
 		void AddDirectoryFilesToTar (TarArchive tarArchive, string sourceDirectory, bool recurse)
 		{
 			// Recursively add sub-folders
 			if (recurse) {
-				string[] directories = Directory.GetDirectories (sourceDirectory);
+				string [] directories = Directory.GetDirectories (sourceDirectory);
 				foreach (string directory in directories)
 					AddDirectoryFilesToTar (tarArchive, directory, recurse);
 			}
 
 			// Add files
-			string[] filenames = Directory.GetFiles (sourceDirectory);
+			string [] filenames = Directory.GetFiles (sourceDirectory);
 			foreach (string filename in filenames) {
 				TarEntry tarEntry = TarEntry.CreateEntryFromFile (filename);
 				tarArchive.WriteEntry (tarEntry, true);
+			}
+		}
+
+		/// <summary>
+		/// Backup and Compact the database if needed.
+		/// </summary>
+		void BackupAndCompactIfNeeded ()
+		{
+			if ((Info.LastModified - Info.LastBackup).TotalDays > 2) {
+				Backup ();
+			}
+			if ((Info.LastModified - Info.LastCleanup).TotalDays > 2) {
+				Compact ();
 			}
 		}
 	}
