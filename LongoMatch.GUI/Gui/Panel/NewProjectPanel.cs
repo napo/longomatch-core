@@ -665,7 +665,7 @@ namespace LongoMatch.Gui.Panel
 			notebook1.Page++;
 
 			if (notebook1.Page == PROJECT_PERIODS) {
-				projectperiods1.Project = project;
+				//projectperiods1.Project = project;
 			}
 			UpdateTitle ();
 		}

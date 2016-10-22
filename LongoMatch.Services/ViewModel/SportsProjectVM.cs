@@ -35,6 +35,9 @@ namespace LongoMatch.Services.ViewModel
 			get {
 				return Model.Description.Description;
 			}
+			set {
+				Model.Description.Description = value;
+			}
 		}
 
 		/// <summary>
@@ -108,12 +111,15 @@ namespace LongoMatch.Services.ViewModel
 		}
 
 		/// <summary>
-		/// Gets the match date.
+		/// Gets or sets the match date.
 		/// </summary>
 		/// <value>The match date.</value>
 		public DateTime MatchDate {
 			get {
 				return Model.Description.MatchDate;
+			}
+			set {
+				Model.Description.MatchDate = value;
 			}
 		}
 
