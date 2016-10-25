@@ -63,17 +63,6 @@ namespace LongoMatch.Core.Store
 			VisitorTeamTemplate?.Dispose ();
 		}
 
-		[JsonIgnore]
-		[PropertyChanged.DoNotNotify]
-		public override bool IsChanged {
-			get {
-				return base.IsChanged;
-			}
-			set {
-				base.IsChanged = value;
-			}
-		}
-
 		#endregion
 
 		#region Properties

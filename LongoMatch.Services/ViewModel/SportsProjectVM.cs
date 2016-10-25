@@ -19,6 +19,7 @@ using System;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Services.ViewModel;
+using VAS.Core;
 
 namespace LongoMatch.Services.ViewModel
 {
@@ -81,10 +82,10 @@ namespace LongoMatch.Services.ViewModel
 		}
 
 		/// <summary>
-		/// Gets the local team score.
+		/// Gets the home team score.
 		/// </summary>
 		/// <value>The local score.</value>
-		public string LocalScore {
+		public string HomeScore {
 			get {
 				return Model.Description.LocalGoals.ToString ();
 			}
