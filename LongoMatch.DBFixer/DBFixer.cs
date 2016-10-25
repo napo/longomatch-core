@@ -20,10 +20,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
+using VAS.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
+using VAS.DB;
+using VAS.Core.Serialization;
 using LongoMatch.DB;
+using VAS.Core.Store.Templates;
+using VAS.Core.Common;
 
 namespace LongoMatch.DBFixer
 {
@@ -33,6 +37,8 @@ namespace LongoMatch.DBFixer
 		static string dbPath;
 		static string recoveryPath;
 
+		//static public Registry DependencyRegistry = new Registry ("App Registry");
+
 		public static void Main (string [] args)
 		{
 			InitDB ();
@@ -41,36 +47,42 @@ namespace LongoMatch.DBFixer
 
 		static void InitDB ()
 		{
-			//Couchbase.Lite.Storage.SystemSQLite.Plugin.Register ();
-			IStorageManager DatabaseManager;
+			Couchbase.Lite.Storage.SystemSQLite.Plugin.Register ();
 			IStorageManager Manager;
 			dbPath = Path.Combine (GetHomeDir (), "db");
-			Manager = new CouchbaseManager (dbPath);
+			Manager = new CouchbaseManagerLongoMatch (dbPath);
 			recoveryPath = Path.Combine (dbPath, "recovery");
 			if (!Directory.Exists (recoveryPath)) {
 				Directory.CreateDirectory (recoveryPath);
 			}
-			DatabaseManager = Manager;
 			Manager.UpdateDatabases ();
 			DB = Manager.Databases.FirstOrDefault ();
+
+			//DependencyRegistry.Register<IStorageManager, CouchbaseManagerLongoMatch> (1);
+			//Manager = DependencyRegistry.Retrieve<IStorageManager> (InstanceType.New, dbPath);
+			//Manager.UpdateDatabases ();
+			//DB = Manager.Databases.FirstOrDefault ();
 		}
 
 		static void RetrieveData ()
 		{
-			IEnumerable<Project> ProjectList = DB.RetrieveAll<Project> ();
-			List<Team> retrievedTeams = new List<Team> ();
+			IEnumerable<ProjectLongoMatch> ProjectList = DB.RetrieveAll<ProjectLongoMatch> ();
+			List<SportsTeam> retrievedTeams = new List<SportsTeam> ();
 			List<Dashboard> retrievedDashboards = new List<Dashboard> ();
 
-			foreach (Project project in ProjectList) {
+			foreach (ProjectLongoMatch project in ProjectList) {
 				project.Load ();
 				if (!retrievedTeams.Any (t => t.ID == project.LocalTeamTemplate.ID)) {
-					SerializeObject (project.LocalTeamTemplate.Name, project.LocalTeamTemplate, Constants.TEAMS_TEMPLATE_EXT);
+					SerializeObject (project.LocalTeamTemplate.Name, project.LocalTeamTemplate, Core.Common.Constants.TEAMS_TEMPLATE_EXT);
+					retrievedTeams.Add (project.LocalTeamTemplate);
 				}
 				if (!retrievedTeams.Any (t => t.ID == project.VisitorTeamTemplate.ID)) {
-					SerializeObject (project.VisitorTeamTemplate.Name, project.VisitorTeamTemplate, Constants.TEAMS_TEMPLATE_EXT);
+					SerializeObject (project.VisitorTeamTemplate.Name, project.VisitorTeamTemplate, Core.Common.Constants.TEAMS_TEMPLATE_EXT);
+					retrievedTeams.Add (project.VisitorTeamTemplate);
 				}
 				if (!retrievedDashboards.Any (t => t.ID == project.Dashboard.ID)) {
-					SerializeObject (project.Dashboard.Name, project.Dashboard, Constants.CAT_TEMPLATE_EXT);
+					SerializeObject (project.Dashboard.Name, project.Dashboard, Core.Common.Constants.CAT_TEMPLATE_EXT);
+					retrievedDashboards.Add (project.Dashboard);
 				}
 			}
 		}
@@ -89,7 +101,7 @@ namespace LongoMatch.DBFixer
 			if (home == null) {
 				home = Environment.GetFolderPath (Environment.SpecialFolder.Personal);
 			}
-			return Config.homeDirectory = Path.Combine (home, Constants.SOFTWARE_NAME);
+			return Path.Combine (home, Core.Common.Constants.SOFTWARE_NAME);
 		}
 	}
 }
