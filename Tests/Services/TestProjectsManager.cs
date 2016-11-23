@@ -34,6 +34,7 @@ using VAS.Core.Interfaces.GUI;
 using VAS.Core.Interfaces.Multimedia;
 using VAS.Core.Store;
 using VAS.Services;
+using VASUtils = VAS.Tests.Utils;
 
 namespace Tests.Services
 {
@@ -196,6 +197,12 @@ namespace Tests.Services
 		public void TestCaptureFinished ()
 		{
 			List<string> transitions = new List<string> ();
+
+			string stateTest = "stateTest";
+
+			App.Current.StateController.Register (stateTest, () => VASUtils.GetScreenStateMocked (stateTest).Object);
+
+			App.Current.StateController.MoveTo (stateTest, null);
 
 			App.Current.EventsBroker.Subscribe<NavigationEvent> ((obj) => {
 				transitions.Add (obj.Name);
