@@ -16,6 +16,7 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
+using System.Xml.Serialization;
 using Newtonsoft.Json;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
@@ -51,6 +52,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Title of the project
 		/// </summary>
+		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public String Title {
@@ -61,12 +63,13 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
+		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public String DateTitle {
 			get {
 				string ret = String.Format ("{0}-{1} {2}", LocalName, VisitorName,
-					             MatchDate.ToShortDateString ());
+								 MatchDate.ToShortDateString ());
 				if (!String.IsNullOrEmpty (Season)) {
 					ret += " " + Season;
 				}
@@ -224,10 +227,10 @@ namespace LongoMatch.Core.Store
 		}
 
 		static public int Sort (ProjectDescription p1, ProjectDescription p2,
-		                        ProjectSortType sortType)
+								ProjectSortType sortType)
 		{
 			int ret = 0;
-			
+
 			if (p1 == null && p2 == null) {
 				ret = 0;
 			} else if (p1 == null) {
@@ -236,37 +239,32 @@ namespace LongoMatch.Core.Store
 				ret = 1;
 			} else {
 				switch (sortType) {
-				case ProjectSortType.SortByName:
-					{
+				case ProjectSortType.SortByName: {
 						ret = String.Compare (p1.Title, p2.Title);
 						if (ret == 0) {
 							ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
 						}
 						break;
 					}
-				case ProjectSortType.SortByDate:
-					{
+				case ProjectSortType.SortByDate: {
 						ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
 						if (ret == 0) {
 							ret = String.Compare (p1.Title, p2.Title);
 						}
 						break;
 					}
-				case ProjectSortType.SortByModificationDate:
-					{
+				case ProjectSortType.SortByModificationDate: {
 						ret = -DateTime.Compare (p1.LastModified, p2.LastModified);
 						break;
 					}
-				case ProjectSortType.SortBySeason:
-					{
+				case ProjectSortType.SortBySeason: {
 						ret = String.Compare (p1.Season, p2.Season);
 						if (ret == 0) {
 							ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
 						}
 						break;
 					}
-				case ProjectSortType.SortByCompetition:
-					{
+				case ProjectSortType.SortByCompetition: {
 						ret = String.Compare (p1.Competition, p2.Competition);
 						if (ret == 0) {
 							ret = -DateTime.Compare (p1.MatchDate, p2.MatchDate);
