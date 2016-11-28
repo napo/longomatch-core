@@ -20,7 +20,6 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Xml.Serialization;
 using Newtonsoft.Json;
 using VAS.Core;
 using VAS.Core.Common;
@@ -28,7 +27,6 @@ using VAS.Core.Interfaces;
 using VAS.Core.Serialization;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
-using Constants = LongoMatch.Core.Common.Constants;
 
 namespace LongoMatch.Core.Store.Templates
 {
@@ -74,7 +72,6 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override Color Color {
@@ -88,7 +85,6 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public int StartingPlayers {
@@ -102,7 +98,7 @@ namespace LongoMatch.Core.Store.Templates
 			set;
 		}
 
-		[XmlIgnore]
+		[CloneIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public string FormationStr {
@@ -136,7 +132,6 @@ namespace LongoMatch.Core.Store.Templates
 			get;
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public List<PlayerLongoMatch> Players {
@@ -145,7 +140,6 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public List<PlayerLongoMatch> PlayingPlayersList {
@@ -158,7 +152,6 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public List<PlayerLongoMatch> StartingPlayersList {
@@ -169,7 +162,6 @@ namespace LongoMatch.Core.Store.Templates
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public List<PlayerLongoMatch> BenchPlayersList {

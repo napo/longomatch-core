@@ -16,10 +16,8 @@
 //  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA
 //
 using System;
-using System.Xml.Serialization;
 using Newtonsoft.Json;
 using VAS.Core.Common;
-using VAS.Core.Interfaces;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 
@@ -52,7 +50,6 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Title of the project
 		/// </summary>
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public String Title {
@@ -63,7 +60,6 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public String DateTitle {

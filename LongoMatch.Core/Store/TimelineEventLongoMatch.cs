@@ -39,7 +39,6 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		public List<SportsTeam> TaggedTeams {
 			get {
@@ -68,7 +67,6 @@ namespace LongoMatch.Core.Store
 	[Obsolete ("Create a TimelineEvent with a PenaltyCardEventType")]
 	public class PenaltyCardEvent : TimelineEventLongoMatch
 	{
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public PenaltyCardEventType PenaltyCardEventType {
@@ -87,7 +85,6 @@ namespace LongoMatch.Core.Store
 	[Obsolete ("Create a TimelineEvent with a ScoreEventType")]
 	public class ScoreEvent : TimelineEventLongoMatch
 	{
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public ScoreEventType ScoreEventType {
@@ -174,7 +171,6 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override string Description {

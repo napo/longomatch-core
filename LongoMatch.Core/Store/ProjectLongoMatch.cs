@@ -19,7 +19,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Xml.Serialization;
 using LongoMatch.Core.Common;
 using LongoMatch.Core.Migration;
 using LongoMatch.Core.Store.Templates;
@@ -86,7 +85,6 @@ namespace LongoMatch.Core.Store
 			set;
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public List<TimelineEvent> ScoreEvents {
@@ -95,7 +93,6 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public List<TimelineEvent> PenaltyCardsEvents {
@@ -104,7 +101,6 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public SubstitutionEventType SubstitutionsEventType {
@@ -120,7 +116,6 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public LineupEvent Lineup {
@@ -133,7 +128,6 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override bool IsFakeCapture {
@@ -150,7 +144,6 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[XmlIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override String ShortDescription {
@@ -159,7 +152,7 @@ namespace LongoMatch.Core.Store
 			}
 		}
 
-		[XmlIgnore]
+		[CloneIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override DateTime LastModified {
@@ -434,7 +427,7 @@ namespace LongoMatch.Core.Store
 		/// <summary>
 		/// Media file asigned to this project
 		/// </summary>
-		[XmlIgnore]
+		[CloneIgnore]
 		[JsonIgnore]
 		[PropertyChanged.DoNotNotify]
 		public override MediaFileSet FileSet {
