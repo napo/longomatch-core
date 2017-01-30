@@ -20,7 +20,7 @@
 		<WarningLevel>4</WarningLevel>
 		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\LongoMatch</AssemblyOriginatorKeyFile>
 		<Execution>
-			<Execution clr-version="Net_2_0" />
+		  <Execution clr-version="Net_2_0" />
 		</Execution>
 		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	</PropertyGroup>
@@ -32,7 +32,7 @@
 		<WarningLevel>3</WarningLevel>
 		<AssemblyOriginatorKeyFile>..\..\..\Proyectos\LongoMatch\LongoMatch.GUI</AssemblyOriginatorKeyFile>
 		<Execution>
-			<Execution clr-version="Net_2_0" />
+		  <Execution clr-version="Net_2_0" />
 		</Execution>
 		<CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
 	</PropertyGroup>
@@ -47,7 +47,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Compile Include="Gui\MainWindow.cs" />
-		<Compile Include="Gui\TransparentDrawingArea.cs" />
 		<Compile Include="Gui\Dialog\EditCategoryDialog.cs" />
 		<Compile Include="Gui\Dialog\EntryDialog.cs" />
 		<Compile Include="Gui\Component\DashboardWidget.cs" />
@@ -82,7 +81,6 @@
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.UpdateDialog.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.HotKeySelectorDialog.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Component.PlayersListTreeWidget.cs" />
-		<Compile Include="gtk-gui\LongoMatch.Gui.Popup.TransparentDrawingArea.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EditCategoryDialog.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.DrawingTool.cs" />
 		<Compile Include="gtk-gui\LongoMatch.Gui.Dialog.EndCaptureDialog.cs" />
@@ -275,10 +273,10 @@
 	</ItemGroup>
 	<Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 	<ProjectExtensions>
-		<MonoDevelop>
-			<Properties>
-				<GtkDesignInfo gettextClass="LongoMatch.Core.Catalog" />
-			</Properties>
-		</MonoDevelop>
+	  <MonoDevelop>
+	    <Properties>
+	      <GtkDesignInfo gettextClass="LongoMatch.Core.Catalog" />
+	    </Properties>
+	  </MonoDevelop>
 	</ProjectExtensions>
 </Project>

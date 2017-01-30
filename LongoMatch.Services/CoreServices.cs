@@ -28,6 +28,7 @@ using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Interfaces.GUI;
 using LongoMatch.Core.Interfaces.Multimedia;
 using LongoMatch.DB;
+using VAS.KPI;
 
 #if OSTYPE_WINDOWS
 using System.Runtime.InteropServices;
@@ -47,17 +48,21 @@ namespace LongoMatch.Services
 		static TemplatesService ts;
 		static List<IService> services = new List<IService> ();
 		public static IProjectsImporter ProjectsImporter;
+		public static IKpiService kpiService;
 
-		#if OSTYPE_WINDOWS
+#if OSTYPE_WINDOWS
 		[DllImport("libglib-2.0-0.dll") /* willfully unmapped */ ]
 		static extern bool g_setenv (String env, String val, bool overwrite);
-		#endif
+#endif
 		public static void Init ()
 		{
 			Log.Debugging = Debugging;
 
 			FillVersion ();
 			Config.Init ();
+
+			kpiService = new KpiService ();
+			kpiService.Init ("9dc114d23c6148719b4adbe585b811cc", "user", "email");
 
 			/* Check default folders */
 			CheckDirs ();
@@ -69,7 +74,7 @@ namespace LongoMatch.Services
 
 			/* Load user config */
 			Config.Load ();
-			
+
 			if (Config.Lang != null) {
 				Environment.SetEnvironmentVariable ("LANGUAGE", Config.Lang.Replace ("-", "_"));
 #if OSTYPE_WINDOWS
@@ -85,7 +90,7 @@ namespace LongoMatch.Services
 		static void FillVersion ()
 		{
 			Assembly assembly = Assembly.GetExecutingAssembly ();
-			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location); 
+			FileVersionInfo info = FileVersionInfo.GetVersionInfo (assembly.Location);
 			Config.Version = assembly.GetName ().Version;
 			Config.BuildVersion = info.ProductVersion;
 		}
@@ -109,6 +114,7 @@ namespace LongoMatch.Services
 
 		public static void Start (IGUIToolkit guiToolkit, IMultimediaToolkit multimediaToolkit)
 		{
+			kpiService.TrackEvent ("Session_Start", null, null);
 			Config.MultimediaToolkit = multimediaToolkit;
 			Config.GUIToolkit = guiToolkit;
 			Config.EventsBroker = new EventsBroker ();
@@ -184,6 +190,7 @@ namespace LongoMatch.Services
 					Log.InformationFormat ("Failed stopping service {0}", service.Name);
 				}
 			}
+			kpiService.Flush ();
 		}
 
 		public static void CheckDirs ()
@@ -206,14 +213,14 @@ namespace LongoMatch.Services
 
 		public static bool Debugging {
 			get {
-				#if DEBUG
+#if DEBUG
 				return true;
-				#else
+#else
 				if (debugging == null) {
 					debugging = EnvironmentIsSet ("LGM_DEBUG");
 				}
 				return debugging.Value;
-				#endif
+#endif
 			}
 			set {
 				debugging = value;

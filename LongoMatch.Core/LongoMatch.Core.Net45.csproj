@@ -8,7 +8,6 @@
     <RootNamespace>LongoMatch.Core</RootNamespace>
     <AssemblyName>LongoMatch.Core</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <UseMSBuildEngine>True</UseMSBuildEngine>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
@@ -20,6 +19,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <Optimize>false</Optimize>
@@ -29,6 +29,7 @@
     <WarningLevel>4</WarningLevel>
     <ConsolePause>false</ConsolePause>
     <DebugSymbols>true</DebugSymbols>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -47,6 +48,7 @@
       <HintPath>$(SolutionDir)\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Package>newtonsoft-json</Package>
     </Reference>
+    <Reference Include="System.Net.Http" />
   </ItemGroup>
   <Import Project="LongoMatch.Core.projitems" Label="Shared" Condition="Exists('LongoMatch.Core.projitems')" />
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
@@ -57,6 +59,18 @@
     <Compile Include="Catalog.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="DirectoryMonitor.cs" />
+    <Compile Include="KPI\Constants.cs" />
+    <Compile Include="KPI\HockeyClientVASExtensions.cs" />
+    <Compile Include="KPI\HockeyPlatformHelperMono.cs" />
+    <Compile Include="KPI\KpiService.cs" />
+    <Compile Include="KPI\Services\ApplicationService.cs" />
+    <Compile Include="KPI\Services\DeviceService.cs" />
+    <Compile Include="KPI\Services\HttpClientTransmission.cs" />
+    <Compile Include="KPI\Services\PlatformService.cs" />
+    <Compile Include="KPI\Services\StorageService.cs" />
+    <Compile Include="KPI\Services\UnhandledExceptionTelemetryModule.cs" />
+    <Compile Include="Device.cs" />
+    <Compile Include="DeviceID.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -70,6 +84,10 @@
     <ProjectReference Include="..\Weavers\Weavers.csproj">
       <Project>{A7BA3B58-76E6-461C-B842-3D4DC4995B42}</Project>
       <Name>Weavers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HockeySDK-Windows\Src\HockeySDK.Net45\HockeySDK.Net45.csproj">
+      <Project>{7CB80B49-38A2-408E-970A-877399C1B3D3}</Project>
+      <Name>HockeySDK.Net45</Name>
     </ProjectReference>
   </ItemGroup>
 </Project>

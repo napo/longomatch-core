@@ -35,6 +35,8 @@ using LongoMatch.Multimedia.Utils;
 using LongoMatch.Services;
 using LongoMatch.Video;
 using LongoMatch.Core;
+using System.Reflection;
+using System.Collections.Generic;
 
 namespace LongoMatch
 {
@@ -43,7 +45,7 @@ namespace LongoMatch
 		[DllImport ("libX11", CallingConvention = CallingConvention.Cdecl)]
 		private static extern int XInitThreads ();
 
-		public static void Main (string[] args)
+		public static void Main (string [] args)
 		{
 			// Replace the current synchronization context with a GTK synchronization context
 			// that continues tasks in the main UI thread instead of a random thread from the pool.
@@ -154,12 +156,12 @@ namespace LongoMatch
 		static void InitGtk ()
 		{
 			string gtkRC, iconsDir, styleConf;
-			
+
 			gtkRC = Path.Combine (Config.dataDir, "theme", "gtk-2.0", "gtkrc");
 			if (File.Exists (gtkRC)) {
 				Rc.AddDefaultFile (gtkRC);
 			}
-			
+
 			styleConf = Path.Combine (Config.dataDir, "theme", "longomatch-dark.json");
 			Config.Style = StyleConf.Load (styleConf);
 
@@ -176,7 +178,7 @@ namespace LongoMatch
 			if (Directory.Exists (iconsDir)) {
 				IconTheme.Default.PrependSearchPath (iconsDir);
 			}
-			
+
 		}
 
 		static void ShowCodecsDialog ()
@@ -217,12 +219,26 @@ namespace LongoMatch
 				Log.Exception (ex1);
 			}
 
+			TrackUnhandledException (ex);
+
 			MessagesHelpers.ErrorMessage (null,
 				Catalog.GetString ("The application has finished with an unexpected error.") + "\n" +
 				Catalog.GetString ("A log has been saved at: ") +
 				"<a href=\"" + logFile + "\">" + logFile + "</a>\n" +
 				Catalog.GetString ("Please, fill a bug report "));
+
 			Application.Quit ();
+		}
+
+		static void TrackUnhandledException (Exception e)
+		{
+			TargetInvocationException invException = e as TargetInvocationException;
+			if (invException != null) {
+				CoreServices.kpiService?.TrackException (invException.InnerException);
+			} else {
+				CoreServices.kpiService?.TrackException (e);
+			}
+			CoreServices.kpiService?.Flush ();
 		}
 	}
 }

@@ -19,7 +19,11 @@
     <ConsolePause>false</ConsolePause>
     <CustomCommands>
       <CustomCommands>
-        <Command type="AfterBuild" command="cp ${ProjectDir}/LongoMatch.GUI.Helpers.dll.config.mdp ${TargetDir}/LongoMatch.GUI.Helpers.dll.config" workingdir="${ProjectDir}" />
+        <Command>
+          <type>AfterBuild</type>
+          <command>cp ${ProjectDir}/LongoMatch.GUI.Helpers.dll.config.mdp ${TargetDir}/LongoMatch.GUI.Helpers.dll.config</command>
+          <workingdir>${ProjectDir}</workingdir>
+        </Command>
       </CustomCommands>
     </CustomCommands>
   </PropertyGroup>

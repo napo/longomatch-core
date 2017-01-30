@@ -49,6 +49,8 @@ Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "LongoMatch.Drawing", "Longo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LongoMatch.DBFixer", "LongoMatch.DBFixer\LongoMatch.DBFixer.csproj", "{91E0DE03-BDA1-42F8-85F0-524556E52071}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HockeySDK.Net45", "HockeySDK-Windows\Src\HockeySDK.Net45\HockeySDK.Net45.csproj", "{7CB80B49-38A2-408E-970A-877399C1B3D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{91E0DE03-BDA1-42F8-85F0-524556E52071}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91E0DE03-BDA1-42F8-85F0-524556E52071}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91E0DE03-BDA1-42F8-85F0-524556E52071}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CB80B49-38A2-408E-970A-877399C1B3D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CB80B49-38A2-408E-970A-877399C1B3D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CB80B49-38A2-408E-970A-877399C1B3D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB80B49-38A2-408E-970A-877399C1B3D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
 		Policies = $0
@@ -152,10 +158,10 @@ Global
 		$4.MessageStyle = $5
 		$5.LineAlign = 0
 		$0.TextStylePolicy = $6
-		$6.FileWidth = 100
-		$6.TabWidth = 4
-		$6.inheritsSet = Mono
+		$6.inheritsSet = null
 		$6.inheritsScope = text/plain
+		$6.scope = text/x-chdr
+		$6.TabWidth = 2
 		$0.TextStylePolicy = $7
 		$7.FileWidth = 100
 		$7.TabsToSpaces = False

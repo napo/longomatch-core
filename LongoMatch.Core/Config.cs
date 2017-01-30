@@ -36,7 +36,7 @@ namespace LongoMatch
 		public static string baseDirectory = ".";
 		public static string configDirectory = ".";
 		public static string dataDir = ".";
-		
+
 		/* State */
 		public static IGUIToolkit GUIToolkit;
 		public static IMultimediaToolkit MultimediaToolkit;
@@ -44,16 +44,20 @@ namespace LongoMatch
 		public static ITeamTemplatesProvider TeamTemplatesProvider;
 		public static ICategoriesTemplatesProvider CategoriesTemplatesProvider;
 		public static EventsBroker EventsBroker;
-		
+
+		public static IDevice Device;
+
 		public static IStorageManager DatabaseManager;
 		public static IRenderingJobsManager RenderingJobsManger;
-		
+
 		static StyleConf style;
 		static ConfigState state;
 
 		public static void Init ()
 		{
 			string home = null;
+
+			Device = new LMDevice ();
 
 			if (Environment.GetEnvironmentVariable ("LGM_UNINSTALLED") != null) {
 				Config.baseDirectory = Path.GetFullPath (".");
@@ -106,7 +110,7 @@ namespace LongoMatch
 			// Migrate old config directory the home directory so that OS X users can easilly find
 			// log files and config files without having to access hidden folders
 			if (Environment.OSVersion.Platform != PlatformID.Win32NT) {
-				string oldHome = Path.Combine (home, "." + Constants.SOFTWARE_NAME.ToLower ()); 
+				string oldHome = Path.Combine (home, "." + Constants.SOFTWARE_NAME.ToLower ());
 				string configFilename = Constants.SOFTWARE_NAME.ToLower () + "-1.0.config";
 				string configFilepath = Path.Combine (oldHome, configFilename);
 				if (File.Exists (configFilepath) && !File.Exists (Config.ConfigFile)) {
@@ -135,7 +139,7 @@ namespace LongoMatch
 					Log.Exception (ex);
 				}
 			}
-			
+
 			if (state == null) {
 				Log.Information ("Creating new config at " + Config.ConfigFile);
 				state = new ConfigState ();
@@ -152,7 +156,7 @@ namespace LongoMatch
 		public static void Save ()
 		{
 			try {
-				Serializer.Instance.Save (state, Config.ConfigFile); 
+				Serializer.Instance.Save (state, Config.ConfigFile);
 			} catch (Exception ex) {
 				Log.Error ("Error saving config");
 				Log.Exception (ex);
@@ -266,7 +270,7 @@ namespace LongoMatch
 			get {
 				return Path.Combine (DBDir, "analysis");
 			}
-			
+
 		}
 
 		public static string TeamsDir {
@@ -418,7 +422,7 @@ namespace LongoMatch
 			set {
 				state.captureEncodingProfile = value;
 				Save ();
-				
+
 			}
 		}
 
@@ -439,7 +443,7 @@ namespace LongoMatch
 			set {
 				state.renderEncodingProfile = value;
 				Save ();
-				
+
 			}
 		}
 
@@ -450,7 +454,7 @@ namespace LongoMatch
 			set {
 				state.captureEncodingQuality = value;
 				Save ();
-				
+
 			}
 		}
 

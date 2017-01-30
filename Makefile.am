@@ -22,6 +22,7 @@ SUBDIRS = \
 	.nuget \
 	oxyplot \
 	Weavers \
+	HockeySDK-Windows/Src/HockeySDK.Net45 \
 	LongoMatch.Core \
 	LongoMatch.DB \
 	LongoMatch.Multimedia \

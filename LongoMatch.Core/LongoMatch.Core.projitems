@@ -143,6 +143,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDirectoryMonitor.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Handlers\Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Common\EncryptedObject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IKpiService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\IDevice.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

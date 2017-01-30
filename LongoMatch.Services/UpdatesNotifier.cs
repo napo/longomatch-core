@@ -16,16 +16,16 @@ namespace LongoMatch.Services
 {
 
 
-	public class UpdatesNotifier: IService
+	public class UpdatesNotifier : IService
 	{
 		static public bool FetchNewVersion (string url, string filename)
 		{
 			var userAgent = String.Format ("{0}/{1} ({2};{3};{4})",
-				                Config.SoftwareName,
-				                Config.Version,
-				                Utils.OS,
-				                Environment.OSVersion.VersionString,
-				                Config.BuildVersion);
+								Config.SoftwareName,
+								Config.Version,
+								Utils.OS,
+								Environment.OSVersion.VersionString,
+								Config.BuildVersion);
 			try {
 				var wb = new WebClient ();
 				wb.Headers.Add ("User-Agent", userAgent);
@@ -98,7 +98,7 @@ namespace LongoMatch.Services
 
 			Config.GUIToolkit.Invoke (async delegate {
 				bool ignore = await Config.GUIToolkit.NewVersionAvailable (currentVersion, latestVersion,
-					              downloadURL, changeLog, null);
+								  downloadURL, changeLog, null);
 				if (ignore) {
 					/* User requested to ignore this version */
 					Log.InformationFormat ("UpdatesNotifier: Marking version {0} as silenced.", latestVersion);
