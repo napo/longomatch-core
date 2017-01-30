@@ -47,6 +47,9 @@ namespace LongoMatch
 
 		public static void Main (string [] args)
 		{
+			// FIXME: Trust all certificates
+			System.Net.ServicePointManager.ServerCertificateValidationCallback =
+					  (sender, certificate, chain, sslPolicyErrors) => true;
 			// Replace the current synchronization context with a GTK synchronization context
 			// that continues tasks in the main UI thread instead of a random thread from the pool.
 			SynchronizationContext.SetSynchronizationContext (new GtkSynchronizationContext ());
