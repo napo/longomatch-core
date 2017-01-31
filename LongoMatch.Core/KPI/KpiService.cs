@@ -19,8 +19,9 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.HockeyApp;
+using LongoMatch;
 using LongoMatch.Core.Interfaces;
+using Microsoft.HockeyApp;
 
 namespace VAS.KPI
 {
@@ -38,6 +39,10 @@ namespace VAS.KPI
 		public void TrackEvent (string eventName, IDictionary<string, string> properties = null, IDictionary<string, double> metrics = null)
 		{
 #if !DEBUG
+			if (properties == null) {
+				properties = new Dictionary<string, string> ();
+			}
+			properties ["FullName"] = Config.SoftwareName;
 			HockeyClient.Current.TrackEvent (eventName, properties, metrics);
 #endif
 		}
@@ -45,6 +50,10 @@ namespace VAS.KPI
 		public void TrackException (Exception ex, IDictionary<string, string> properties)
 		{
 #if !DEBUG
+			if (properties == null) {
+				properties = new Dictionary<string, string> ();
+			}
+			properties ["FullName"] = Config.SoftwareName;
 			HockeyClient.Current.HandleException (ex);
 #endif
 		}
