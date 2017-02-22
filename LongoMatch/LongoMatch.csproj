@@ -48,7 +48,7 @@
       <Variable name="LGM_DEBUG" value="3" />
       <Variable name="GTK2_RC_FILES" value="" />
     </EnvironmentVariables>
-    <TargetRuntimeId>Mono 4.6.0 (Stable)</TargetRuntimeId>
+    <TargetRuntimeId>Mono Unknown</TargetRuntimeId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />

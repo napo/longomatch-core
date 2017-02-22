@@ -16,6 +16,7 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using LongoMatch.Core.Common;
+using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
@@ -53,6 +54,16 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 		}
 
+		// FIXME: We keep this to be compatible with View that are not using MVVM yet
+		public LMPlayer Model {
+			get {
+				return ViewModel.Model as LMPlayer;
+			}
+			set {
+				ViewModel = new LMPlayerVM { Model = value };
+			}
+		}
+
 		public bool SubstitutionMode {
 			get;
 			set;
@@ -81,16 +92,11 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		public override void Draw (IDrawingToolkit tk, Area area)
 		{
-			Point zero, start, p;
-			double size, scale;
+			Point p;
 			ISurface arrowin, arrowout;
 
 			if (Player == null)
 				return;
-
-			zero = new Point (0, 0);
-			size = StyleConf.PlayerSize;
-			scale = (double)Width / size;
 
 			if (Team == TeamType.LOCAL) {
 				arrowin = ArrowIn;
@@ -101,10 +107,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			}
 
 			tk.Begin ();
-			start = new Point (Width / 2, Height / 2);
-			tk.TranslateAndScale (Center - start, new Point (scale, scale));
 
-			if (!UpdateDrawArea (tk, area, new Area (zero, size, size))) {
+			if (!UpdateDrawArea (tk, area, new Area (Position, Width, Height))) {
 				tk.End ();
 				return;
 			}
@@ -112,19 +116,19 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			/* Background */
 			tk.FillColor = App.Current.Style.PaletteBackgroundDark;
 			tk.LineWidth = 0;
-			tk.DrawRectangle (zero, StyleConf.PlayerSize, StyleConf.PlayerSize);
+			tk.DrawRectangle (Position, Width, Height);
 
 			/* Image */
 			if (Player.Photo != null) {
-				tk.DrawImage (zero, size, size, Player.Photo, ScaleMode.AspectFit);
+				tk.DrawImage (Position, Width, Height, Player.Photo, ScaleMode.AspectFit);
 			} else {
-				tk.DrawSurface (zero, StyleConf.PlayerSize, StyleConf.PlayerSize, DefaultPhoto, ScaleMode.AspectFit);
+				tk.DrawSurface (Position, Width, Height, DefaultPhoto, ScaleMode.AspectFit);
 			}
 
 			/* Bottom line */
-			p = new Point (0, size - StyleConf.PlayerLineWidth);
+			p = new Point (Position.X, Position.Y + Width - StyleConf.PlayerLineWidth);
 			tk.FillColor = Color;
-			tk.DrawRectangle (p, size, 3);
+			tk.DrawRectangle (p, Width, 3);
 
 			/* Draw Arrow */
 			if (SubstitutionMode && (Highlighted || Active)) {
@@ -136,13 +140,13 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				} else {
 					arrow = arrowin;
 				}
-				ap = new Point (StyleConf.PlayerArrowX, StyleConf.PlayerArrowY);
+				ap = new Point (Position.X + StyleConf.PlayerArrowX, Position.Y + StyleConf.PlayerArrowY);
 				tk.DrawRectangle (ap, StyleConf.PlayerArrowSize, StyleConf.PlayerArrowSize);
 				tk.DrawSurface (arrow, ap);
 			}
 
 			/* Draw number */
-			p = new Point (StyleConf.PlayerNumberX, StyleConf.PlayerNumberY);
+			p = new Point (Position.X + StyleConf.PlayerNumberX, Position.Y + Height - StyleConf.PlayerNumberSize);
 			tk.FillColor = Color;
 			tk.DrawRectangle (p, StyleConf.PlayerNumberSize, StyleConf.PlayerNumberSize);
 
@@ -162,9 +166,8 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				Color c = Color.Copy ();
 				c.A = (byte)(c.A * 60 / 100);
 				tk.FillColor = c;
-				tk.DrawRectangle (zero, size, size);
+				tk.DrawRectangle (Position, Width, Height);
 			}
-
 			tk.End ();
 		}
 	}

@@ -19,6 +19,7 @@ using System;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
 using VAS.Core.ViewModel;
+using System.Collections.Generic;
 
 namespace LongoMatch.Core.ViewModel
 {
@@ -32,6 +33,7 @@ namespace LongoMatch.Core.ViewModel
 			HomeTeam = new LMTeamVM ();
 			AwayTeam = new LMTeamVM ();
 			Timeline = new LMTimelineVM (HomeTeam, AwayTeam);
+			Dashboard = new LMDashboardVM ();
 		}
 
 		/// <summary>
@@ -168,11 +170,18 @@ namespace LongoMatch.Core.ViewModel
 			protected set;
 		}
 
+		public override IEnumerable<TeamVM> Teams {
+			get {
+				yield return HomeTeam;
+				yield return AwayTeam;
+			}
+		}
+
 		protected override void SyncLoadedModel ()
 		{
-			base.SyncLoadedModel ();
 			HomeTeam.Model = Model.LocalTeamTemplate;
 			AwayTeam.Model = Model.VisitorTeamTemplate;
+			base.SyncLoadedModel ();
 			(Timeline as LMTimelineVM).UpdatePredicates ();
 		}
 	}

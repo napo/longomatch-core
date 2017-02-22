@@ -22,6 +22,7 @@ using VAS.Core.Store;
 using VAS.DB;
 using LongoMatch.DB.Views;
 using VAS.Core.Store.Playlists;
+using VAS.Core.Store.Templates;
 
 namespace LongoMatch.DB
 {
@@ -49,8 +50,8 @@ namespace LongoMatch.DB
 			AddView (typeof (EventType), new EventTypeView (this));
 			AddView (typeof (LMTimelineEvent), new TimelineEventsView (this));
 			AddView (typeof (LMProject), new ProjectsView (this));
-			AddView (typeof (LMTeam), new TeamsView (this));
-			AddView (typeof (LMDashboard), new DashboardsView (this));
+			AddView (typeof (Team), new TeamsView (this));
+			AddView (typeof (Dashboard), new DashboardsView (this));
 			AddView (typeof (LMPlayer), new PlayersView (this));
 		}
 

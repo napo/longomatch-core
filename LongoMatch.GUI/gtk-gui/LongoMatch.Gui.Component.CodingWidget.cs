@@ -60,7 +60,6 @@ namespace LongoMatch.Gui.Component
 			this.buttonswidget = new global::LongoMatch.Gui.Component.DashboardWidget ();
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
-			this.buttonswidget.Edited = false;
 			this.hbox5.Add (this.buttonswidget);
 			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.buttonswidget]));
 			w2.Position = 0;
