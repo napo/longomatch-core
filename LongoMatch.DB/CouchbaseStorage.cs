@@ -34,10 +34,11 @@ using ICSharpCode.SharpZipLib;
 
 namespace LongoMatch.DB
 {
-	public class CouchbaseStorage: IStorage
+	public class CouchbaseStorage : IStorage
 	{
 		Database db;
 		Dictionary<Type, object> views;
+		string dbDir;
 		string storageName;
 		object mutex;
 		bool documentUpdated;
@@ -45,12 +46,14 @@ namespace LongoMatch.DB
 		public CouchbaseStorage (Database db)
 		{
 			this.db = db;
+			dbDir = Config.DBDir;
 			Init ();
 		}
 
 		public CouchbaseStorage (Manager manager, string storageName)
 		{
 			this.storageName = storageName;
+			dbDir = Config.DBDir;
 			db = manager.GetDatabase (storageName);
 			Init ();
 		}
@@ -58,21 +61,22 @@ namespace LongoMatch.DB
 		public CouchbaseStorage (string dbDir, string storageName)
 		{
 			this.storageName = storageName;
+			this.dbDir = dbDir;
 			Manager manager = new Manager (new System.IO.DirectoryInfo (dbDir),
-				                  ManagerOptions.Default);
+								  ManagerOptions.Default);
 			db = manager.GetDatabase (storageName);
 			Init ();
 		}
 
 		void Init ()
 		{
+			VFS.SetCurrent (new FileSystem ());
 			// Only keep one revision for each document until we support replication and can handle conflicts
 			db.MaxRevTreeDepth = 1;
 			mutex = new object ();
 			FetchInfo ();
 			BackupAndCompactIfNeeded ();
 			InitializeViews ();
-			VFS.SetCurrent (new FileSystem ());
 		}
 
 		#region IStorage implementation
@@ -112,12 +116,12 @@ namespace LongoMatch.DB
 				using (FileStream fs = new FileStream (outputFilename, FileMode.Create, FileAccess.Write, FileShare.None)) {
 					using (Stream gzipStream = new GZipOutputStream (fs)) {
 						using (TarArchive tarArchive = TarArchive.CreateOutputTarArchive (gzipStream)) {
-							foreach (string n in new string[] {"", "-wal", "-shm"}) {
+							foreach (string n in new string [] { "", "-wal", "-shm" }) {
 								TarEntry tarEntry = TarEntry.CreateEntryFromFile (
-									                    Path.Combine (Config.DBDir, storageName + ".cblite" + n));
+									Path.Combine (dbDir, storageName + ".cblite" + n));
 								tarArchive.WriteEntry (tarEntry, true);
 							}
-							AddDirectoryFilesToTar (tarArchive, Path.Combine (Config.DBDir, storageName + " attachments"), true);
+							AddDirectoryFilesToTar (tarArchive, Path.Combine (dbDir, storageName + " attachments"), true);
 						}
 					}
 				}
