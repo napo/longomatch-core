@@ -193,6 +193,8 @@ namespace LongoMatch.Gui.Component
 			buttonswidget.Visible = true;
 			ViewModel.Project.Dashboard.Mode = DashboardMode.Code;
 			buttonswidget.ViewModel = ViewModel.Project.Dashboard;
+			//FIXME: vmartos
+			teamtagger.ViewModel = ViewModel.TeamTagger;
 			// FIXME: team tagger is not ported yet to MVVM
 			teamtagger.Project = ViewModel.Project.Model;
 			teamtagger.LoadTeams (ViewModel.Project.Model.LocalTeamTemplate,
@@ -286,10 +288,10 @@ namespace LongoMatch.Gui.Component
 		void HandlePropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == nameof (ViewModel.Capturer.CurrentCaptureTime)
-			    && ViewModel.Project.ProjectType == ProjectType.FileProject) {
+				&& ViewModel.Project.ProjectType == ProjectType.FileProject) {
 				timeline.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
-					buttonswidget.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
-					teamtagger.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
+				buttonswidget.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
+				teamtagger.CurrentTime = ViewModel.VideoPlayer.CurrentTime;
 			}
 		}
 
