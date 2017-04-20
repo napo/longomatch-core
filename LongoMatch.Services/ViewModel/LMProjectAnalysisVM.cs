@@ -3,7 +3,6 @@
 using System.Threading.Tasks;
 using LongoMatch.Core.Events;
 using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.State;
 using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.Interfaces.GUI;
@@ -16,6 +15,7 @@ namespace LongoMatch.Services.ViewModel
 	{
 		public LMProjectAnalysisVM ()
 		{
+			TeamTagger = new LMTeamTaggerVM ();
 			Project = new LMProjectVM ();
 			SaveCommand = new Command (
 				() => App.Current.EventsBroker.Publish (new SaveEvent<LMProjectVM> { Object = Project }),
@@ -23,6 +23,18 @@ namespace LongoMatch.Services.ViewModel
 			ShowStatsCommand = new Command (
 				() => App.Current.EventsBroker.Publish (new ShowProjectStatsEvent { Project = Project.Model }));
 			CloseCommand = new Command (Close);
+		}
+
+		public new LMProjectVM Project {
+			get {
+				return base.Project;
+			}
+			set {
+				base.Project = value;
+				if (value != null) {
+					ResetTeamTagger (base.Project);
+				}
+			}
 		}
 
 		public ICapturerBin Capturer {
@@ -33,6 +45,14 @@ namespace LongoMatch.Services.ViewModel
 		public CaptureSettings CaptureSettings {
 			get;
 			set;
+		}
+
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamTaggerVM TeamTagger {
+			get;
 		}
 
 		/// <summary>
@@ -47,6 +67,13 @@ namespace LongoMatch.Services.ViewModel
 		async Task Close ()
 		{
 			await App.Current.EventsBroker.Publish (new CloseEvent<LMProjectVM> { Object = Project });
+		}
+
+		void ResetTeamTagger (LMProjectVM project)
+		{
+			TeamTagger.AwayTeam = project.AwayTeam;
+			TeamTagger.HomeTeam = project.HomeTeam;
+			TeamTagger.Background = project.Dashboard.Model != null ? project.Dashboard.FieldBackground : null;
 		}
 	}
 }
