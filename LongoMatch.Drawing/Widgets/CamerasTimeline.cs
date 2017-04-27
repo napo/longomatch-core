@@ -15,7 +15,6 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Drawing.CanvasObjects.Timeline;
@@ -33,11 +32,6 @@ namespace LongoMatch.Drawing.Widgets
 {
 	public class CamerasTimeline : SelectionCanvas, ICanvasView<ProjectVM>
 	{
-		// For cameras
-		public event CameraDraggedHandler CameraDragged;
-		public event EventHandler SelectedCameraChanged;
-		// And periods
-		public event TimeNodeChangedHandler TimeNodeChanged;
 		public event ShowTimerMenuHandler ShowTimerMenuEvent;
 
 		double secondsPerPixel;
@@ -127,6 +121,7 @@ namespace LongoMatch.Drawing.Widgets
 
 		void Update ()
 		{
+			int height = 0;
 			if (ViewModel == null)
 				return;
 
@@ -134,8 +129,10 @@ namespace LongoMatch.Drawing.Widgets
 			foreach (TimelineView tl in timelines) {
 				tl.Width = width;
 				tl.SecondsPerPixel = SecondsPerPixel;
+				height += (int)tl.Height;
 			}
 			WidthRequest = (int)width;
+			HeightRequest = height;
 		}
 
 		void AddTimeLine (TimelineView tl)
@@ -161,23 +158,23 @@ namespace LongoMatch.Drawing.Widgets
 			AddTimeLine (PeriodsTimeline);
 			i++;
 
-			// And for the cameras
-			foreach (MediaFileVM fileVM in ViewModel.FileSet) {
+			// Now add the timeline for the secondary cameras.
+			// The main camera does not have a timeline since its the master camera and secondary cameras are synced
+			// with respect of the main camera.
+			foreach (MediaFileVM fileVM in ViewModel.FileSet.Skip (1)) {
 				CameraTimelineView cameraTimeLine = new CameraTimelineView {
 					ShowName = false,
 					ShowLine = true,
 					Height = StyleConf.TimelineCameraHeight,
 					OffsetY = i * StyleConf.TimelineCameraHeight,
-					LineColor = App.Current.Style.PaletteBackground,
-					BackgroundColor = App.Current.Style.PaletteBackgroundLight,
+					LineColor = App.Current.Style.PaletteBackgroundLight,
+					BackgroundColor = App.Current.Style.PaletteBackground,
 				};
 				cameraTimeLine.ViewModel = fileVM;
 				AddTimeLine (cameraTimeLine);
 				i++;
 			}
 			Update ();
-			// Calculate height depending on number of cameras - 1 (for the main camera) + the line for periods
-			HeightRequest = StyleConf.TimelineCameraHeight * ViewModel.FileSet.Count ();
 		}
 
 		protected override void StartMove (Selection sel)
@@ -185,7 +182,7 @@ namespace LongoMatch.Drawing.Widgets
 			if (sel == null || sel.Drawable as TimeNodeView == null)
 				return;
 
-			(sel.Drawable as TimeNodeView).ClippingMode = NodeClippingMode.LeftStrict;
+			(sel.Drawable as TimeNodeView).ClippingMode = NodeClippingMode.NoStrict;
 
 			if (sel.Position == SelectionPosition.All) {
 				widget.SetCursor (CursorType.Selection);
@@ -197,39 +194,6 @@ namespace LongoMatch.Drawing.Widgets
 		protected override void StopMove (bool moved)
 		{
 			widget.SetCursor (CursorType.Arrow);
-		}
-
-		protected override void SelectionMoved (Selection sel)
-		{
-			if (sel.Drawable is CameraView) {
-				if (CameraDragged != null) {
-					CameraView co = sel.Drawable as CameraView;
-					// Adjust offset
-					co.ViewModel.Offset = new Time (-co.TimeNode.Start.MSeconds);
-					// And notify
-					CameraDragged (co.ViewModel.Model, co.TimeNode.Model);
-				}
-			} else {
-				if (TimeNodeChanged != null) {
-					Time moveTime;
-					TimeNodeVM tn = (sel.Drawable as TimeNodeView).TimeNode;
-
-					if (sel.Position == SelectionPosition.Right) {
-						moveTime = tn.Stop;
-					} else {
-						moveTime = tn.Start;
-					}
-					TimeNodeChanged (tn.Model, moveTime);
-				}
-			}
-		}
-
-		protected override void SelectionChanged (List<Selection> sel)
-		{
-			// Fire an event
-			if (SelectedCameraChanged != null) {
-				SelectedCameraChanged (this, new EventArgs ());
-			}
 		}
 
 		protected override void ShowMenu (Point coords)
