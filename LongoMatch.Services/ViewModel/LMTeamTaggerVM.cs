@@ -107,7 +107,7 @@ namespace LongoMatch.Services.ViewModel
 			App.Current.EventsBroker.Publish (new TagPlayerEvent {
 				Player = player,
 				Team = GetTeam (player),
-				HasModifier = clickWithModif,
+				Modifier = clickWithModif ? ButtonModifier.Shift : ButtonModifier.None,
 				Sender = player
 			});
 		}

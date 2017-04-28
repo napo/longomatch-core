@@ -17,6 +17,7 @@
 //
 using LongoMatch.Core;
 using LongoMatch.Core.Common;
+using LongoMatch.Services.ViewModel;
 using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
@@ -56,6 +57,18 @@ namespace LongoMatch.Services.Controller
 		protected override bool SaveValidations (Team model)
 		{
 			return true;
+		}
+
+		protected override void HandleTemplateChanged (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+		{
+			base.HandleTemplateChanged (sender, e);
+			if (e.PropertyName == "Model") {
+				var viewModel = ViewModel as TeamsManagerVM;
+				if (viewModel != null) {
+					viewModel.TeamEditor.Team.Selection.Clear ();
+					viewModel.TeamEditor.DeletePlayersCommand.EmitCanExecuteChanged ();
+				}
+			}
 		}
 	}
 }
