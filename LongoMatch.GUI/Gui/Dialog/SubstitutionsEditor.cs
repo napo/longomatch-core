@@ -86,7 +86,6 @@ namespace LongoMatch.Gui.Dialog
 			set {
 				editorVM = value;
 				if (editorVM != null) {
-					//FIXME: vmartos
 					tagger.ViewModel = editorVM.TeamTagger;
 					inpo.ViewModel = editorVM.InPlayer;
 					outpo.ViewModel = editorVM.OutPlayer;

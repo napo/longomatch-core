@@ -153,7 +153,6 @@ namespace LongoMatch.Gui.Panel
 					}
 					viewModel.ViewModels.CollectionChanged += HandleCollectionChanged;
 					viewModel.LoadedTemplate.PropertyChanged += HandleLoadedTemplateChanged;
-					//FIXME: vmartos
 					teamtemplateeditor1.ViewModel = viewModel.TeamEditor;
 					teamtemplateeditor1.TeamTagger = viewModel.TeamTagger;
 					Select (ViewModel.LoadedTemplate);

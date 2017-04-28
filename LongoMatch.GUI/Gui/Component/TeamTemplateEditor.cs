@@ -265,8 +265,6 @@ namespace LongoMatch.Gui.Component
 		{
 			try {
 				template.FormationStr = tacticsentry.Text;
-				//FIXME:vmartos
-				//teamtagger.Reload ();
 				Edited = true;
 			} catch {
 				App.Current.Dialogs.ErrorMessage (
@@ -334,8 +332,6 @@ namespace LongoMatch.Gui.Component
 			if (player != null && loadedPlayer != null) {
 				playerimage.Pixbuf = player.Scale (PLAYER_SIZE, PLAYER_SIZE).Value;
 				loadedPlayer.Photo = player;
-				//FIXME: vmartos
-				//teamtagger.Reload ();
 				Edited = true;
 			}
 		}
