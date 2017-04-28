@@ -66,7 +66,6 @@ namespace LongoMatch.Gui.Component
 			applyimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-apply", IconSize.Button);
 
 			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
-			tagger.ButtonsSelectedEvent += HandleTaggersSelectedEvent;
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
 			tagger.NewTagEvent += HandleNewTagEvent;
 			tagger.EditButtonTagsEvent += HandleEditEventSubcategories;
@@ -206,11 +205,10 @@ namespace LongoMatch.Gui.Component
 			}
 		}
 
-		void HandleTaggersSelectedEvent (List<DashboardButton> taggers)
+		void UpdateSelection ()
 		{
-			if (taggers.Count == 1) {
-				selected = taggers [0];
-				tagproperties.Tagger = taggers [0];
+			if (viewModel.Selection.Count == 1) {
+				tagproperties.Tagger = viewModel.Selection [0].Model;
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_TAGS;
 			} else {
 				selected = null;
@@ -289,12 +287,15 @@ namespace LongoMatch.Gui.Component
 			if (ViewModel.NeedsSync (e, nameof (DashboardVM.ShowLinks))) {
 				propertiesnotebook.Page = PROPERTIES_NOTEBOOK_PAGE_EMPTY;
 			}
+			if (ViewModel.NeedsSync (e, $"Collection_{nameof (DashboardVM.Selection)}")) {
+				UpdateSelection ();
+			}
 		}
 
 		void HandleShowMenuEvent (List<DashboardButtonVM> buttons, List<ActionLink> links)
 		{
 			Menu menu;
-			MenuItem delbut;
+			MenuItem delbut, dupbut;
 
 			if (ViewModel.Mode != DashboardMode.Edit) {
 				return;
@@ -306,15 +307,15 @@ namespace LongoMatch.Gui.Component
 
 			menu = new Menu ();
 			foreach (DashboardButtonVM button in buttons) {
-				delbut = new MenuItem (string.Format ("{0}: {1}",
-					Catalog.GetString ("Delete"), button.Name));
-				delbut.Activated += (sender, e) => ViewModel.DeleteButton.Execute (button);
+				delbut = ViewModel.DeleteButton.CreateMenuItem ($"{ViewModel.DeleteButton.Text}: {button.Name}",
+																commandParam: button);
 				menu.Add (delbut);
+				dupbut = ViewModel.DuplicateButton.CreateMenuItem ($"{ViewModel.DuplicateButton.Text}: {button.Name}",
+																   commandParam: button);
+				menu.Add (dupbut);
 			}
 			foreach (ActionLink link in links) {
-				delbut = new MenuItem (string.Format ("{0}: {1}",
-					Catalog.GetString ("Delete"), link));
-				delbut.Activated += (sender, e) => ViewModel.DeleteLink.Execute (link);
+				delbut = ViewModel.DeleteLink.CreateMenuItem ($"{ViewModel.DeleteLink.Text}: {link}", commandParam: link);
 				menu.Add (delbut);
 			}
 			menu.ShowAll ();
