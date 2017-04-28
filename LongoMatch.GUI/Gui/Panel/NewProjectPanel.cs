@@ -130,8 +130,8 @@ namespace LongoMatch.Gui.Panel
 				}
 				UpdateTitle ();
 				//FIXME: vmartos
+				viewModel.TeamTagger.Background = analysisTemplate.FieldBackground;
 				teamtagger.ViewModel = viewModel.TeamTagger;
-				teamtagger.ViewModel.Background = analysisTemplate.FieldBackground;
 			}
 			get {
 				return viewModel;
