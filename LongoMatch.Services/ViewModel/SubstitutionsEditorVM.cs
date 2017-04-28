@@ -58,7 +58,7 @@ namespace LongoMatch.Services.ViewModel
 		/// <value>The team tagger.</value>
 		public LMTeamTaggerVM TeamTagger {
 			get;
-			set;
+			protected set;
 		}
 
 		/// <summary>
@@ -81,7 +81,7 @@ namespace LongoMatch.Services.ViewModel
 		public LMPlayerVM OutPlayer { get; set; }
 
 		/// <summary>
-		/// Command to save a template.
+		/// Command to save a Event.
 		/// </summary>
 		/// <value>The save command.</value>
 		[PropertyChanged.DoNotNotify]
@@ -102,14 +102,14 @@ namespace LongoMatch.Services.ViewModel
 			UpdateViewModels ();
 		}
 
-		Task Save ()
+		async Task Save ()
 		{
 			if (LineupMode) {
-				return App.Current.EventsBroker.Publish (new UpdateEvent<LineupEvent> {
+				await App.Current.EventsBroker.Publish (new UpdateEvent<LineupEvent> {
 					Object = play as LineupEvent
 				});
 			} else {
-				return App.Current.EventsBroker.Publish (new UpdateEvent<SubstitutionEvent> {
+				await App.Current.EventsBroker.Publish (new UpdateEvent<SubstitutionEvent> {
 					Object = play as SubstitutionEvent
 				});
 			}

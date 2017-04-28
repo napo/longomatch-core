@@ -16,11 +16,12 @@
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
 using System;
-using System.Linq;
+using System.Threading.Tasks;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.ViewModel;
 using LongoMatch.Services.Interfaces;
 using VAS.Core.Common;
+using VAS.Core.Events;
 using VAS.Core.MVVMC;
 
 namespace LongoMatch.Services.ViewModel
@@ -68,11 +69,12 @@ namespace LongoMatch.Services.ViewModel
 		/// <value>The team tagger.</value>
 		public LMTeamTaggerVM TeamTagger {
 			get;
+			protected set;
 		}
 
 		public LMProjectVM Project {
 			get {
-				throw new NotImplementedException ();
+				return this;
 			}
 		}
 
@@ -84,8 +86,8 @@ namespace LongoMatch.Services.ViewModel
 
 		void ResetTeamTagger ()
 		{
-			TeamTagger.AwayTeam.Model = Model.VisitorTeamTemplate;
-			TeamTagger.HomeTeam.Model = Model.LocalTeamTemplate;
+			TeamTagger.AwayTeam = AwayTeam;
+			TeamTagger.HomeTeam = HomeTeam;
 			TeamTagger.Background = Model.Dashboard?.FieldBackground;
 			UpdateTeamTagger ();
 		}
@@ -96,13 +98,23 @@ namespace LongoMatch.Services.ViewModel
 				foreach (var player in TeamTagger.HomeTeam) {
 					if (play.Players.Contains (player.Model)) {
 						player.Tagged = true;
+						TeamTagger.HomeTeam.Selection.Add (player);
 					}
 				}
 				foreach (var player in TeamTagger.AwayTeam) {
 					if (play.Players.Contains (player.Model)) {
 						player.Tagged = true;
+						TeamTagger.AwayTeam.Selection.Add (player);
 					}
 				}
+				foreach (var team in play.Teams) {
+					if (team == TeamTagger.HomeTeam.Model) {
+						TeamTagger.HomeTeam.Tagged = true;
+					} else if (team == TeamTagger.AwayTeam.Model) {
+						TeamTagger.AwayTeam.Tagged = true;
+					}
+				}
+				TeamTagger.CurrentTime = play.EventTime;
 			}
 		}
 	}
