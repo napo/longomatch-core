@@ -48,6 +48,7 @@ namespace LongoMatch.Services.ViewModel
 			TeamTagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
 			TeamEditor = new LMTeamEditorVM ();
 			TeamEditor.Team = LoadedTemplate as LMTeamVM;
+			TeamEditor.Team.TemplateEditorMode = true;
 		}
 
 		/// <summary>

@@ -140,6 +140,8 @@ namespace LongoMatch.Services.Controller
 				if (substitutionPlayer.Key == null) {
 					substitutionPlayer = new KeyValuePair<PlayerVM, TeamVM> (e.Player, e.Team);
 					e.Player.Tagged = true;
+				} else if (substitutionPlayer.Key == e.Player) {
+					ClearSelection ();
 				} else if (substitutionPlayer.Value == e.Team) {
 					e.Player.Tagged = true;
 					EmitSubstitutionEvent (e.Player as LMPlayerVM, substitutionPlayer.Key as LMPlayerVM, e.Team as LMTeamVM);
@@ -315,13 +317,10 @@ namespace LongoMatch.Services.Controller
 		void ChangeLineUp (LMTeamVM team)
 		{
 			if (team != null) {
-				team.PlayingPlayersList = team.ViewModels.OfType<LMPlayerVM> ().
-					Take (team.Model.StartingPlayers);
+				team.FieldPlayersList = team.PlayingPlayersList.Take (team.Model.StartingPlayers);
 
-				team.StartingPlayersList = team.PlayingPlayersList;
-
-				team.BenchPlayersList = team.OfType<LMPlayerVM> ().
-					Except (team.PlayingPlayersList);
+				team.BenchPlayersList = team.PlayingPlayersList.
+					Except (team.FieldPlayersList);
 			}
 		}
 
@@ -352,14 +351,14 @@ namespace LongoMatch.Services.Controller
 				}
 			}
 			if (teamTagger.HomeTeam != null) {
-				teamTagger.HomeTeam.PlayingPlayersList = initialHomePlayerList.Take (teamTagger.HomeTeam.Model.StartingPlayers);
-				teamTagger.HomeTeam.BenchPlayersList = teamTagger.HomeTeam.OfType<LMPlayerVM> ().Except (
-					teamTagger.HomeTeam.PlayingPlayersList);
+				teamTagger.HomeTeam.FieldPlayersList = initialHomePlayerList.Take (teamTagger.HomeTeam.Model.StartingPlayers);
+				teamTagger.HomeTeam.BenchPlayersList = initialHomePlayerList.Except (
+					teamTagger.HomeTeam.FieldPlayersList);
 			}
 			if (teamTagger.AwayTeam != null) {
-				teamTagger.AwayTeam.PlayingPlayersList = initialAwayPlayerList.Take (teamTagger.AwayTeam.Model.StartingPlayers);
-				teamTagger.AwayTeam.BenchPlayersList = teamTagger.AwayTeam.OfType<LMPlayerVM> ().Except (
-					teamTagger.AwayTeam.PlayingPlayersList);
+				teamTagger.AwayTeam.FieldPlayersList = initialAwayPlayerList.Take (teamTagger.AwayTeam.Model.StartingPlayers);
+				teamTagger.AwayTeam.BenchPlayersList = initialAwayPlayerList.Except (
+					teamTagger.AwayTeam.FieldPlayersList);
 			}
 		}
 

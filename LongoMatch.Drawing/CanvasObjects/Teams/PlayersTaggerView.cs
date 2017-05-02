@@ -172,7 +172,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			if (ViewModel.HomeTeam != null) {
 				this.homeTeam = ViewModel.HomeTeam.Model;
 				this.homeTeam.UpdateColors ();
-				homePlayingPlayers = GetPlayersViews (ViewModel.HomeTeam.PlayingPlayersList, TeamType.LOCAL);
+				homePlayingPlayers = GetPlayersViews (ViewModel.HomeTeam.FieldPlayersList, TeamType.LOCAL);
 				homeBenchPlayers = GetPlayersViews (ViewModel.HomeTeam.BenchPlayersList, TeamType.LOCAL);
 				homePlayers.AddRange (homePlayingPlayers);
 				homePlayers.AddRange (homeBenchPlayers);
@@ -187,7 +187,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			if (ViewModel.AwayTeam != null) {
 				this.awayTeam = ViewModel.AwayTeam.Model;
 				this.awayTeam.UpdateColors ();
-				awayPlayingPlayers = GetPlayersViews (ViewModel.AwayTeam.PlayingPlayersList, TeamType.VISITOR);
+				awayPlayingPlayers = GetPlayersViews (ViewModel.AwayTeam.FieldPlayersList, TeamType.VISITOR);
 				awayBenchPlayers = GetPlayersViews (ViewModel.AwayTeam.BenchPlayersList, TeamType.VISITOR);
 				awayPlayers.AddRange (awayPlayingPlayers);
 				awayPlayers.AddRange (awayBenchPlayers);
@@ -565,7 +565,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		{
 			if (ViewModel.HomeTeam != null) {
 				if ((ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam), sender, ViewModel) ||
-					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.PlayingPlayersList), sender, ViewModel.HomeTeam) ||
+					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.FieldPlayersList), sender, ViewModel.HomeTeam) ||
 					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.HomeTeam.BenchPlayersList), sender, ViewModel.HomeTeam))) {
 					LoadTeams ();
 					ReDraw ();
@@ -579,7 +579,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 			if (ViewModel.AwayTeam != null) {
 				if ((ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam), sender, ViewModel) ||
-				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.PlayingPlayersList), sender, ViewModel.AwayTeam) ||
+					 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.FieldPlayersList), sender, ViewModel.AwayTeam) ||
 				 ViewModel.NeedsSync (e.PropertyName, nameof (ViewModel.AwayTeam.BenchPlayersList), sender, ViewModel.AwayTeam))) {
 					LoadTeams ();
 					ReDraw ();
