@@ -18,7 +18,6 @@
       <Link>AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)ProjectImporter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)ImportMonitorServices.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\DashboardsController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\TeamsController.cs" />
@@ -51,10 +50,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PlayEditorVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\SubstitutionsEditorVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controller\EventEditorController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\FileOpenerService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Service\ImportMonitorServices.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Controller\" />
     <Folder Include="$(MSBuildThisFileDirectory)ViewModel\" />
     <Folder Include="$(MSBuildThisFileDirectory)State\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Service\" />
   </ItemGroup>
 </Project>

@@ -37,6 +37,7 @@ using VAS.Services.ViewModel;
 using Catalog = LongoMatch.Core.Catalog;
 using Constants = LongoMatch.Core.Common.Constants;
 using LMFileStorage = LongoMatch.DB.FileStorage;
+using LongoMatch.Services.Service;
 
 
 #if OSTYPE_WINDOWS
@@ -166,6 +167,8 @@ namespace LongoMatch.Services
 			RegisterService (hkManager);
 			App.Current.HotkeysService = new HotkeysService ();
 			RegisterService (App.Current.HotkeysService);
+
+			RegisterService (new FileOpenerService ());
 
 			GeneralUIHotkeys.RegisterDefaultHotkeys ();
 			PlaybackHotkeys.RegisterDefaultHotkeys ();

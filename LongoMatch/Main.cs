@@ -23,10 +23,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Gtk;
 using LongoMatch.Addins;
+using LongoMatch.Core.Events;
 using LongoMatch.DB;
 using LongoMatch.Gui;
 using LongoMatch.Gui.Dialog;
-using LongoMatch.Services;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
@@ -34,11 +34,10 @@ using VAS.Core.Interfaces.GUI;
 using VAS.DB;
 using VAS.Drawing.Cairo;
 using VAS.Multimedia.Utils;
-using VAS.Services;
 using VAS.UI.Dialog;
-using VAS.UI.Helpers;
 using VAS.Video;
 using Constants = LongoMatch.Core.Common.Constants;
+using LMCoreServices = LongoMatch.Services.CoreServices;
 using LMDB = LongoMatch.DB;
 using VASUi = VAS.UI;
 
@@ -57,11 +56,19 @@ namespace LongoMatch
 			GLib.ExceptionManager.UnhandledException += HandleException;
 			TaskScheduler.UnobservedTaskException += HandleUnobservedTaskException;
 			App.Init ();
-			CoreServices.Init ();
+			//#if OSTYPE_OSX
+#if true
+			// This must be called as soon as possible, but only after App.Init, otherwise we loose the first openFile
+			// event if the app was started with a double click on an associated file. It's a shame because it takes
+			// a few ms to initialize and we haven't show the splash screen yet.
+			OSXApplication.Instance.Init ();
+#endif
+			LMCoreServices.Init ();
 			InitGtk ();
+
 			var splashScreen = new SplashScreen (Resources.LoadImage (Constants.SPLASH));
 			splashScreen.Show ();
-			Application.Invoke (async (s, e) => await Init (splashScreen));
+			Application.Invoke (async (s, e) => await Init (splashScreen, args));
 			Application.Run ();
 
 			try {
@@ -72,11 +79,11 @@ namespace LongoMatch
 			}
 		}
 
-		static async Task Init (SplashScreen splashScreen)
+		static async Task Init (SplashScreen splashScreen, string [] args)
 		{
 			IProgressReport progress = splashScreen;
-
 			try {
+
 				bool haveCodecs = false;
 				App.Current.DrawingToolkit = new CairoBackend ();
 				App.Current.MultimediaToolkit = new MultimediaToolkit ();
@@ -91,9 +98,9 @@ namespace LongoMatch
 
 				App.Current.DependencyRegistry.Register<IFileStorage, LMDB.FileStorage> (0);
 				InitAddins (progress);
-				CoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
+				LMCoreServices.Start (App.Current.GUIToolkit, App.Current.MultimediaToolkit);
 				AddinsManager.LoadDashboards (App.Current.CategoriesTemplatesProvider);
-				AddinsManager.LoadImportProjectAddins (CoreServices.ProjectsImporter);
+				AddinsManager.LoadImportProjectAddins (LMCoreServices.ProjectsImporter);
 
 				// Migrate the old databases now that the DB and Templates services have started
 				DatabaseMigration dbMigration = new DatabaseMigration (progress);
@@ -111,9 +118,16 @@ namespace LongoMatch
 				}
 
 				splashScreen.Destroy ();
-				ConfigureOSXApp ();
 				(GUIToolkit.Instance.MainController as MainWindow).Initialize ();
+
 				await App.Current.StateController.SetHomeTransition ("Home", null);
+#if true
+				OSXApplication.Instance.Ready ();
+#endif
+				if (args.Length == 1) {
+					await App.Current.EventsBroker.Publish (new OpenFileEvent { FilePath = args [0] });
+				}
+
 			} catch (Exception ex) {
 				ProcessExecutionError (ex);
 			}
@@ -140,30 +154,6 @@ namespace LongoMatch
 			progress.Report (0.1f, "Initializing GStreamer", id);
 			GStreamer.Init ();
 			progress.Report (1f, "GStreamer initialized", id);
-		}
-
-		static void ConfigureOSXApp ()
-		{
-			if (Utils.OS == OperatingSystemID.OSX) {
-				MenuItem quit;
-				GtkOSXApplication app;
-
-				app = new GtkOSXApplication ();
-				MainWindow window = App.Current.GUIToolkit.MainController as MainWindow;
-				app.NSApplicationBlockTermination += (o, a) => {
-					a.RetVal = window.CloseAndQuit ();
-				};
-
-				quit = window.QuitMenu;
-				quit.Visible = false;
-				app.SetMenuBar (window.Menu);
-				app.InsertAppMenuItem (window.AboutMenu, 0);
-				app.InsertAppMenuItem (new SeparatorMenuItem (), 1);
-				app.InsertAppMenuItem (window.PreferencesMenu, 2);
-				window.Menu.Visible = false;
-				app.UseQuartzAccelerators = false;
-				app.Ready ();
-			}
 		}
 
 		static void InitGtk ()

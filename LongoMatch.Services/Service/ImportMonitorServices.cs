@@ -17,18 +17,15 @@
 //
 using System;
 using System.IO;
-using LongoMatch.Core.Common;
-using LongoMatch.Core.Interfaces;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
-using LongoMatch.DB;
 using VAS.Core.Common;
 using VAS.Core.Interfaces;
 using VAS.Core.Store.Templates;
 using VAS.DB;
 using Constants = LongoMatch.Core.Common.Constants;
 
-namespace LongoMatch.Services
+namespace LongoMatch.Services.Service
 {
 	/// <summary>
 	/// This services monitors a directory in the filesystem looking for <see cref="Dashboard"/>

@@ -27,7 +27,7 @@ using VAS.Core.Store;
 
 namespace LongoMatch.Core.Events
 {
-    public class OpenProjectIDEvent : Event
+	public class OpenProjectIDEvent : Event
 	{
 		public Guid ProjectID { get; set; }
 
@@ -36,6 +36,27 @@ namespace LongoMatch.Core.Events
 
 	public class ImportProjectEvent : Event
 	{
+	}
+
+	/// <summary>
+	/// Event to request openning a file in the application.
+	/// </summary>
+	public class OpenFileEvent : Event
+	{
+		/// <summary>
+		/// Gets or sets the file path.
+		/// </summary>
+		/// <value>The file path.</value>
+		public string FilePath { get; set; }
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="T:LongoMatch.Core.Events.OpenFileEvent"/>
+		/// will only import the file if it can be imported and it will not open it. For example, if a user
+		/// double clicks in a Team file, it will import the team and open it in the teams editor by default.
+		/// In case of a service monitoring a directory, it will only import the file.
+		/// </summary>
+		/// <value><c>true</c> if import only; otherwise, <c>false</c>.</value>
+		public bool ImportOnly { get; set; }
 	}
 
 	public class ExportProjectEvent : Event
