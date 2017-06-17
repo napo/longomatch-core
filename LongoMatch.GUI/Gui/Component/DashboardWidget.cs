@@ -60,7 +60,7 @@ namespace LongoMatch.Gui.Component
 		{
 			this.Build ();
 
-			applyimage.Pixbuf = Helpers.Misc.LoadIcon ("longomatch-apply", IconSize.Button);
+			applyimage.Image = App.Current.ResourcesLocator.LoadIcon ("longomatch-apply", StyleConf.ButtonDialogIconSize);
 
 			tagger = new DashboardCanvas (new WidgetWrapper (drawingarea));
 			tagger.ShowMenuEvent += HandleShowMenuEvent;
