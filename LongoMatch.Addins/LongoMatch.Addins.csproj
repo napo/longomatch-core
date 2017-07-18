@@ -8,6 +8,8 @@
     <RootNamespace>LongoMatch.Addins</RootNamespace>
     <AssemblyName>LongoMatch.Addins</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,15 +47,16 @@
     <Compile Include="ExtensionPoints\IServicesPlugin.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Mono.Addins, Version=0.6.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756">
-      <SpecificVersion>False</SpecificVersion>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=b9a188c8922137c6">
       <Package>newtonsoft-json</Package>
       <SpecificVersion>False</SpecificVersion>
     </Reference>
+    <Reference Include="Mono.Addins">
+      <HintPath>..\longomatch-pro\packages\Mono.Addins.1.3.7\lib\net45\Mono.Addins.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\LongoMatch.Core\LongoMatch.Core.Net45.csproj">
@@ -64,6 +67,9 @@
       <Project>{AA2793F9-3B72-4F34-9B34-2E0C18A8A960}</Project>
       <Name>LongoMatch.Services.Net45</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

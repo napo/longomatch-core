@@ -6,11 +6,12 @@
     <ProjectGuid>{42A9EA2B-942E-4BA7-8F2C-C89B503CFCD2}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>longomatch</RootNamespace>
-    <ApplicationIcon>.</ApplicationIcon>
     <CodePage>65001</CodePage>
     <AssemblyName>LongoMatch.GUI.Multimedia</AssemblyName>
     <AssemblyOriginatorKeyFile>..\..\..\Proyectos\longomatch\CesarPlayer</AssemblyOriginatorKeyFile>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
