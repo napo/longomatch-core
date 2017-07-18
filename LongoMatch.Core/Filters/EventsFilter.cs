@@ -20,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
+using LongoMatch.Core.Store.Templates;
 
 namespace LongoMatch.Core.Filters
 {
@@ -31,6 +32,7 @@ namespace LongoMatch.Core.Filters
 		Dictionary<EventType, List<Tag>> eventsFilter;
 		List<Tag> tagsFilter;
 		List<Player> playersFilter;
+		List<Team> teamsFilter;
 		List<Period> periodsFilter;
 		List<Timer> timersFilter;
 		Project project;
@@ -43,6 +45,7 @@ namespace LongoMatch.Core.Filters
 			periodsFilter = new List<Period> ();
 			tagsFilter = new List<Tag> ();
 			timersFilter = new List<Timer> ();
+			teamsFilter = new List<Team> ();
 			ClearAll ();
 			UpdateFilters ();
 		}
@@ -67,9 +70,26 @@ namespace LongoMatch.Core.Filters
 			protected set;
 		}
 
+		public List<Team> VisibleTeams {
+			get;
+			protected set;
+		}
+
 		public List<TimelineEvent> VisiblePlays {
 			get;
 			protected set;
+		}
+
+		bool TeamsFilterEnabled {
+			get {
+				return teamsFilter.Any ();
+			}
+		}
+
+		bool PlayersFilterEnabled {
+			get {
+				return playersFilter.Any ();
+			}
 		}
 
 		public void ClearAll (bool update = true)
@@ -79,8 +99,21 @@ namespace LongoMatch.Core.Filters
 			periodsFilter.Clear ();
 			timersFilter.Clear ();
 			tagsFilter.Clear ();
+			teamsFilter.Clear ();
 			if (update)
 				Update ();
+		}
+
+		public void FilterTeam (Team team, bool visible)
+		{
+			if (visible) {
+				if (!teamsFilter.Contains (team))
+					teamsFilter.Add (team);
+			} else {
+				if (teamsFilter.Contains (team))
+					teamsFilter.Remove (team);
+			}
+			Update ();
 		}
 
 		public void FilterPlayer (Player player, bool visible)
@@ -182,6 +215,7 @@ namespace LongoMatch.Core.Filters
 		void UpdateFilters ()
 		{
 			UpdateVisiblePlayers ();
+			UpdateVisibleTeams ();
 			UpdateVisibleCategories ();
 			UpdateVisiblePlays ();
 		}
@@ -193,6 +227,15 @@ namespace LongoMatch.Core.Filters
 					project.VisitorTeamTemplate.PlayingPlayersList).ToList ();
 			} else {
 				VisiblePlayers = playersFilter.ToList ();
+			}
+		}
+
+		void UpdateVisibleTeams ()
+		{
+			if (teamsFilter.Count == 0) {
+				VisibleTeams = new List<Team> { project.LocalTeamTemplate, project.VisitorTeamTemplate };
+			} else {
+				VisibleTeams = teamsFilter.ToList ();
 			}
 		}
 
@@ -211,7 +254,10 @@ namespace LongoMatch.Core.Filters
 			bool period_match = true, timer_match = true;
 
 			VisiblePlays = new List<TimelineEvent> ();
-				
+
+			int totalPlayers = project.LocalTeamTemplate.PlayingPlayersList.Union (
+							project.VisitorTeamTemplate.PlayingPlayersList).Count<Player> ();
+
 			foreach (TimelineEvent play in project.Timeline) {
 				cat_match = false;
 				if (VisibleEventTypes.Contains (play.EventType)) {
@@ -236,19 +282,18 @@ namespace LongoMatch.Core.Filters
 						tag_match = true;
 					}
 				}
-					
-				if (play.Players.Count == 0 &&
-				    VisiblePlayers.Count == project.LocalTeamTemplate.PlayingPlayersList.Union (
-					    project.VisitorTeamTemplate.PlayingPlayersList).Count<Player> ()) {
-					player_match = true;
 
+				if (!PlayersFilterEnabled && !TeamsFilterEnabled) {
+					player_match = true;
 				} else {
-					player_match = VisiblePlayers.Intersect (play.Players).Any ();
+					player_match = (PlayersFilterEnabled && VisiblePlayers.Intersect (play.Players).Any ()) ||
+						(TeamsFilterEnabled && VisibleTeams.Intersect (play.Teams).Any ());
 				}
 
 				if (timersFilter.Count != 0) {
 					timer_match = false;
 				}
+
 				foreach (Timer t in timersFilter) {
 					foreach (TimeNode tn in t.Nodes) {
 						if (tn.Join (play) != null) {

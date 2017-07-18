@@ -61,48 +61,61 @@ namespace LongoMatch.Gui.Component
 		protected override void UpdateSelection (TreeIter iter, bool active)
 		{
 			TreeStore store = Model as TreeStore;
-			Player player = (Player)store.GetValue (iter, COL_VALUE);
-			
+			var selected = store.GetValue (iter, COL_VALUE);
+
 			/* Check all children */
-			if (player == localTeam || player == visitorTeam) {
+			if (selected == local || selected == visitor) {
 				TreeIter child;
 				store.IterChildren (out child, iter);
-				
+
 				filter.IgnoreUpdates = true;
 				while (store.IterIsValid (child)) {
 					Player childPlayer = (Player)store.GetValue (child, COL_VALUE);
-					filter.FilterPlayer (childPlayer, active);
+					FilterPlayer (childPlayer, active);
 					store.SetValue (child, COL_ACTIVE, active);
 					store.IterNext (ref child);
 				}
 				filter.IgnoreUpdates = false;
 			} else {
-				filter.FilterPlayer (player, active);
+				FilterPlayer (selected as Player, active);
 				if (!active) {
 					TreeIter team;
 					/* Uncheck the team check button */
-					if (local.List.Contains (player))
+					if (local.List.Contains (selected as Player) || selected == localTeam)
 						team = localIter;
 					else
 						team = visitorIter;
 					store.SetValue (team, COL_ACTIVE, false);
 				}
 			}
-			
+
 			store.SetValue (iter, COL_ACTIVE, active);
 			filter.Update ();
 		}
 
+		void FilterPlayer (Player player, bool active)
+		{
+			if (player == localTeam) {
+				filter.FilterTeam (local, active);
+			} else if (player == visitorTeam) {
+				filter.FilterTeam (visitor, active);
+			} else {
+				filter.FilterPlayer (player as Player, active);
+			}
+		}
+
 		void FillTree ()
 		{
-			localIter = store.AppendValues (localTeam.Name, false, localTeam);
-			visitorIter = store.AppendValues (visitorTeam.Name, false, visitorTeam);
+			localIter = store.AppendValues (localTeam.Name, false, local);
+			visitorIter = store.AppendValues (visitorTeam.Name, false, visitor);
 
 			filter.IgnoreUpdates = true;
+			store.AppendValues (localIter, Catalog.GetString ("Team tagged"), false, localTeam);
 			foreach (Player player in local.PlayingPlayersList) {
 				store.AppendValues (localIter, player.ToString (), false, player);
 			}
 			
+			store.AppendValues (visitorIter, Catalog.GetString ("Team tagged"), false, visitorTeam);
 			foreach (Player player in visitor.PlayingPlayersList) {
 				store.AppendValues (visitorIter, player.ToString (), false, player);
 			}
