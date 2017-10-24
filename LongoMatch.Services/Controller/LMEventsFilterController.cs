@@ -1,19 +1,17 @@
 ﻿//
 //  Copyright (C) 2017 Fluendo S.A.
 
+using System.Linq;
+using LongoMatch.Core.Store;
+using LongoMatch.Core.ViewModel;
+using LongoMatch.Services.State;
+using VAS.Core;
+using VAS.Core.Common;
 using VAS.Core.Filters;
 using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
 using VAS.Services.Controller;
-using LongoMatch.Services.State;
 using Predicate = VAS.Core.Filters.Predicate<VAS.Core.ViewModel.TimelineEventVM>;
-using LongoMatch.Core.ViewModel;
-using VAS.Core;
-using LongoMatch.Core.Store;
-using System.Collections.Specialized;
-using System.Threading.Tasks;
-using VAS.Core.Events;
-using System.Linq;
 
 namespace LongoMatch.Services.Controller
 {
@@ -63,7 +61,7 @@ namespace LongoMatch.Services.Controller
 			});
 
 			foreach (var team in new LMTeamVM [] { homeTeamVM, awayTeamVM }) {
-				var teamPredicate = new OrPredicate<TimelineEventVM> {
+				var teamPredicate = new AndOrPredicate<TimelineEventVM> (QueryOperator.Or) {
 					Name = team.Name,
 				};
 				teamPredicate.Add (new Predicate {

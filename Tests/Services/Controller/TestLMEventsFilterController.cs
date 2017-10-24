@@ -2,7 +2,6 @@
 //  Copyright (C) 2017 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using LongoMatch;
@@ -16,10 +15,8 @@ using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Filters;
 using VAS.Core.Interfaces.GUI;
-using VAS.Core.Interfaces.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.ViewModel;
-using VAS.Services.Controller;
 using VAS.Tests.Services;
 using Predicate = VAS.Core.Filters.Predicate<VAS.Core.ViewModel.TimelineEventVM>;
 
@@ -148,12 +145,13 @@ namespace Tests.Services.Controller
 			Assert.IsTrue (timelineVM.TimersPredicate.All (p => p is Predicate));
 
 			Assert.AreEqual (2, timelineVM.CommonTagsPredicate.Count);
-			Assert.IsTrue (timelineVM.CommonTagsPredicate.All (p => p is OrPredicate<TimelineEventVM>));
-			Assert.AreEqual (3, ((OrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.First ()).Elements.Count);
-			Assert.IsTrue (((OrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.First ()).All (p => p is Predicate));
-			Assert.AreEqual (2, ((OrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.ElementAt (1)).Elements.Count);
+			Assert.IsTrue (timelineVM.CommonTagsPredicate
+						   .All (p => (p as AndOrPredicate<TimelineEventVM>).Operator == QueryOperator.Or));
+			Assert.AreEqual (3, ((AndOrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.First ()).Elements.Count);
+			Assert.IsTrue (((AndOrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.First ()).All (p => p is Predicate));
+			Assert.AreEqual (2, ((AndOrPredicate<TimelineEventVM>)timelineVM.CommonTagsPredicate.ElementAt (1)).Elements.Count);
 
-			Assert.AreEqual (10, timelineVM.EventTypesPredicate.Elements.OfType<OrPredicate<TimelineEventVM>> ().Count ());
+			Assert.AreEqual (10, timelineVM.EventTypesPredicate.Elements.OfType<AndOrPredicate<TimelineEventVM>> ().Count ());
 			Assert.AreEqual (5, timelineVM.EventTypesPredicate.Elements.OfType<Predicate> ().Count ());
 		}
 
