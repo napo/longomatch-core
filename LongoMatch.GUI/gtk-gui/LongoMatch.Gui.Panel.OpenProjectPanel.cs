@@ -12,43 +12,44 @@ namespace LongoMatch.Gui.Panel
 
 		private global::LongoMatch.Gui.Component.ProjectsIconWidget projectlistwidget;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Panel.OpenProjectPanel
-			global::Stetic.BinContainer.Attach (this);
+			global::Stetic.BinContainer.Attach(this);
 			this.Name = "LongoMatch.Gui.Panel.OpenProjectPanel";
 			// Container child LongoMatch.Gui.Panel.OpenProjectPanel.Gtk.Container+ContainerChild
-			this.vbox4 = new global::Gtk.VBox ();
+			this.vbox4 = new global::Gtk.VBox();
 			this.vbox4.Name = "vbox4";
 			this.vbox4.Spacing = 6;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.panelheader1 = new global::LongoMatch.Gui.Panel.PanelHeader ();
+			this.panelheader1 = new global::LongoMatch.Gui.Panel.PanelHeader();
 			this.panelheader1.Events = ((global::Gdk.EventMask)(256));
 			this.panelheader1.Name = "panelheader1";
-			this.vbox4.Add (this.panelheader1);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.panelheader1]));
+			this.vbox4.Add(this.panelheader1);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.panelheader1]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.contentalignment = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.contentalignment = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
 			this.contentalignment.Name = "contentalignment";
 			this.contentalignment.LeftPadding = ((uint)(12));
 			this.contentalignment.RightPadding = ((uint)(12));
 			// Container child contentalignment.Gtk.Container+ContainerChild
-			this.projectlistwidget = new global::LongoMatch.Gui.Component.ProjectsIconWidget ();
+			this.projectlistwidget = new global::LongoMatch.Gui.Component.ProjectsIconWidget();
 			this.projectlistwidget.Events = ((global::Gdk.EventMask)(256));
 			this.projectlistwidget.Name = "projectlistwidget";
-			this.contentalignment.Add (this.projectlistwidget);
-			this.vbox4.Add (this.contentalignment);
-			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.contentalignment]));
+			this.contentalignment.Add(this.projectlistwidget);
+			this.vbox4.Add(this.contentalignment);
+			global::Gtk.Box.BoxChild w3 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.contentalignment]));
 			w3.Position = 1;
-			this.Add (this.vbox4);
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			this.Add(this.vbox4);
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
-			this.Hide ();
+			this.Hide();
 		}
 	}
 }

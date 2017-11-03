@@ -6,20 +6,21 @@ namespace LongoMatch.Gui.Component
 	{
 		private global::Gtk.DrawingArea drawingarea;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Component.BackgroundWidget
-			global::Stetic.BinContainer.Attach (this);
+			global::Stetic.BinContainer.Attach(this);
 			this.Name = "LongoMatch.Gui.Component.BackgroundWidget";
 			// Container child LongoMatch.Gui.Component.BackgroundWidget.Gtk.Container+ContainerChild
-			this.drawingarea = new global::Gtk.DrawingArea ();
+			this.drawingarea = new global::Gtk.DrawingArea();
 			this.drawingarea.Name = "drawingarea";
-			this.Add (this.drawingarea);
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			this.Add(this.drawingarea);
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
-			this.Hide ();
+			this.Hide();
 		}
 	}
 }

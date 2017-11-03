@@ -20,12 +20,12 @@ namespace LongoMatch.Gui.Dialog
 
 		private global::VAS.UI.Helpers.ImageView buttonOKimage;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Dialog.CodecsChoiceDialog
 			this.Name = "LongoMatch.Gui.Dialog.CodecsChoiceDialog";
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Menu);
+			this.Icon = global::Stetic.IconLoader.LoadIcon(this, "longomatch", global::Gtk.IconSize.Menu);
 			this.WindowPosition = ((global::Gtk.WindowPosition)(1));
 			this.Modal = true;
 			this.DestroyWithParent = true;
@@ -37,50 +37,54 @@ namespace LongoMatch.Gui.Dialog
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
-			this.alignment4 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.alignment4 = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
 			this.alignment4.Name = "alignment4";
 			// Container child alignment4.Gtk.Container+ContainerChild
-			this.vbox2 = new global::Gtk.VBox ();
+			this.vbox2 = new global::Gtk.VBox();
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			this.vbox2.BorderWidth = ((uint)(10));
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.headereventbox = new global::Gtk.EventBox ();
+			this.headereventbox = new global::Gtk.EventBox();
 			this.headereventbox.Name = "headereventbox";
 			// Container child headereventbox.Gtk.Container+ContainerChild
-			this.alignment3 = new global::Gtk.Alignment (0.5F, 0.5F, 1F, 1F);
+			this.alignment3 = new global::Gtk.Alignment(0.5F, 0.5F, 1F, 1F);
 			this.alignment3.Name = "alignment3";
 			this.alignment3.LeftPadding = ((uint)(20));
 			this.alignment3.TopPadding = ((uint)(20));
 			this.alignment3.RightPadding = ((uint)(20));
 			this.alignment3.BottomPadding = ((uint)(20));
 			// Container child alignment3.Gtk.Container+ContainerChild
-			this.titlelabel = new global::Gtk.Label ();
+			this.titlelabel = new global::Gtk.Label();
 			this.titlelabel.Name = "titlelabel";
 			this.titlelabel.Xalign = 0F;
-			this.titlelabel.LabelProp = global::VAS.Core.Catalog.GetString ("Missing CODECS");
-			this.alignment3.Add (this.titlelabel);
-			this.headereventbox.Add (this.alignment3);
-			this.vbox2.Add (this.headereventbox);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.headereventbox]));
+			this.titlelabel.LabelProp = global::VAS.Core.Catalog.GetString("Missing CODECS");
+			this.alignment3.Add(this.titlelabel);
+			this.headereventbox.Add(this.alignment3);
+			this.vbox2.Add(this.headereventbox);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.headereventbox]));
 			w4.Position = 0;
 			w4.Expand = false;
 			w4.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.label1 = new global::Gtk.Label ();
+			this.label1 = new global::Gtk.Label();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::VAS.Core.Catalog.GetString ("As explained and detailed in the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  \n\nTo acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=\"http://www.longomatch.com/open-source.html\">OpenSource project</a> page.\n\nTo avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. ");
+			this.label1.LabelProp = global::VAS.Core.Catalog.GetString(@"As explained and detailed in the <a href=""http://www.longomatch.com/open-source.html"">OpenSource project</a> page, the use of this free and open source version of LongoMatch requires that you also install additional software called a CODEC, which may also be free.  
+
+To acknowledge your understanding and for more information on why this is so, where to get it and how to install it visit the <a href=""http://www.longomatch.com/open-source.html"">OpenSource project</a> page.
+
+To avoid this, and to enjoy many additional functional benefits, we encourage you to upgrade to Longomatch PRO, which, for a fee, is ready-to-use. ");
 			this.label1.UseMarkup = true;
 			this.label1.Wrap = true;
 			this.label1.Justify = ((global::Gtk.Justification)(3));
-			this.vbox2.Add (this.label1);
-			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.label1]));
+			this.vbox2.Add(this.label1);
+			global::Gtk.Box.BoxChild w5 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.label1]));
 			w5.Position = 1;
 			w5.Expand = false;
 			w5.Fill = false;
-			this.alignment4.Add (this.vbox2);
-			w1.Add (this.alignment4);
-			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(w1 [this.alignment4]));
+			this.alignment4.Add(this.vbox2);
+			w1.Add(this.alignment4);
+			global::Gtk.Box.BoxChild w7 = ((global::Gtk.Box.BoxChild)(w1[this.alignment4]));
 			w7.Position = 0;
 			w7.Expand = false;
 			w7.Fill = false;
@@ -91,24 +95,25 @@ namespace LongoMatch.Gui.Dialog
 			w8.BorderWidth = ((uint)(5));
 			w8.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonOk = new global::Gtk.Button ();
+			this.buttonOk = new global::Gtk.Button();
 			this.buttonOk.CanDefault = true;
 			this.buttonOk.CanFocus = true;
 			this.buttonOk.Name = "buttonOk";
 			// Container child buttonOk.Gtk.Container+ContainerChild
-			this.buttonOKimage = new global::VAS.UI.Helpers.ImageView ();
+			this.buttonOKimage = new global::VAS.UI.Helpers.ImageView();
 			this.buttonOKimage.Name = "buttonOKimage";
-			this.buttonOk.Add (this.buttonOKimage);
-			this.AddActionWidget (this.buttonOk, -3);
-			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w8 [this.buttonOk]));
+			this.buttonOk.Add(this.buttonOKimage);
+			this.AddActionWidget(this.buttonOk, -3);
+			global::Gtk.ButtonBox.ButtonBoxChild w10 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w8[this.buttonOk]));
 			w10.Expand = false;
 			w10.Fill = false;
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 606;
 			this.DefaultHeight = 397;
-			this.Show ();
+			this.Show();
 		}
 	}
 }

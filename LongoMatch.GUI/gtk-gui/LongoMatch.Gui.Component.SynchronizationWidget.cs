@@ -87,9 +87,9 @@ namespace LongoMatch.Gui.Component
 			this.zoomscale = new global::Gtk.HScale(null);
 			this.zoomscale.CanFocus = true;
 			this.zoomscale.Name = "zoomscale";
-			this.zoomscale.Adjustment.Upper = 100;
-			this.zoomscale.Adjustment.PageIncrement = 10;
-			this.zoomscale.Adjustment.StepIncrement = 1;
+			this.zoomscale.Adjustment.Upper = 100D;
+			this.zoomscale.Adjustment.PageIncrement = 10D;
+			this.zoomscale.Adjustment.StepIncrement = 1D;
 			this.zoomscale.DrawValue = false;
 			this.zoomscale.Digits = 0;
 			this.zoomscale.ValuePos = ((global::Gtk.PositionType)(2));

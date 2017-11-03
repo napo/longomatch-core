@@ -444,14 +444,14 @@ namespace LongoMatch.Gui.Component
 			w33.XOptions = ((global::Gtk.AttachOptions)(4));
 			w33.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.heightspinbutton = new global::Gtk.SpinButton(0, 100, 1);
+			this.heightspinbutton = new global::Gtk.SpinButton(0D, 100D, 1D);
 			this.heightspinbutton.CanFocus = true;
 			this.heightspinbutton.Name = "heightspinbutton";
-			this.heightspinbutton.Adjustment.PageIncrement = 10;
-			this.heightspinbutton.ClimbRate = 1;
+			this.heightspinbutton.Adjustment.PageIncrement = 10D;
+			this.heightspinbutton.ClimbRate = 1D;
 			this.heightspinbutton.Digits = ((uint)(2));
 			this.heightspinbutton.Numeric = true;
-			this.heightspinbutton.Value = 18;
+			this.heightspinbutton.Value = 18D;
 			this.table1.Add(this.heightspinbutton);
 			global::Gtk.Table.TableChild w34 = ((global::Gtk.Table.TableChild)(this.table1[this.heightspinbutton]));
 			w34.TopAttach = ((uint)(6));
@@ -646,11 +646,11 @@ namespace LongoMatch.Gui.Component
 			w49.XOptions = ((global::Gtk.AttachOptions)(4));
 			w49.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.numberspinbutton = new global::Gtk.SpinButton(0, 100, 1);
+			this.numberspinbutton = new global::Gtk.SpinButton(0D, 100D, 1D);
 			this.numberspinbutton.CanFocus = true;
 			this.numberspinbutton.Name = "numberspinbutton";
-			this.numberspinbutton.Adjustment.PageIncrement = 10;
-			this.numberspinbutton.ClimbRate = 1;
+			this.numberspinbutton.Adjustment.PageIncrement = 10D;
+			this.numberspinbutton.ClimbRate = 1D;
 			this.numberspinbutton.Numeric = true;
 			this.table1.Add(this.numberspinbutton);
 			global::Gtk.Table.TableChild w50 = ((global::Gtk.Table.TableChild)(this.table1[this.numberspinbutton]));
@@ -675,13 +675,13 @@ namespace LongoMatch.Gui.Component
 			w51.XOptions = ((global::Gtk.AttachOptions)(4));
 			w51.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.weightspinbutton = new global::Gtk.SpinButton(0, 1000, 1);
+			this.weightspinbutton = new global::Gtk.SpinButton(0D, 1000D, 1D);
 			this.weightspinbutton.CanFocus = true;
 			this.weightspinbutton.Name = "weightspinbutton";
-			this.weightspinbutton.Adjustment.PageIncrement = 10;
-			this.weightspinbutton.ClimbRate = 1;
+			this.weightspinbutton.Adjustment.PageIncrement = 10D;
+			this.weightspinbutton.ClimbRate = 1D;
 			this.weightspinbutton.Numeric = true;
-			this.weightspinbutton.Value = 80;
+			this.weightspinbutton.Value = 80D;
 			this.table1.Add(this.weightspinbutton);
 			global::Gtk.Table.TableChild w52 = ((global::Gtk.Table.TableChild)(this.table1[this.weightspinbutton]));
 			w52.TopAttach = ((uint)(7));

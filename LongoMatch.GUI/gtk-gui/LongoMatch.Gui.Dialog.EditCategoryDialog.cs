@@ -8,13 +8,13 @@ namespace LongoMatch.Gui.Dialog
 
 		private global::Gtk.Button buttonOk;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Dialog.EditCategoryDialog
 			this.Name = "LongoMatch.Gui.Dialog.EditCategoryDialog";
-			this.Title = global::VAS.Core.Catalog.GetString ("Properties");
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Menu);
+			this.Title = global::VAS.Core.Catalog.GetString("Properties");
+			this.Icon = global::Stetic.IconLoader.LoadIcon(this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
@@ -24,12 +24,12 @@ namespace LongoMatch.Gui.Dialog
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
-			this.timenodeproperties2 = new global::LongoMatch.Gui.Component.CategoryProperties ();
+			this.timenodeproperties2 = new global::LongoMatch.Gui.Component.CategoryProperties();
 			this.timenodeproperties2.Events = ((global::Gdk.EventMask)(256));
 			this.timenodeproperties2.Name = "timenodeproperties2";
 			this.timenodeproperties2.Edited = false;
-			w1.Add (this.timenodeproperties2);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1 [this.timenodeproperties2]));
+			w1.Add(this.timenodeproperties2);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(w1[this.timenodeproperties2]));
 			w2.Position = 0;
 			w2.Expand = false;
 			// Internal child LongoMatch.Gui.Dialog.EditCategoryDialog.ActionArea
@@ -39,23 +39,24 @@ namespace LongoMatch.Gui.Dialog
 			w3.BorderWidth = ((uint)(5));
 			w3.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonOk = new global::Gtk.Button ();
+			this.buttonOk = new global::Gtk.Button();
 			this.buttonOk.CanDefault = true;
 			this.buttonOk.CanFocus = true;
 			this.buttonOk.Name = "buttonOk";
 			this.buttonOk.UseStock = true;
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
-			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w3 [this.buttonOk]));
+			this.AddActionWidget(this.buttonOk, -5);
+			global::Gtk.ButtonBox.ButtonBoxChild w4 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w3[this.buttonOk]));
 			w4.Expand = false;
 			w4.Fill = false;
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 324;
 			this.DefaultHeight = 668;
-			this.Show ();
+			this.Show();
 		}
 	}
 }

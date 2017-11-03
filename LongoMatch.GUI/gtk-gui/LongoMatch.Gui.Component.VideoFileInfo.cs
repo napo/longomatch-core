@@ -32,42 +32,42 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.HSeparator hseparator2;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Component.VideoFileInfo
-			global::Stetic.BinContainer.Attach (this);
+			global::Stetic.BinContainer.Attach(this);
 			this.Name = "LongoMatch.Gui.Component.VideoFileInfo";
 			// Container child LongoMatch.Gui.Component.VideoFileInfo.Gtk.Container+ContainerChild
-			this.eventbox3 = new global::Gtk.EventBox ();
+			this.eventbox3 = new global::Gtk.EventBox();
 			this.eventbox3.Name = "eventbox3";
 			// Container child eventbox3.Gtk.Container+ContainerChild
-			this.vbox4 = new global::Gtk.VBox ();
+			this.vbox4 = new global::Gtk.VBox();
 			this.vbox4.Name = "vbox4";
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox ();
+			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 20;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.snapshotimage = new global::VAS.UI.Helpers.ImageView ();
+			this.snapshotimage = new global::VAS.UI.Helpers.ImageView();
 			this.snapshotimage.WidthRequest = 100;
 			this.snapshotimage.Name = "snapshotimage";
-			this.hbox1.Add (this.snapshotimage);
-			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.snapshotimage]));
+			this.hbox1.Add(this.snapshotimage);
+			global::Gtk.Box.BoxChild w1 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.snapshotimage]));
 			w1.Position = 0;
 			w1.Expand = false;
 			w1.Fill = false;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.table1 = new global::Gtk.Table (((uint)(4)), ((uint)(2)), true);
+			this.table1 = new global::Gtk.Table(((uint)(4)), ((uint)(2)), true);
 			this.table1.Name = "table1";
 			this.table1.RowSpacing = ((uint)(6));
 			this.table1.ColumnSpacing = ((uint)(6));
 			// Container child table1.Gtk.Table+TableChild
-			this.audiolabel = new global::Gtk.Label ();
+			this.audiolabel = new global::Gtk.Label();
 			this.audiolabel.Name = "audiolabel";
 			this.audiolabel.Xalign = 0F;
-			this.table1.Add (this.audiolabel);
-			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1 [this.audiolabel]));
+			this.table1.Add(this.audiolabel);
+			global::Gtk.Table.TableChild w2 = ((global::Gtk.Table.TableChild)(this.table1[this.audiolabel]));
 			w2.TopAttach = ((uint)(3));
 			w2.BottomAttach = ((uint)(4));
 			w2.LeftAttach = ((uint)(1));
@@ -75,42 +75,42 @@ namespace LongoMatch.Gui.Component
 			w2.XOptions = ((global::Gtk.AttachOptions)(4));
 			w2.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.containerlabel = new global::Gtk.Label ();
+			this.containerlabel = new global::Gtk.Label();
 			this.containerlabel.Name = "containerlabel";
 			this.containerlabel.Xalign = 0F;
-			this.table1.Add (this.containerlabel);
-			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1 [this.containerlabel]));
+			this.table1.Add(this.containerlabel);
+			global::Gtk.Table.TableChild w3 = ((global::Gtk.Table.TableChild)(this.table1[this.containerlabel]));
 			w3.TopAttach = ((uint)(3));
 			w3.BottomAttach = ((uint)(4));
 			w3.XOptions = ((global::Gtk.AttachOptions)(4));
 			w3.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.durationlabel = new global::Gtk.Label ();
+			this.durationlabel = new global::Gtk.Label();
 			this.durationlabel.Name = "durationlabel";
 			this.durationlabel.Xalign = 0F;
-			this.table1.Add (this.durationlabel);
-			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1 [this.durationlabel]));
+			this.table1.Add(this.durationlabel);
+			global::Gtk.Table.TableChild w4 = ((global::Gtk.Table.TableChild)(this.table1[this.durationlabel]));
 			w4.TopAttach = ((uint)(1));
 			w4.BottomAttach = ((uint)(2));
 			w4.XOptions = ((global::Gtk.AttachOptions)(4));
 			w4.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.filelabel = new global::Gtk.Label ();
+			this.filelabel = new global::Gtk.Label();
 			this.filelabel.Name = "filelabel";
 			this.filelabel.Xalign = 0F;
 			this.filelabel.Ellipsize = ((global::Pango.EllipsizeMode)(1));
-			this.table1.Add (this.filelabel);
-			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1 [this.filelabel]));
+			this.table1.Add(this.filelabel);
+			global::Gtk.Table.TableChild w5 = ((global::Gtk.Table.TableChild)(this.table1[this.filelabel]));
 			w5.LeftAttach = ((uint)(1));
 			w5.RightAttach = ((uint)(2));
 			w5.XOptions = ((global::Gtk.AttachOptions)(7));
 			w5.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.formatlabel = new global::Gtk.Label ();
+			this.formatlabel = new global::Gtk.Label();
 			this.formatlabel.Name = "formatlabel";
 			this.formatlabel.Xalign = 0F;
-			this.table1.Add (this.formatlabel);
-			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1 [this.formatlabel]));
+			this.table1.Add(this.formatlabel);
+			global::Gtk.Table.TableChild w6 = ((global::Gtk.Table.TableChild)(this.table1[this.formatlabel]));
 			w6.TopAttach = ((uint)(2));
 			w6.BottomAttach = ((uint)(3));
 			w6.LeftAttach = ((uint)(1));
@@ -118,20 +118,20 @@ namespace LongoMatch.Gui.Component
 			w6.XOptions = ((global::Gtk.AttachOptions)(4));
 			w6.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.namelabel = new global::Gtk.Label ();
+			this.namelabel = new global::Gtk.Label();
 			this.namelabel.Name = "namelabel";
 			this.namelabel.Xalign = 0F;
-			this.table1.Add (this.namelabel);
-			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1 [this.namelabel]));
+			this.table1.Add(this.namelabel);
+			global::Gtk.Table.TableChild w7 = ((global::Gtk.Table.TableChild)(this.table1[this.namelabel]));
 			w7.XOptions = ((global::Gtk.AttachOptions)(4));
 			w7.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.offsetlabel = new global::Gtk.Label ();
+			this.offsetlabel = new global::Gtk.Label();
 			this.offsetlabel.Name = "offsetlabel";
 			this.offsetlabel.Xalign = 0F;
 			this.offsetlabel.UseMarkup = true;
-			this.table1.Add (this.offsetlabel);
-			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1 [this.offsetlabel]));
+			this.table1.Add(this.offsetlabel);
+			global::Gtk.Table.TableChild w8 = ((global::Gtk.Table.TableChild)(this.table1[this.offsetlabel]));
 			w8.TopAttach = ((uint)(1));
 			w8.BottomAttach = ((uint)(2));
 			w8.LeftAttach = ((uint)(1));
@@ -139,35 +139,36 @@ namespace LongoMatch.Gui.Component
 			w8.XOptions = ((global::Gtk.AttachOptions)(4));
 			w8.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child table1.Gtk.Table+TableChild
-			this.videolabel = new global::Gtk.Label ();
+			this.videolabel = new global::Gtk.Label();
 			this.videolabel.Name = "videolabel";
 			this.videolabel.Xalign = 0F;
-			this.table1.Add (this.videolabel);
-			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.table1 [this.videolabel]));
+			this.table1.Add(this.videolabel);
+			global::Gtk.Table.TableChild w9 = ((global::Gtk.Table.TableChild)(this.table1[this.videolabel]));
 			w9.TopAttach = ((uint)(2));
 			w9.BottomAttach = ((uint)(3));
 			w9.XOptions = ((global::Gtk.AttachOptions)(4));
 			w9.YOptions = ((global::Gtk.AttachOptions)(4));
-			this.hbox1.Add (this.table1);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.table1]));
+			this.hbox1.Add(this.table1);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.table1]));
 			w10.Position = 1;
-			this.vbox4.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hbox1]));
+			this.vbox4.Add(this.hbox1);
+			global::Gtk.Box.BoxChild w11 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.hbox1]));
 			w11.Position = 0;
 			// Container child vbox4.Gtk.Box+BoxChild
-			this.hseparator2 = new global::Gtk.HSeparator ();
+			this.hseparator2 = new global::Gtk.HSeparator();
 			this.hseparator2.Name = "hseparator2";
-			this.vbox4.Add (this.hseparator2);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox4 [this.hseparator2]));
+			this.vbox4.Add(this.hseparator2);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox4[this.hseparator2]));
 			w12.Position = 1;
 			w12.Expand = false;
 			w12.Fill = false;
-			this.eventbox3.Add (this.vbox4);
-			this.Add (this.eventbox3);
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			this.eventbox3.Add(this.vbox4);
+			this.Add(this.eventbox3);
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
-			this.Hide ();
+			this.Hide();
 		}
 	}
 }

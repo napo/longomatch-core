@@ -28,93 +28,94 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.Label label13;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Component.CodingWidget
-			global::Stetic.BinContainer.Attach (this);
+			global::Stetic.BinContainer.Attach(this);
 			this.Name = "LongoMatch.Gui.Component.CodingWidget";
 			// Container child LongoMatch.Gui.Component.CodingWidget.Gtk.Container+ContainerChild
-			this.notebook = new global::Gtk.Notebook ();
+			this.notebook = new global::Gtk.Notebook();
 			this.notebook.CanFocus = true;
 			this.notebook.Name = "notebook";
 			this.notebook.CurrentPage = 0;
 			this.notebook.TabPos = ((global::Gtk.PositionType)(0));
 			this.notebook.ShowBorder = false;
 			// Container child notebook.Gtk.Notebook+NotebookChild
-			this.dashboardhpaned = new global::Gtk.HPaned ();
+			this.dashboardhpaned = new global::Gtk.HPaned();
 			this.dashboardhpaned.CanFocus = true;
 			this.dashboardhpaned.Name = "dashboardhpaned";
 			this.dashboardhpaned.Position = 276;
 			// Container child dashboardhpaned.Gtk.Paned+PanedChild
-			this.teamsdrawingarea = new global::Gtk.DrawingArea ();
+			this.teamsdrawingarea = new global::Gtk.DrawingArea();
 			this.teamsdrawingarea.Name = "teamsdrawingarea";
-			this.dashboardhpaned.Add (this.teamsdrawingarea);
-			global::Gtk.Paned.PanedChild w1 = ((global::Gtk.Paned.PanedChild)(this.dashboardhpaned [this.teamsdrawingarea]));
+			this.dashboardhpaned.Add(this.teamsdrawingarea);
+			global::Gtk.Paned.PanedChild w1 = ((global::Gtk.Paned.PanedChild)(this.dashboardhpaned[this.teamsdrawingarea]));
 			w1.Resize = false;
 			// Container child dashboardhpaned.Gtk.Paned+PanedChild
-			this.hbox5 = new global::Gtk.HBox ();
+			this.hbox5 = new global::Gtk.HBox();
 			this.hbox5.Name = "hbox5";
 			this.hbox5.Spacing = 6;
 			// Container child hbox5.Gtk.Box+BoxChild
-			this.buttonswidget = new global::LongoMatch.Gui.Component.DashboardWidget ();
+			this.buttonswidget = new global::LongoMatch.Gui.Component.DashboardWidget();
 			this.buttonswidget.Events = ((global::Gdk.EventMask)(256));
 			this.buttonswidget.Name = "buttonswidget";
-			this.hbox5.Add (this.buttonswidget);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox5 [this.buttonswidget]));
+			this.hbox5.Add(this.buttonswidget);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.hbox5[this.buttonswidget]));
 			w2.Position = 0;
-			this.dashboardhpaned.Add (this.hbox5);
-			this.notebook.Add (this.dashboardhpaned);
+			this.dashboardhpaned.Add(this.hbox5);
+			this.notebook.Add(this.dashboardhpaned);
 			// Notebook tab
-			this.label2 = new global::Gtk.Label ();
+			this.label2 = new global::Gtk.Label();
 			this.label2.Name = "label2";
-			this.label2.LabelProp = global::VAS.Core.Catalog.GetString ("page1");
-			this.notebook.SetTabLabel (this.dashboardhpaned, this.label2);
-			this.label2.ShowAll ();
+			this.label2.LabelProp = global::VAS.Core.Catalog.GetString("page1");
+			this.notebook.SetTabLabel(this.dashboardhpaned, this.label2);
+			this.label2.ShowAll();
 			// Container child notebook.Gtk.Notebook+NotebookChild
-			this.timeline = new global::LongoMatch.Gui.Component.Timeline ();
+			this.timeline = new global::LongoMatch.Gui.Component.Timeline();
 			this.timeline.Events = ((global::Gdk.EventMask)(256));
 			this.timeline.Name = "timeline";
-			this.notebook.Add (this.timeline);
-			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.timeline]));
+			this.notebook.Add(this.timeline);
+			global::Gtk.Notebook.NotebookChild w5 = ((global::Gtk.Notebook.NotebookChild)(this.notebook[this.timeline]));
 			w5.Position = 1;
 			// Notebook tab
-			this.label3 = new global::Gtk.Label ();
+			this.label3 = new global::Gtk.Label();
 			this.label3.Name = "label3";
-			this.label3.LabelProp = global::VAS.Core.Catalog.GetString ("page2");
-			this.notebook.SetTabLabel (this.timeline, this.label3);
-			this.label3.ShowAll ();
+			this.label3.LabelProp = global::VAS.Core.Catalog.GetString("page2");
+			this.notebook.SetTabLabel(this.timeline, this.label3);
+			this.label3.ShowAll();
 			// Container child notebook.Gtk.Notebook+NotebookChild
-			this.playspositionviewer1 = new global::LongoMatch.Gui.Component.PlaysPositionViewer ();
+			this.playspositionviewer1 = new global::LongoMatch.Gui.Component.PlaysPositionViewer();
 			this.playspositionviewer1.Events = ((global::Gdk.EventMask)(256));
 			this.playspositionviewer1.Name = "playspositionviewer1";
-			this.notebook.Add (this.playspositionviewer1);
-			global::Gtk.Notebook.NotebookChild w6 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.playspositionviewer1]));
+			this.notebook.Add(this.playspositionviewer1);
+			global::Gtk.Notebook.NotebookChild w6 = ((global::Gtk.Notebook.NotebookChild)(this.notebook[this.playspositionviewer1]));
 			w6.Position = 2;
 			// Notebook tab
-			this.label5 = new global::Gtk.Label ();
+			this.label5 = new global::Gtk.Label();
 			this.label5.Name = "label5";
-			this.label5.LabelProp = global::VAS.Core.Catalog.GetString ("page3");
-			this.notebook.SetTabLabel (this.playspositionviewer1, this.label5);
-			this.label5.ShowAll ();
+			this.label5.LabelProp = global::VAS.Core.Catalog.GetString("page3");
+			this.notebook.SetTabLabel(this.playspositionviewer1, this.label5);
+			this.label5.ShowAll();
 			// Container child notebook.Gtk.Notebook+NotebookChild
-			this.eventslistwidget = new global::LongoMatch.Gui.Component.EventsListWidget ();
+			this.eventslistwidget = new global::LongoMatch.Gui.Component.EventsListWidget();
 			this.eventslistwidget.Events = ((global::Gdk.EventMask)(256));
 			this.eventslistwidget.Name = "eventslistwidget";
-			this.notebook.Add (this.eventslistwidget);
-			global::Gtk.Notebook.NotebookChild w7 = ((global::Gtk.Notebook.NotebookChild)(this.notebook [this.eventslistwidget]));
+			this.notebook.Add(this.eventslistwidget);
+			global::Gtk.Notebook.NotebookChild w7 = ((global::Gtk.Notebook.NotebookChild)(this.notebook[this.eventslistwidget]));
 			w7.Position = 3;
 			// Notebook tab
-			this.label13 = new global::Gtk.Label ();
+			this.label13 = new global::Gtk.Label();
 			this.label13.Name = "label13";
-			this.label13.LabelProp = global::VAS.Core.Catalog.GetString ("page4");
-			this.notebook.SetTabLabel (this.eventslistwidget, this.label13);
-			this.label13.ShowAll ();
-			this.Add (this.notebook);
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			this.label13.LabelProp = global::VAS.Core.Catalog.GetString("page4");
+			this.notebook.SetTabLabel(this.eventslistwidget, this.label13);
+			this.label13.ShowAll();
+			this.Add(this.notebook);
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
-			this.Hide ();
+			this.Hide();
 		}
 	}
 }

@@ -26,13 +26,13 @@ namespace LongoMatch.Gui.Dialog
 
 		private global::Gtk.Button buttonOk;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Dialog.DatabasesManager
 			this.Name = "LongoMatch.Gui.Dialog.DatabasesManager";
-			this.Title = global::VAS.Core.Catalog.GetString ("Databases manager");
-			this.Icon = global::Stetic.IconLoader.LoadIcon (this, "lm-longomatch", global::Gtk.IconSize.Menu);
+			this.Title = global::VAS.Core.Catalog.GetString("Databases manager");
+			this.Icon = global::Stetic.IconLoader.LoadIcon(this, "longomatch", global::Gtk.IconSize.Menu);
 			this.TypeHint = ((global::Gdk.WindowTypeHint)(1));
 			this.WindowPosition = ((global::Gtk.WindowPosition)(4));
 			this.Modal = true;
@@ -44,106 +44,106 @@ namespace LongoMatch.Gui.Dialog
 			w1.Name = "dialog1_VBox";
 			w1.BorderWidth = ((uint)(2));
 			// Container child dialog1_VBox.Gtk.Box+BoxChild
-			this.vbox2 = new global::Gtk.VBox ();
+			this.vbox2 = new global::Gtk.VBox();
 			this.vbox2.Name = "vbox2";
 			this.vbox2.Spacing = 6;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.dblabel = new global::Gtk.Label ();
+			this.dblabel = new global::Gtk.Label();
 			this.dblabel.Name = "dblabel";
-			this.vbox2.Add (this.dblabel);
-			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.dblabel]));
+			this.vbox2.Add(this.dblabel);
+			global::Gtk.Box.BoxChild w2 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.dblabel]));
 			w2.Position = 0;
 			w2.Expand = false;
 			w2.Fill = false;
 			// Container child vbox2.Gtk.Box+BoxChild
-			this.hbox1 = new global::Gtk.HBox ();
+			this.hbox1 = new global::Gtk.HBox();
 			this.hbox1.Name = "hbox1";
 			this.hbox1.Spacing = 6;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow ();
+			this.GtkScrolledWindow = new global::Gtk.ScrolledWindow();
 			this.GtkScrolledWindow.Name = "GtkScrolledWindow";
 			this.GtkScrolledWindow.ShadowType = ((global::Gtk.ShadowType)(1));
 			// Container child GtkScrolledWindow.Gtk.Container+ContainerChild
-			this.treeview = new global::Gtk.TreeView ();
+			this.treeview = new global::Gtk.TreeView();
 			this.treeview.CanFocus = true;
 			this.treeview.Name = "treeview";
-			this.GtkScrolledWindow.Add (this.treeview);
-			this.hbox1.Add (this.GtkScrolledWindow);
-			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.GtkScrolledWindow]));
+			this.GtkScrolledWindow.Add(this.treeview);
+			this.hbox1.Add(this.GtkScrolledWindow);
+			global::Gtk.Box.BoxChild w4 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.GtkScrolledWindow]));
 			w4.Position = 0;
 			// Container child hbox1.Gtk.Box+BoxChild
-			this.vbox3 = new global::Gtk.VBox ();
+			this.vbox3 = new global::Gtk.VBox();
 			this.vbox3.Name = "vbox3";
 			this.vbox3.Spacing = 6;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.selectbutton = new global::Gtk.Button ();
+			this.selectbutton = new global::Gtk.Button();
 			this.selectbutton.Sensitive = false;
 			this.selectbutton.CanFocus = true;
 			this.selectbutton.Name = "selectbutton";
 			this.selectbutton.UseUnderline = true;
-			this.selectbutton.Label = global::VAS.Core.Catalog.GetString ("_Select DB");
-			global::Gtk.Image w5 = new global::Gtk.Image ();
-			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-apply", global::Gtk.IconSize.Menu);
+			this.selectbutton.Label = global::VAS.Core.Catalog.GetString("_Select DB");
+			global::Gtk.Image w5 = new global::Gtk.Image();
+			w5.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-apply", global::Gtk.IconSize.Menu);
 			this.selectbutton.Image = w5;
-			this.vbox3.Add (this.selectbutton);
-			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.selectbutton]));
+			this.vbox3.Add(this.selectbutton);
+			global::Gtk.Box.BoxChild w6 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.selectbutton]));
 			w6.Position = 0;
 			w6.Expand = false;
 			w6.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.delbutton = new global::Gtk.Button ();
+			this.delbutton = new global::Gtk.Button();
 			this.delbutton.Sensitive = false;
 			this.delbutton.CanFocus = true;
 			this.delbutton.Name = "delbutton";
 			this.delbutton.UseUnderline = true;
-			this.delbutton.Label = global::VAS.Core.Catalog.GetString ("_Delete");
-			global::Gtk.Image w7 = new global::Gtk.Image ();
-			w7.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-delete", global::Gtk.IconSize.Menu);
+			this.delbutton.Label = global::VAS.Core.Catalog.GetString("_Delete");
+			global::Gtk.Image w7 = new global::Gtk.Image();
+			w7.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-delete", global::Gtk.IconSize.Menu);
 			this.delbutton.Image = w7;
-			this.vbox3.Add (this.delbutton);
-			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.delbutton]));
+			this.vbox3.Add(this.delbutton);
+			global::Gtk.Box.BoxChild w8 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.delbutton]));
 			w8.Position = 1;
 			w8.Expand = false;
 			w8.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.backupbutton = new global::Gtk.Button ();
+			this.backupbutton = new global::Gtk.Button();
 			this.backupbutton.Sensitive = false;
 			this.backupbutton.CanFocus = true;
 			this.backupbutton.Name = "backupbutton";
 			this.backupbutton.UseUnderline = true;
-			this.backupbutton.Label = global::VAS.Core.Catalog.GetString ("_Backup");
-			global::Gtk.Image w9 = new global::Gtk.Image ();
-			w9.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-save-as", global::Gtk.IconSize.Menu);
+			this.backupbutton.Label = global::VAS.Core.Catalog.GetString("_Backup");
+			global::Gtk.Image w9 = new global::Gtk.Image();
+			w9.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-save-as", global::Gtk.IconSize.Menu);
 			this.backupbutton.Image = w9;
-			this.vbox3.Add (this.backupbutton);
-			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.backupbutton]));
+			this.vbox3.Add(this.backupbutton);
+			global::Gtk.Box.BoxChild w10 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.backupbutton]));
 			w10.Position = 2;
 			w10.Expand = false;
 			w10.Fill = false;
 			// Container child vbox3.Gtk.Box+BoxChild
-			this.addbutton = new global::Gtk.Button ();
+			this.addbutton = new global::Gtk.Button();
 			this.addbutton.CanFocus = true;
 			this.addbutton.Name = "addbutton";
 			this.addbutton.UseUnderline = true;
-			this.addbutton.Label = global::VAS.Core.Catalog.GetString ("_Add");
-			global::Gtk.Image w11 = new global::Gtk.Image ();
-			w11.Pixbuf = global::Stetic.IconLoader.LoadIcon (this, "gtk-add", global::Gtk.IconSize.Menu);
+			this.addbutton.Label = global::VAS.Core.Catalog.GetString("_Add");
+			global::Gtk.Image w11 = new global::Gtk.Image();
+			w11.Pixbuf = global::Stetic.IconLoader.LoadIcon(this, "gtk-add", global::Gtk.IconSize.Menu);
 			this.addbutton.Image = w11;
-			this.vbox3.Add (this.addbutton);
-			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox3 [this.addbutton]));
+			this.vbox3.Add(this.addbutton);
+			global::Gtk.Box.BoxChild w12 = ((global::Gtk.Box.BoxChild)(this.vbox3[this.addbutton]));
 			w12.Position = 3;
 			w12.Expand = false;
 			w12.Fill = false;
-			this.hbox1.Add (this.vbox3);
-			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1 [this.vbox3]));
+			this.hbox1.Add(this.vbox3);
+			global::Gtk.Box.BoxChild w13 = ((global::Gtk.Box.BoxChild)(this.hbox1[this.vbox3]));
 			w13.Position = 1;
 			w13.Expand = false;
 			w13.Fill = false;
-			this.vbox2.Add (this.hbox1);
-			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox2 [this.hbox1]));
+			this.vbox2.Add(this.hbox1);
+			global::Gtk.Box.BoxChild w14 = ((global::Gtk.Box.BoxChild)(this.vbox2[this.hbox1]));
 			w14.Position = 1;
-			w1.Add (this.vbox2);
-			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(w1 [this.vbox2]));
+			w1.Add(this.vbox2);
+			global::Gtk.Box.BoxChild w15 = ((global::Gtk.Box.BoxChild)(w1[this.vbox2]));
 			w15.Position = 0;
 			// Internal child LongoMatch.Gui.Dialog.DatabasesManager.ActionArea
 			global::Gtk.HButtonBox w16 = this.ActionArea;
@@ -152,28 +152,29 @@ namespace LongoMatch.Gui.Dialog
 			w16.BorderWidth = ((uint)(5));
 			w16.LayoutStyle = ((global::Gtk.ButtonBoxStyle)(4));
 			// Container child dialog1_ActionArea.Gtk.ButtonBox+ButtonBoxChild
-			this.buttonOk = new global::Gtk.Button ();
+			this.buttonOk = new global::Gtk.Button();
 			this.buttonOk.CanDefault = true;
 			this.buttonOk.CanFocus = true;
 			this.buttonOk.Name = "buttonOk";
 			this.buttonOk.UseStock = true;
 			this.buttonOk.UseUnderline = true;
 			this.buttonOk.Label = "gtk-ok";
-			this.AddActionWidget (this.buttonOk, -5);
-			global::Gtk.ButtonBox.ButtonBoxChild w17 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w16 [this.buttonOk]));
+			this.AddActionWidget(this.buttonOk, -5);
+			global::Gtk.ButtonBox.ButtonBoxChild w17 = ((global::Gtk.ButtonBox.ButtonBoxChild)(w16[this.buttonOk]));
 			w17.Expand = false;
 			w17.Fill = false;
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
 			this.DefaultWidth = 400;
 			this.DefaultHeight = 300;
-			this.Show ();
-			this.treeview.CursorChanged += new global::System.EventHandler (this.OnTreeviewCursorChanged);
-			this.selectbutton.Clicked += new global::System.EventHandler (this.OnSelectbuttonClicked);
-			this.delbutton.Clicked += new global::System.EventHandler (this.OnDelbuttonClicked);
-			this.backupbutton.Clicked += new global::System.EventHandler (this.OnBackupbuttonClicked);
-			this.addbutton.Clicked += new global::System.EventHandler (this.OnAddbuttonClicked);
+			this.Show();
+			this.treeview.CursorChanged += new global::System.EventHandler(this.OnTreeviewCursorChanged);
+			this.selectbutton.Clicked += new global::System.EventHandler(this.OnSelectbuttonClicked);
+			this.delbutton.Clicked += new global::System.EventHandler(this.OnDelbuttonClicked);
+			this.backupbutton.Clicked += new global::System.EventHandler(this.OnBackupbuttonClicked);
+			this.addbutton.Clicked += new global::System.EventHandler(this.OnAddbuttonClicked);
 		}
 	}
 }

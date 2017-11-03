@@ -55,7 +55,9 @@ namespace LongoMatch.Gui.Dialog
 			// Container child hbox2.Gtk.Box+BoxChild
 			this.label1 = new global::Gtk.Label();
 			this.label1.Name = "label1";
-			this.label1.LabelProp = global::VAS.Core.Catalog.GetString("A capture project is actually running.\nYou can continue with the current capture, cancel it or save your project. \n\n<b>Warning: If you cancel the current project all your changes will be lost.</b>");
+			this.label1.LabelProp = global::VAS.Core.Catalog.GetString("A capture project is actually running.\nYou can continue with the current capture," +
+					" cancel it or save your project. \n\n<b>Warning: If you cancel the current project" +
+					" all your changes will be lost.</b>");
 			this.label1.UseMarkup = true;
 			this.label1.Justify = ((global::Gtk.Justification)(2));
 			this.hbox2.Add(this.label1);

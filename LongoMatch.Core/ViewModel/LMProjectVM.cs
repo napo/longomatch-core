@@ -19,6 +19,7 @@ using System;
 using System.Collections.Generic;
 using LongoMatch.Core.Store;
 using VAS.Core.Common;
+using VAS.Core.MVVMC;
 using VAS.Core.ViewModel;
 
 namespace LongoMatch.Core.ViewModel

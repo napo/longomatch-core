@@ -583,6 +583,7 @@ namespace LongoMatch.Gui.Panel
 			global::Gtk.Table.TableChild w40 = ((global::Gtk.Table.TableChild)(this.outputfiletable[this.capturemediafilechooser]));
 			w40.LeftAttach = ((uint)(1));
 			w40.RightAttach = ((uint)(2));
+			w40.XOptions = ((global::Gtk.AttachOptions)(4));
 			w40.YOptions = ((global::Gtk.AttachOptions)(4));
 			// Container child outputfiletable.Gtk.Table+TableChild
 			this.outputfilelabel = new global::Gtk.Label();

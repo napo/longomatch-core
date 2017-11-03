@@ -10,36 +10,37 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.VBox mfss_vbox;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Component.MediaFileSetSelection
-			global::Stetic.BinContainer.Attach (this);
+			global::Stetic.BinContainer.Attach(this);
 			this.HeightRequest = 100;
 			this.Name = "LongoMatch.Gui.Component.MediaFileSetSelection";
 			// Container child LongoMatch.Gui.Component.MediaFileSetSelection.Gtk.Container+ContainerChild
-			this.mfss_scrolledwindow = new global::Gtk.ScrolledWindow ();
+			this.mfss_scrolledwindow = new global::Gtk.ScrolledWindow();
 			this.mfss_scrolledwindow.CanFocus = true;
 			this.mfss_scrolledwindow.Name = "mfss_scrolledwindow";
 			this.mfss_scrolledwindow.HscrollbarPolicy = ((global::Gtk.PolicyType)(2));
 			// Container child mfss_scrolledwindow.Gtk.Container+ContainerChild
-			global::Gtk.Viewport w1 = new global::Gtk.Viewport ();
+			global::Gtk.Viewport w1 = new global::Gtk.Viewport();
 			w1.ShadowType = ((global::Gtk.ShadowType)(0));
 			// Container child GtkViewport.Gtk.Container+ContainerChild
-			this.mfss_alignment = new global::Gtk.Alignment (0F, 0F, 1F, 0F);
+			this.mfss_alignment = new global::Gtk.Alignment(0F, 0F, 1F, 0F);
 			this.mfss_alignment.Name = "mfss_alignment";
 			// Container child mfss_alignment.Gtk.Container+ContainerChild
-			this.mfss_vbox = new global::Gtk.VBox ();
+			this.mfss_vbox = new global::Gtk.VBox();
 			this.mfss_vbox.Name = "mfss_vbox";
 			this.mfss_vbox.Spacing = 6;
-			this.mfss_alignment.Add (this.mfss_vbox);
-			w1.Add (this.mfss_alignment);
-			this.mfss_scrolledwindow.Add (w1);
-			this.Add (this.mfss_scrolledwindow);
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			this.mfss_alignment.Add(this.mfss_vbox);
+			w1.Add(this.mfss_alignment);
+			this.mfss_scrolledwindow.Add(w1);
+			this.Add(this.mfss_scrolledwindow);
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
-			this.Hide ();
+			this.Hide();
 		}
 	}
 }

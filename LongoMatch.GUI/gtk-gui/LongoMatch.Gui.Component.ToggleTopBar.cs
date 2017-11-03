@@ -10,35 +10,36 @@ namespace LongoMatch.Gui.Component
 
 		private global::Gtk.HBox buttoncontainer;
 
-		protected virtual void Build ()
+		protected virtual void Build()
 		{
-			global::Stetic.Gui.Initialize (this);
+			global::Stetic.Gui.Initialize(this);
 			// Widget LongoMatch.Gui.Component.ToggleTopBar
-			global::Stetic.BinContainer.Attach (this);
+			global::Stetic.BinContainer.Attach(this);
 			this.Name = "LongoMatch.Gui.Component.ToggleTopBar";
 			// Container child LongoMatch.Gui.Component.ToggleTopBar.Gtk.Container+ContainerChild
-			this.gradienttopbar = new global::Gtk.EventBox ();
+			this.gradienttopbar = new global::Gtk.EventBox();
 			this.gradienttopbar.HeightRequest = 70;
 			this.gradienttopbar.Name = "gradienttopbar";
 			// Container child gradienttopbar.Gtk.Container+ContainerChild
-			this.alignment1 = new global::Gtk.Alignment (0F, 0.5F, 0F, 1F);
+			this.alignment1 = new global::Gtk.Alignment(0F, 0.5F, 0F, 1F);
 			this.alignment1.HeightRequest = 70;
 			this.alignment1.Name = "alignment1";
 			this.alignment1.LeftPadding = ((uint)(15));
 			this.alignment1.TopPadding = ((uint)(20));
 			this.alignment1.BottomPadding = ((uint)(23));
 			// Container child alignment1.Gtk.Container+ContainerChild
-			this.buttoncontainer = new global::Gtk.HBox ();
+			this.buttoncontainer = new global::Gtk.HBox();
 			this.buttoncontainer.HeightRequest = 28;
 			this.buttoncontainer.Name = "buttoncontainer";
 			this.buttoncontainer.Homogeneous = true;
-			this.alignment1.Add (this.buttoncontainer);
-			this.gradienttopbar.Add (this.alignment1);
-			this.Add (this.gradienttopbar);
-			if ((this.Child != null)) {
-				this.Child.ShowAll ();
+			this.alignment1.Add(this.buttoncontainer);
+			this.gradienttopbar.Add(this.alignment1);
+			this.Add(this.gradienttopbar);
+			if ((this.Child != null))
+			{
+				this.Child.ShowAll();
 			}
-			this.Hide ();
+			this.Hide();
 		}
 	}
 }

@@ -21,7 +21,9 @@ using LongoMatch.Core.ViewModel;
 using VAS.Core;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.UI.Helpers;
+using VAS.UI.Helpers.Bindings;
 using Helpers = VAS.UI.Helpers;
 
 namespace LongoMatch.Gui.Component
@@ -38,6 +40,7 @@ namespace LongoMatch.Gui.Component
 		EventsFilterTreeView playersfilter;
 		LMProjectVM viewModel;
 		IconNotebookHelper notebookHelper, notebookHelperPlaylist, notebookHelperFilter;
+		BindingContext ctx;
 
 		public PlaysSelectionWidget ()
 		{
@@ -52,6 +55,7 @@ namespace LongoMatch.Gui.Component
 			filtersnotebook.Page = PAGE_CATEGORIES;
 			clearButton.Clicked += HandleClearClicked;
 			hbox3.NoShowAll = true;
+			Bind ();
 		}
 
 		public override void Dispose ()
@@ -111,6 +115,7 @@ namespace LongoMatch.Gui.Component
 				playlistwidget.ViewModel = value?.Playlists;
 				categoriesfilter.Predicate = value?.Timeline?.EventsPredicate;
 				playersfilter.Predicate = value?.Timeline?.TeamsPredicate;
+				ctx.UpdateViewModel (value);
 			}
 		}
 
@@ -122,6 +127,12 @@ namespace LongoMatch.Gui.Component
 		}
 
 		#endregion
+
+		void Bind ()
+		{
+			ctx = this.GetBindingContext ();
+			ctx.Add (strictButton.Bind (vm => ((LMProjectVM)vm).ChangeStrictFilterCommand, true, false));
+		}
 
 		void LoadIcons ()
 		{
