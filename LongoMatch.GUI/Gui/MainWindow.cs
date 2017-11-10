@@ -45,7 +45,6 @@ namespace LongoMatch.Gui
 	[System.ComponentModel.ToolboxItem (false)]
 	public partial class MainWindow : Gtk.Window, IMainController
 	{
-		IGUIToolkit guiToolKit;
 		Widget currentPanel;
 		LimitationCommand databaseManagerCommand;
 		LimitationCommand newProjectCommand;
@@ -54,11 +53,10 @@ namespace LongoMatch.Gui
 
 		#region Constructors
 
-		public MainWindow (IGUIToolkit guiToolkit) :
+		public MainWindow () :
 			base (Constants.SOFTWARE_NAME)
 		{
 			this.Build ();
-			this.guiToolKit = guiToolkit;
 			Title = Constants.SOFTWARE_NAME;
 
 			ConnectMenuSignals ();
