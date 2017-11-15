@@ -38,9 +38,11 @@ namespace LongoMatch
 			}
 		}
 
-		public static void Init ()
+		public static void Init (App app = null)
 		{
-			App app = new App ();
+			if (app == null) {
+				app = new App ();
+			}
 
 			Init (app, "LGM_UNINSTALLED", Constants.SOFTWARE_NAME, Constants.LOGO_ICON, Constants.PORTABLE_FILE, "LONGOMATCH_HOME");
 			App.Current.InitConstants ();

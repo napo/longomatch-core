@@ -42,8 +42,8 @@ namespace LongoMatch.Services
 		{
 			CoreTool tool = new CoreTool ();
 			tool.Enable ();
-			Scanner.ScanControllers (App.Current.ControllerLocator);
-			VASServicesInit.ScanController ();
+			Scanner.ScanAll ();
+			VASServicesInit.Init ();
 			RegisterServices ();
 			App.Current.EventsBroker.Subscribe<QuitApplicationEvent> (HandleQuitApplicationEvent);
 		}

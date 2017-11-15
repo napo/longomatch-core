@@ -46,8 +46,8 @@ namespace LongoMatch.Gui
 
 		GUIToolkit () : base (new MainWindow ())
 		{
-			Scanner.ScanViews (App.Current.ViewLocator);
-			LMDrawingInit.ScanViews ();
+			Scanner.ScanAll ();
+			LMDrawingInit.Init ();
 		}
 
 		public override void ExportFrameSeries (TimelineEvent play, string snapshotsDir)
