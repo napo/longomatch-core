@@ -49,7 +49,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		const int BUTTONS_HEIGHT = 40;
 		const int BUTTONS_WIDTH = 60;
 		const int MIN_PLAYERS_ROWS = 5;
-		ButtonObject subPlayers, subInjury, homeButton, awayButton;
+		ButtonView subPlayers, subInjury, homeButton, awayButton;
 		LMTeam homeTeam, awayTeam;
 		Dictionary<LMPlayerVM, LMPlayerView> homePlayerToPlayerObject;
 		Dictionary<LMPlayerVM, LMPlayerView> awayPlayerToPlayerObject;
@@ -58,7 +58,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 		List<LMPlayerView> homePlayers, awayPlayers;
 		BenchObject homeBench, awayBench;
 		LMPlayerView clickedPlayer;
-		ButtonObject clickedButton;
+		ButtonView clickedButton;
 		FieldObject field;
 		int NTeams;
 		Point offset;
@@ -178,9 +178,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				homePlayers.AddRange (homeBenchPlayers);
 				homeF = homeTeam.Formation;
 				if (ViewModel.HomeTeam.Icon == null) {
-					homeButton.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+					homeButton.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 				} else {
-					homeButton.BackgroundImage = ViewModel.HomeTeam.Icon;
+					homeButton.Icon = ViewModel.HomeTeam.Icon;
 				}
 				NTeams++;
 			}
@@ -193,9 +193,9 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				awayPlayers.AddRange (awayBenchPlayers);
 				awayF = awayTeam.Formation;
 				if (ViewModel.AwayTeam.Icon == null) {
-					awayButton.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
+					awayButton.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.DefaultShield);
 				} else {
-					awayButton.BackgroundImage = ViewModel.AwayTeam.Icon;
+					awayButton.Icon = ViewModel.AwayTeam.Icon;
 				}
 				NTeams++;
 			}
@@ -296,14 +296,14 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		void LoadSubsButtons ()
 		{
-			subPlayers = new ButtonObject ();
-			subPlayers.BackgroundImageActive = App.Current.ResourcesLocator.LoadIcon (Icons.SubsUnlock);
+			subPlayers = new ButtonView ();
+			subPlayers.Icon = App.Current.ResourcesLocator.LoadIcon (Icons.SubsUnlock);
 			subPlayers.BackgroundColorActive = App.Current.Style.ScreenBase;
-			subPlayers.BackgroundImage = App.Current.ResourcesLocator.LoadIcon (Icons.SubsLock);
+			subPlayers.IconInactive = App.Current.ResourcesLocator.LoadIcon (Icons.SubsLock);
 			subPlayers.Toggle = true;
 			subPlayers.ClickedEvent += HandleSubsClicked;
 			subPlayers.RedrawEvent += (co, area) => EmitRedrawEvent (subPlayers, area);
-			subInjury = new ButtonObject ();
+			subInjury = new ButtonView ();
 			subInjury.BackgroundColorActive = App.Current.Style.ScreenBase;
 			subInjury.Toggle = true;
 			subInjury.ClickedEvent += HandleSubsClicked;
@@ -312,7 +312,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		void LoadTeamsButtons ()
 		{
-			homeButton = new ButtonObject ();
+			homeButton = new ButtonView ();
 			homeButton.Toggle = true;
 			homeButton.ClickedEvent += HandleTeamClickedEvent;
 			homeButton.Width = BUTTONS_WIDTH;
@@ -320,7 +320,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			homeButton.RedrawEvent += (co, area) => {
 				EmitRedrawEvent (homeButton, area);
 			};
-			awayButton = new ButtonObject ();
+			awayButton = new ButtonView ();
 			awayButton.Toggle = true;
 			awayButton.Width = BUTTONS_WIDTH;
 			awayButton.Height = BUTTONS_HEIGHT;
@@ -388,7 +388,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 			ViewModel.PlayerClick (player.ViewModel, modifier);
 		}
 
-		bool ButtonClickPressed (Point point, ButtonModifier modif, params ButtonObject [] buttons)
+		bool ButtonClickPressed (Point point, ButtonModifier modif, params ButtonView [] buttons)
 		{
 			Selection sel;
 
@@ -396,12 +396,12 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 				return false;
 			}
 
-			foreach (ButtonObject button in buttons) {
+			foreach (ButtonView button in buttons) {
 				if (!button.Visible)
 					continue;
 				sel = button.GetSelection (point, 0);
 				if (sel != null) {
-					clickedButton = sel.Drawable as ButtonObject;
+					clickedButton = sel.Drawable as ButtonView;
 					(sel.Drawable as ICanvasObject).ClickPressed (point, modif, sel);
 					return true;
 				}
@@ -416,7 +416,7 @@ namespace LongoMatch.Drawing.CanvasObjects.Teams
 
 		void HandleTeamClickedEvent (ICanvasObject co)
 		{
-			var button = co as ButtonObject;
+			var button = co as ButtonView;
 			if (button == homeButton) {
 				ViewModel.HomeTeam.Tagged = button.Active;
 			} else if (button == awayButton) {
