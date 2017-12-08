@@ -231,6 +231,7 @@ namespace LongoMatch.Core.Store.Templates
 		{
 			LMTeam defaultTemplate = new LMTeam ();
 			defaultTemplate.FillDefaultTemplate (playersCount);
+			defaultTemplate.Preview = App.Current.PreviewService.CreateTeamPreview(defaultTemplate);
 			return defaultTemplate;
 		}
 

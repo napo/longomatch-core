@@ -24,7 +24,7 @@ using LongoMatch.Core.Handlers;
 using LongoMatch.Core.Store;
 using LongoMatch.Core.Store.Templates;
 using LongoMatch.Drawing.CanvasObjects.Teams;
-using LongoMatch.Services.ViewModel;
+using LongoMatch.Core.ViewModel;
 using VAS.Core.Common;
 using VAS.Core.Interfaces.Drawing;
 using VAS.Core.Store;
@@ -88,6 +88,14 @@ namespace LongoMatch.Drawing.Widgets
 		public void SetViewModel (object viewModel)
 		{
 			ViewModel = (LMTeamTaggerVM)viewModel;
+		}
+
+		public void ForceSizeUpdate (double width, double height)
+		{
+			this.WidthRequest = (int)width;
+			this.HeightRequest = (int)height;
+			tagger.Width = width;
+			tagger.Height = height;
 		}
 
 		protected override void ShowMenu (Point coords)

@@ -62,6 +62,19 @@ namespace LongoMatch.Core.Migration
 			team.Version = 1;
 		}
 		#pragma warning restore 0618
+
+		public static void Migrate1 (LMTeam team)
+		{
+			if (team.Version != 1) {
+				return;
+			}
+
+			// use the preview service to get the team preview
+			team.Preview = App.Current.PreviewService.CreateTeamPreview (team);
+
+			// when finalize increase the db version
+			// team.Version = 2;
+		}
 	}
 }
 

@@ -15,44 +15,71 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.ViewModel;
+using System.Collections.Generic;
+using LongoMatch.Core.Interfaces;
+using LongoMatch.Core.Store.Templates;
+using VAS.Core;
 using VAS.Core.Common;
-using VAS.Core.Interfaces.MVVMC;
-using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
-using VAS.Services.ViewModel;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
-	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
+	/// <summary>
+	/// ViewModel for the teams manager.
+	/// </summary>
+	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerDealer, ILMTeamEditorDealer
 	{
 		CountLimitationBarChartVM chartVM;
 
-		public DashboardsManagerVM ()
+		public TeamsManagerVM ()
 		{
-			AddButton = LoadedTemplate.AddButton;
+			LoadedTemplate = new LMTeamVM ();
 			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", StyleConf.TemplatesIconSize);
 			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-save", StyleConf.TemplatesIconSize);
 			DeleteCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", StyleConf.TemplatesIconSize);
 			ExportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("lm-export", StyleConf.TemplatesIconSize);
 			ImportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-import", StyleConf.TemplatesIconSize);
+			TeamTagger = new LMTeamTaggerVM ();
+			TeamTagger.HomeTeam = (LMTeamVM)LoadedTemplate;
+			TeamTagger.AwayTeam = null;
+			TeamTagger.Background = App.Current.HHalfFieldBackground;
+			TeamTagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
+			TeamEditor = new LMTeamEditorVM ();
+			TeamEditor.Team = (LMTeamVM)LoadedTemplate;
+			TeamEditor.Team.TemplateEditorMode = true;
 			if (LimitationChart != null) {
 				LimitationChart.Dispose ();
 				LimitationChart = null;
 			}
+			TeamMenu = CreateTeamMenu ();
 		}
 
-		public Command<string> AddButton {
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamTaggerVM TeamTagger {
 			get;
-			private set;
 		}
 
-		public DashboardVM Dashboard {
-			get {
-				return LoadedTemplate;
+		/// <summary>
+		/// Gets the team tagger.
+		/// </summary>
+		/// <value>The team tagger.</value>
+		public LMTeamEditorVM TeamEditor {
+			get;
+		}
+
+		protected override TeamVM CreateInstance (Team model)
+		{
+			LMTeamVM lMTeamVM = new LMTeamVM { Model = (LMTeam)model };
+			if (model.Static) {
+				StaticViewModels.Add (lMTeamVM);
 			}
+
+			return lMTeamVM;
 		}
 
 		/// <summary>
@@ -66,14 +93,23 @@ namespace LongoMatch.Services.ViewModel
 			}
 		}
 
-		protected override LMDashboardVM CreateInstance (Dashboard model)
-		{
-			LMDashboardVM vm = new LMDashboardVM { Model = model };
-			if (model.Static) {
-				StaticViewModels.Add (vm);
-			}
+		/// <summary>
+		/// Gets the team menu.
+		/// </summary>
+		/// <value>The team menu.</value>
+		public MenuVM TeamMenu { get; private set; }
 
-			return vm;
+		protected MenuVM CreateTeamMenu ()
+		{
+			DeleteCommand.IconName = "vas-delete";
+			MenuVM menu = new MenuVM ();
+			menu.ViewModels.AddRange (new List<MenuNodeVM> {
+				new MenuNodeVM (DeleteCommand, null, Catalog.GetString("Delete")) { Color = App.Current.Style.ColorAccentError },
+			});
+
+			return menu;
 		}
+
 	}
 }
+

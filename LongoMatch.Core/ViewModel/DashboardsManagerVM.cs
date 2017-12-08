@@ -15,72 +15,42 @@
 //  along with this program; if not, write to the Free Software
 //  Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301, USA.
 //
-using LongoMatch.Core.Store;
-using LongoMatch.Core.Store.Templates;
-using LongoMatch.Core.ViewModel;
-using LongoMatch.Services.Interfaces;
-using VAS.Core;
 using VAS.Core.Common;
+using VAS.Core.Interfaces.MVVMC;
+using VAS.Core.MVVMC;
 using VAS.Core.Store;
 using VAS.Core.Store.Templates;
 using VAS.Core.ViewModel;
-using VAS.Services.ViewModel;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
-	/// <summary>
-	/// ViewModel for the teams manager.
-	/// </summary>
-	public class TeamsManagerVM : TemplatesManagerViewModel<Team, TeamVM, Player, PlayerVM>, ILMTeamTaggerDealer, ILMTeamEditorDealer
+	public class DashboardsManagerVM : TemplatesManagerViewModel<Dashboard, LMDashboardVM, DashboardButton, DashboardButtonVM>, IDashboardDealer
 	{
 		CountLimitationBarChartVM chartVM;
 
-		public TeamsManagerVM ()
+		public DashboardsManagerVM ()
 		{
-			LoadedTemplate = new LMTeamVM ();
+			AddButton = LoadedTemplate.AddButton;
 			NewCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-add", StyleConf.TemplatesIconSize);
 			SaveCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-save", StyleConf.TemplatesIconSize);
 			DeleteCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-delete", StyleConf.TemplatesIconSize);
 			ExportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("lm-export", StyleConf.TemplatesIconSize);
 			ImportCommand.Icon = App.Current.ResourcesLocator.LoadIcon ("vas-import", StyleConf.TemplatesIconSize);
-			TeamTagger = new LMTeamTaggerVM ();
-			TeamTagger.HomeTeam = (LMTeamVM)LoadedTemplate;
-			TeamTagger.AwayTeam = null;
-			TeamTagger.Background = App.Current.HHalfFieldBackground;
-			TeamTagger.SelectionMode = MultiSelectionMode.MultipleWithModifier;
-			TeamEditor = new LMTeamEditorVM ();
-			TeamEditor.Team = (LMTeamVM)LoadedTemplate;
-			TeamEditor.Team.TemplateEditorMode = true;
 			if (LimitationChart != null) {
 				LimitationChart.Dispose ();
 				LimitationChart = null;
 			}
 		}
 
-		/// <summary>
-		/// Gets the team tagger.
-		/// </summary>
-		/// <value>The team tagger.</value>
-		public LMTeamTaggerVM TeamTagger {
+		public Command<string> AddButton {
 			get;
+			private set;
 		}
 
-		/// <summary>
-		/// Gets the team tagger.
-		/// </summary>
-		/// <value>The team tagger.</value>
-		public LMTeamEditorVM TeamEditor {
-			get;
-		}
-
-		protected override TeamVM CreateInstance (Team model)
-		{
-			LMTeamVM lMTeamVM = new LMTeamVM { Model = (LMTeam)model };
-			if (model.Static) {
-				StaticViewModels.Add (lMTeamVM);
+		public DashboardVM Dashboard {
+			get {
+				return LoadedTemplate;
 			}
-
-			return lMTeamVM;
 		}
 
 		/// <summary>
@@ -93,6 +63,15 @@ namespace LongoMatch.Services.ViewModel
 				Limitation = chartVM?.Limitation;
 			}
 		}
+
+		protected override LMDashboardVM CreateInstance (Dashboard model)
+		{
+			LMDashboardVM vm = new LMDashboardVM { Model = model };
+			if (model.Static) {
+				StaticViewModels.Add (vm);
+			}
+
+			return vm;
+		}
 	}
 }
-

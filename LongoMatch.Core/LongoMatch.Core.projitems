@@ -65,6 +65,13 @@
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\PenaltyCardButtonVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMDashboardVM.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Hotkeys\LMGeneralUIHotkeys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\DashboardsManagerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\TeamsManagerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamTaggerVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMTeamEditorVM.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamEditorDealer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Interfaces\ILMTeamTaggerDealer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModel\LMProjectAnalysisVM.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Filters\" />

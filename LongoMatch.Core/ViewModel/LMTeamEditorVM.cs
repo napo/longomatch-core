@@ -10,7 +10,7 @@ using VAS.Core.Common;
 using VAS.Core.Events;
 using VAS.Core.MVVMC;
 
-namespace LongoMatch.Services.ViewModel
+namespace LongoMatch.Core.ViewModel
 {
 	/// <summary>
 	/// ViewModel to edit a team.

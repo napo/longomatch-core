@@ -61,7 +61,7 @@ namespace LongoMatch.DB
 			MigrateTeamsAndDashboards ();
 		}
 
-		bool MigrateTeamsAndDashboards ()
+		bool MigrateTeamsAndDashboardToVersion_1 ()
 		{
 			bool ret = true;
 			float count;
@@ -73,24 +73,24 @@ namespace LongoMatch.DB
 			ConcurrentQueue<Dashboard> dashboards = new ConcurrentQueue<Dashboard> ();
 			List<Task> tasks = new List<Task> ();
 
-			progress.Report (0, "Migrating teams and dashboards", id);
+			progress?.Report (0, "Migrating teams and dashboards", id);
 
 			try {
 				teamFiles = Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "teams")).
 					Where (f => f.EndsWith (".ltt")).ToList ();
 			} catch (DirectoryNotFoundException ex) {
 				percent += 0.5f;
-				progress.Report (percent, "Migrated teams", id);
+				progress?.Report (percent, "Migrated teams", id);
 			}
 			try {
 				dashboardFiles = Directory.EnumerateFiles (Path.Combine (App.Current.DBDir, "analysis")).
 					Where (f => f.EndsWith (".lct")).ToList ();
 			} catch (DirectoryNotFoundException ex) {
 				percent += 0.5f;
-				progress.Report (percent, "Migrated dashboards", id);
+				progress?.Report (percent, "Migrated dashboards", id);
 			}
 			if (teamFiles.Count == 0 && dashboardFiles.Count == 0) {
-				progress.Report (1, "Migrated teams and dashboards", id);
+				progress?.Report (1, "Migrated teams and dashboards", id);
 				return true;
 			}
 			count = (teamFiles.Count + dashboardFiles.Count) * 2 + 1;
@@ -100,7 +100,7 @@ namespace LongoMatch.DB
 				try {
 					LMTeam team = Serializer.Instance.Load<LMTeam> (teamFile);
 					percent += 1 / count;
-					progress.Report (percent, "Imported team " + team.Name, id);
+					progress?.Report (percent, "Imported team " + team.Name, id);
 					teams.Enqueue (team);
 				} catch (Exception ex) {
 					Log.Exception (ex);
@@ -111,7 +111,7 @@ namespace LongoMatch.DB
 				try {
 					Dashboard dashboard = Serializer.Instance.Load<Dashboard> (dashboardFile);
 					percent += 1 / count;
-					progress.Report (percent, "Imported dashboard " + dashboard.Name, id);
+					progress?.Report (percent, "Imported dashboard " + dashboard.Name, id);
 					dashboards.Enqueue (dashboard);
 				} catch (Exception ex) {
 					Log.Exception (ex);
@@ -125,7 +125,7 @@ namespace LongoMatch.DB
 						TeamMigration.Migrate0 (team, teamNameToID);
 						App.Current.TeamTemplatesProvider.Save (team);
 						percent += 1 / count;
-						progress.Report (percent, "Migrated team " + team.Name, id);
+						progress?.Report (percent, "Migrated team " + team.Name, id);
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;
@@ -141,7 +141,7 @@ namespace LongoMatch.DB
 						DashboardMigration.Migrate0 (dashboard, scoreNameToID, penaltyNameToID);
 						App.Current.CategoriesTemplatesProvider.Save (dashboard as LMDashboard);
 						percent += 1 / count;
-						progress.Report (percent, "Migrated team " + dashboard.Name, id);
+						progress?.Report (percent, "Migrated team " + dashboard.Name, id);
 					} catch (Exception ex) {
 						Log.Exception (ex);
 						ret = false;
@@ -171,14 +171,14 @@ namespace LongoMatch.DB
 				Log.Exception (ex);
 			}
 
-			progress.Report (1, "Teams and dashboards migrated", id);
+			progress?.Report (1, "Teams and dashboards migrated", id);
 			return ret;
 		}
 
 		void MigrateProjectsDatabases ()
 		{
 			Guid id = Guid.NewGuid ();
-			progress.Report (0, "Migrating databases", id);
+			progress?.Report (0, "Migrating databases", id);
 			// Collect all the databases and projects to migrate for progress updates
 			foreach (var directory in Directory.EnumerateDirectories (App.Current.DBDir)) {
 				if (!directory.EndsWith (".ldb")) {
@@ -215,7 +215,19 @@ namespace LongoMatch.DB
 				Log.Error ("Error moving database to the backup directory");
 				Log.Exception (ex);
 			}
-			progress.Report (1, "Databases migrated", id);
+			progress?.Report (1, "Databases migrated", id);
+		}
+
+		void MigrateTeamsAndDashboards()
+		{
+			IStorage templatesStorage = App.Current.TeamTemplatesProvider.Storage;
+			if (templatesStorage.Info.Version == new Version (1, 0)) {
+				foreach (LMTeam t in App.Current.TeamTemplatesProvider.Templates) {
+					TeamMigration.Migrate1 (t);
+				}
+			} else {
+				MigrateTeamsAndDashboardToVersion_1 ();
+			}
 		}
 
 		bool MigrateDB (IStorageManager manager, string databaseName, List<string> projectFiles)
@@ -251,7 +263,7 @@ namespace LongoMatch.DB
 						ret = false;
 					}
 					percent += step;
-					progress.Report (percent, "Imported project " + project?.Description.Title, id);
+					progress?.Report (percent, "Imported project " + project?.Description.Title, id);
 
 					if (project != null) {
 						if (project.LocalTeamTemplate.ID != Guid.Empty) {
@@ -269,7 +281,7 @@ namespace LongoMatch.DB
 							ret = false;
 						}
 						percent += step;
-						progress.Report (percent, "Migrated project " + project?.Description.Title, id);
+						progress?.Report (percent, "Migrated project " + project?.Description.Title, id);
 						project.Dispose ();
 						project = null;
 						GC.Collect ();
@@ -282,19 +294,19 @@ namespace LongoMatch.DB
 			// Create a query and print the result to traverse the iterator
 			Log.Information ("Projects index created:" + database.RetrieveAll<LMProject> ().Count ());
 			percent += step;
-			progress.Report (percent, "Projects index created", id);
+			progress?.Report (percent, "Projects index created", id);
 
 			Log.Information ("Timeline events index created:" + database.RetrieveAll<LMTimelineEvent> ().Count ());
 			percent += step;
-			progress.Report (percent, "Events index created", id);
+			progress?.Report (percent, "Events index created", id);
 
 			Log.Information ("Teams index created:" + database.RetrieveAll<Team> ().Count ());
 			percent += step;
-			progress.Report (percent, "Teams index created", id);
+			progress?.Report (percent, "Teams index created", id);
 
 			Log.Information ("DAshboards index created:" + database.RetrieveAll<Dashboard> ().Count ());
 			percent += step;
-			progress.Report (percent, "Dashboards index created", id);
+			progress?.Report (percent, "Dashboards index created", id);
 
 			Log.Information ("Database " + databaseName + " migrated correctly");
 			return ret;
