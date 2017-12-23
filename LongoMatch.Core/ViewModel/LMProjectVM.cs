@@ -41,6 +41,13 @@ namespace LongoMatch.Core.ViewModel
 			Dashboard = new LMDashboardVM ();
 		}
 
+		protected override void DisposeManagedResources ()
+		{
+			HomeTeam.Dispose ();
+			AwayTeam.Dispose ();
+			base.DisposeManagedResources ();
+		}
+
 		/// <summary>
 		/// Gets the description of the project
 		/// </summary>
