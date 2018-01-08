@@ -115,7 +115,9 @@ namespace LongoMatch.Gui.Panel
 		{
 			ctx.Dispose ();
 			OnUnload ();
-			dashboardwidget.Dispose ();
+			dashboardsStore.Dispose ();
+			dashboardwidget.Destroy ();
+			dashboardseditortreeview.Destroy ();
 			base.OnDestroyed ();
 		}
 
@@ -235,9 +237,8 @@ namespace LongoMatch.Gui.Panel
 		void Reset ()
 		{
 			dashboardsStore.Clear ();
-			foreach (LMDashboardVM vm in viewModel.ViewModels)
-			{
-				Add (vm); 
+			foreach (LMDashboardVM vm in viewModel.ViewModels) {
+				Add (vm);
 			}
 		}
 
