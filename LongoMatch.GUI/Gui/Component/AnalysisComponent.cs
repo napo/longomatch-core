@@ -73,6 +73,7 @@ namespace LongoMatch.Gui.Component
 				playerWindow.Destroy ();
 				detachedPlayer = false;
 			}
+			ViewModel = null;
 			playercapturer.Dispose ();
 			playsSelection.Dispose ();
 			base.OnDestroyed ();
@@ -108,15 +109,17 @@ namespace LongoMatch.Gui.Component
 			}
 			set {
 				viewModel = value;
-				playercapturer.ViewModel = viewModel.VideoPlayer;
 				codingwidget.ViewModel = viewModel;
-				playsSelection.ViewModel = viewModel.Project;
-				if (viewModel.Project.Model.ProjectType == ProjectType.FileProject) {
-					playercapturer.Mode = PlayerViewOperationMode.Analysis;
-				} else {
-					playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
-					Capturer.PeriodsNames = viewModel.Project.Model.Dashboard.GamePeriods.ToList ();
-					Capturer.Periods = viewModel.Project.Model.Periods.ToList ();
+				playercapturer.ViewModel = viewModel?.VideoPlayer;
+				playsSelection.ViewModel = viewModel?.Project;
+				if (ViewModel != null) {
+					if (viewModel.Project.Model.ProjectType == ProjectType.FileProject) {
+						playercapturer.Mode = PlayerViewOperationMode.Analysis;
+					} else {
+						playercapturer.Mode = playercapturer.Mode = PlayerViewOperationMode.LiveAnalysisReview;
+						Capturer.PeriodsNames = viewModel.Project.Model.Dashboard.GamePeriods.ToList ();
+						Capturer.Periods = viewModel.Project.Model.Periods.ToList ();
+					}
 				}
 			}
 		}
@@ -146,10 +149,10 @@ namespace LongoMatch.Gui.Component
 							   () => codingwidget.ShowZonalTags ()));
 			keyContext.AddAction (
 				new VKeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.SHOW_DASHBOARD),
-				                () => codingwidget.ShowDashboard ()));
+								() => codingwidget.ShowDashboard ()));
 			keyContext.AddAction (
 				new VKeyAction (App.Current.HotkeysService.GetByName (LMGeneralUIHotkeys.SHOW_TIMELINE),
-				                () => codingwidget.ShowTimeline ()));
+								() => codingwidget.ShowTimeline ()));
 			keyContext.AddAction (
 				new VKeyAction (App.Current.HotkeysService.GetByName (GeneralUIHotkeys.FIT_TIMELINE),
 							   () => codingwidget.FitTimeline ()));
