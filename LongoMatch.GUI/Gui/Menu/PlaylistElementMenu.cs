@@ -31,10 +31,10 @@ namespace LongoMatch.Gui.Menus
 {
 	public class PlaylistElementMenu
 	{
-		Menu menu;
+		protected Menu menu;
 		MenuItem editMenu, deleteMenu, prependMenu, appendMenu;
-		readonly Playlist playlist;
-		readonly List<IPlaylistElement> elements;
+		protected readonly Playlist playlist;
+		protected readonly List<IPlaylistElement> elements;
 		readonly Widget widget;
 
 		public PlaylistElementMenu (Widget widget, Playlist playlist, List<IPlaylistElement> elements)
