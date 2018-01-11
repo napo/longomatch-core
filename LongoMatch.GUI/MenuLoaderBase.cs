@@ -47,6 +47,7 @@ namespace LongoMatch.Gui
 		{
 			foreach (MenuItem item in MenuItems) {
 				(menu.Submenu as Menu).Remove (item);
+				item.Destroy ();
 			}
 
 			this.MenuItems.Clear ();
